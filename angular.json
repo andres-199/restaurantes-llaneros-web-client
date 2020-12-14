@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "restaurantes-llaneros"
+  "defaultProject": "restaurantes-llaneros",
+  "cli": {
+    "analytics": false
+  }
 }
