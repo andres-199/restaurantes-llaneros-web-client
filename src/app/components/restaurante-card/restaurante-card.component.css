@@ -3,3 +3,7 @@
   height: 100px !important;
   width: 100px !important;
 }
+
+.mat-card:hover {
+  border: solid 1px;
+}

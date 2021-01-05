@@ -21,6 +21,18 @@ const routes: Routes = [
         (res) => res.CategoriasModule
       ),
   },
+  {
+    path: 'restaurante',
+    loadChildren: () =>
+      import('./restaurante-view/restaurante-view.module').then(
+        (res) => res.RestauranteViewModule
+      ),
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./login/login.module').then((res) => res.LoginModule),
+  },
 ]
 
 @NgModule({

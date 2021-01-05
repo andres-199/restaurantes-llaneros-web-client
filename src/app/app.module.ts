@@ -8,6 +8,7 @@ import { ToolbarModule } from './components/toolbar/toolbar.module'
 import { HttpClientModule } from '@angular/common/http'
 import { MatPaginatorIntl } from '@angular/material/paginator'
 import { MatPaginatorIntlCro } from './components/dinamyc-crud/mat-paginator-intl.service'
+import { FooterModule } from './components/footer/footer.module'
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { MatPaginatorIntlCro } from './components/dinamyc-crud/mat-paginator-int
     BrowserAnimationsModule,
     ToolbarModule,
     HttpClientModule,
+    FooterModule,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro }],
   bootstrap: [AppComponent],
