@@ -32,9 +32,9 @@
 .header-image {
   position: relative;
   margin-bottom: -55px;
-  width: 175px;
-  height: 100px;
-  top: -65px;
+  width: 200px;
+  top: -73px;
+  left: -120px;
 }
 .header {
   text-align: center;

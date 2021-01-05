@@ -3,7 +3,10 @@
   height: 100px !important;
   width: 100px !important;
 }
+.mat-card {
+  transition: all 200ms ease;
+}
 
 .mat-card:hover {
-  border: solid 1px;
+  background-color: #bcaaa4;
 }

@@ -33,6 +33,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./login/login.module').then((res) => res.LoginModule),
   },
+  {
+    path: 'registro',
+    loadChildren: () =>
+      import('./registro/registro.module').then((res) => res.RegistroModule),
+  },
 ]
 
 @NgModule({

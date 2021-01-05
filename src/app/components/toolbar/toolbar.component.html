@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar color="primary" class="toolbar">
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col">
@@ -7,10 +7,12 @@
         >
       </div>
 
+      <!------------------MENU------------------->
       <div class="col-md-auto">
         <button #homeButton mat-button [routerLink]="['']">Iinicio</button>
         <button mat-button [routerLink]="['categorias']">Categorías</button>
         <button mat-button [routerLink]="['restaurantes']">Restaurantes</button>
+        <button mat-button [routerLink]="['registro']">Registro</button>
       </div>
 
       <div class="col-md-auto">
