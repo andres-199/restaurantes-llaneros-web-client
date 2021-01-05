@@ -5,11 +5,12 @@ import { CrudService } from './crud.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatTableDataSource } from '@angular/material/table'
 import { MatPaginator } from '@angular/material/paginator'
+import { origin } from 'src/app/util/origin.enum'
 
 export const Export_Config = {
   fileName: 'pqr_system_file_export',
   sheet: 'datos',
-  Props: { Author: 'andres199' }
+  Props: { Author: 'andres199' },
 }
 
 export interface Col {
@@ -33,7 +34,7 @@ export interface MenuOption {
 @Component({
   selector: 'app-dinamyc-crud',
   templateUrl: './dinamyc-crud.component.html',
-  styles: []
+  styles: [],
 })
 export class DinamycCrudComponent implements OnInit {
   @Input()
@@ -43,7 +44,7 @@ export class DinamycCrudComponent implements OnInit {
   @Input()
   public formFields: FormField[] = []
   @Input()
-  public origin = ''
+  public origin: origin
   @Input()
   public originForm = undefined
   @Input()
@@ -66,7 +67,7 @@ export class DinamycCrudComponent implements OnInit {
   }
 
   private getDataSource() {
-    this.service.findAll(this.origin).subscribe(dataSource => {
+    this.service.findAll(this.origin).subscribe((dataSource) => {
       this.dataSource = new MatTableDataSource<any>(dataSource)
       this.dataSource.paginator = this.paginator
     })
@@ -75,10 +76,10 @@ export class DinamycCrudComponent implements OnInit {
   public onEdit(data) {
     const ref = this.dialog.open(DinamycFormComponent, {
       data: { data, formFields: this.formFields },
-      minWidth: 500
+      minWidth: 500,
     })
 
-    ref.afterClosed().subscribe(_data => {
+    ref.afterClosed().subscribe((_data) => {
       if (_data) {
         this.update(_data)
       }
@@ -88,10 +89,10 @@ export class DinamycCrudComponent implements OnInit {
   public onDelete(data) {
     const ref = this.dialog.open(DinamycFormComponent, {
       data: { isDelete: true },
-      minWidth: 400
+      minWidth: 400,
     })
 
-    ref.afterClosed().subscribe(res => {
+    ref.afterClosed().subscribe((res) => {
       if (res) {
         this.delete(data.id)
       }
@@ -101,10 +102,10 @@ export class DinamycCrudComponent implements OnInit {
   public onRegister() {
     const ref = this.dialog.open(DinamycFormComponent, {
       data: { formFields: this.formFields },
-      minWidth: 500
+      minWidth: 500,
     })
 
-    ref.afterClosed().subscribe(data => {
+    ref.afterClosed().subscribe((data) => {
       if (data) {
         this.create(data)
       }
@@ -114,10 +115,10 @@ export class DinamycCrudComponent implements OnInit {
   private update(data) {
     const origin = this.originForm || this.origin
     this.service.update(origin, data).subscribe(
-      res => {
+      (res) => {
         this.onSuccess(false)
       },
-      err => {
+      (err) => {
         this.showMsg(err.name || err.message)
       }
     )
@@ -126,11 +127,11 @@ export class DinamycCrudComponent implements OnInit {
   private create(data) {
     const origin = this.originForm || this.origin
     this.service.create(origin, data).subscribe(
-      res => {
+      (res) => {
         this.getDataSource()
         this.onSuccess()
       },
-      err => {
+      (err) => {
         this.showMsg(err.name || err.message)
       }
     )
@@ -139,11 +140,11 @@ export class DinamycCrudComponent implements OnInit {
   private delete(id: number) {
     const _origin = `${this.origin}/${id}`
     this.service.delete(_origin).subscribe(
-      res => {
+      (res) => {
         this.getDataSource()
         this.onSuccess()
       },
-      err => {
+      (err) => {
         this.showMsg(err.name || err.message)
       }
     )
@@ -158,7 +159,7 @@ export class DinamycCrudComponent implements OnInit {
 
   private showMsg(message: string) {
     this._snackBar.open(message, 'Aceptar', {
-      duration: 7000
+      duration: 7000,
     })
   }
 }

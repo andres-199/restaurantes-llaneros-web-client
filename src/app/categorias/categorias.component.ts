@@ -3,11 +3,11 @@ import {
   Col,
   FormField,
 } from '../components/dinamyc-crud/dinamyc-crud.component'
+import { origin } from '../util/origin.enum'
 
 @Component({
   selector: 'app-categorias',
   templateUrl: './categorias.component.html',
-  styleUrls: ['./categorias.component.css'],
 })
 export class CategoriasComponent implements OnInit {
   public columnsToDisplay = ['nombre', 'descripcion', 'opciones']
@@ -22,7 +22,7 @@ export class CategoriasComponent implements OnInit {
     { name: 'descripcion', label: 'Descripción', type: 'textArea' },
   ]
 
-  public origin = 'categorias'
+  public origin = origin.CATEGORIAS
 
   constructor() {}
 

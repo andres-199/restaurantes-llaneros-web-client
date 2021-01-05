@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  BACKEND_URL:'http://localhost:3001/'
-};
+  BACKEND_URL: 'http://localhost:3001/',
+  IMAGES_URL: 'https://source.unsplash.com/',
+}
 
 /*
  * For easier debugging in development mode, you can import the following file
