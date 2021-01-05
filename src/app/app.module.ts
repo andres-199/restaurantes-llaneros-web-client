@@ -6,6 +6,8 @@ import { AppComponent } from './app.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ToolbarModule } from './components/toolbar/toolbar.module'
 import { HttpClientModule } from '@angular/common/http'
+import { MatPaginatorIntl } from '@angular/material/paginator'
+import { MatPaginatorIntlCro } from './components/dinamyc-crud/mat-paginator-intl.service'
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http'
     ToolbarModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

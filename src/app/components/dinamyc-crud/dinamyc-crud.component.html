@@ -1,5 +1,10 @@
 <div align="right">
-  <button mat-button color="primary" (click)="onRegister()" matTooltip="Agregar un nuevo registro">
+  <button
+    mat-button
+    color="primary"
+    (click)="onRegister()"
+    matTooltip="Agregar un nuevo registro"
+  >
     <mat-icon>add</mat-icon>
     Registrar
   </button>
@@ -50,5 +55,9 @@
     <!--/template rows-->
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <mat-paginator
+    itemsPerPageLabel="Elementos"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
 </div>
