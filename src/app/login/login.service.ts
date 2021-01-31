@@ -10,15 +10,15 @@ import { Usuario } from '../registro/usuario.interface'
 export class LoginService {
   private backendUrl = environment.BACKEND_URL
 
-  public get isLogedIn(): any {
+  public get isLogedIn(): boolean {
     return localStorage.getItem('user') ? true : false
   }
 
-  public get user(): any {
+  public get user(): Usuario {
     return JSON.parse(localStorage.getItem('user'))
   }
 
-  public set user(value: any) {
+  public set user(value: Usuario) {
     localStorage.setItem('user', JSON.stringify(value))
   }
 

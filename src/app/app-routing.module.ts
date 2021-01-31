@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
+import { LoginGuard } from './guards/login.guard'
+import { LogoutGuard } from './guards/logout.guard'
+import { RoleGuard } from './guards/role.guard'
 
 const routes: Routes = [
   {
@@ -13,6 +16,7 @@ const routes: Routes = [
       import('./restaurantes/restaurantes.module').then(
         (res) => res.RestaurantesModule
       ),
+    canActivate: [LoginGuard, RoleGuard],
   },
   {
     path: 'categorias',
@@ -20,6 +24,7 @@ const routes: Routes = [
       import('./categorias/categorias.module').then(
         (res) => res.CategoriasModule
       ),
+    canActivate: [LoginGuard, RoleGuard],
   },
   {
     path: 'restaurante',
@@ -32,11 +37,13 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((res) => res.LoginModule),
+    canActivate: [LogoutGuard],
   },
   {
     path: 'registro',
     loadChildren: () =>
       import('./registro/registro.module').then((res) => res.RegistroModule),
+    canActivate: [LogoutGuard],
   },
 ]
 
