@@ -1,4 +1,4 @@
 export interface Usuario {
-  user?: string
-  password?: string
+  usuario?: string
+  contrasena?: string
 }
