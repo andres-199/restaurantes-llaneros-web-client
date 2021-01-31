@@ -10,16 +10,32 @@
       <!------------------MENU------------------->
       <div class="col-md-auto">
         <button #homeButton mat-button [routerLink]="['']">Iinicio</button>
-        <button mat-button [routerLink]="['categorias']">Categorías</button>
-        <button mat-button [routerLink]="['restaurantes']">Restaurantes</button>
-        <button mat-button [routerLink]="['registro']">Registro</button>
+        <ng-container *ngIf="isLogedIn && user.rol_id === roles.Admin">
+          <button mat-button [routerLink]="['categorias']">Categorías</button>
+          <button mat-button [routerLink]="['restaurantes']">
+            Restaurantes
+          </button>
+        </ng-container>
+
+        <button mat-button [routerLink]="['registro']" *ngIf="!isLogedIn">
+          Registro
+        </button>
       </div>
 
       <div class="col-md-auto">
-        <button mat-icon-button [routerLink]="['login']">
-          Ingresar
-          <mat-icon>login</mat-icon>
-        </button>
+        <ng-container *ngIf="isLogedIn; else login">
+          <button mat-icon-button (click)="onLogout()">
+            Salir
+            <mat-icon>logout</mat-icon>
+          </button>
+        </ng-container>
+
+        <ng-template #login>
+          <button mat-icon-button (click)="onLogin()">
+            Ingresar
+            <mat-icon>login</mat-icon>
+          </button>
+        </ng-template>
       </div>
     </div>
   </div>
