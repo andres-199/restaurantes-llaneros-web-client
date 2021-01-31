@@ -49,8 +49,8 @@ export class RegistroComponent implements OnInit {
     }
 
     this.tercero.Usuario = {
-      user: this.tercero.email,
-      password: md5(this.password.psw1),
+      usuario: this.tercero.email,
+      contrasena: md5(this.password.psw1),
     }
 
     this.register()

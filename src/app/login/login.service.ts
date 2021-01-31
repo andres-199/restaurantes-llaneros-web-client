@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment'
+import { Usuario } from '../registro/usuario.interface'
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private urlBase = environment.BACKEND_URL
+  private backendUrl = environment.BACKEND_URL
 
   public get isLogedIn(): any {
     return localStorage.getItem('user') ? true : false
@@ -23,13 +24,13 @@ export class LoginService {
 
   constructor(private router: Router, private http: HttpClient) {}
 
-  public login(loginData) {
-    const url = this.urlBase + 'usuarios/login'
+  public login(loginData: Usuario) {
+    const url = this.backendUrl + 'auth/login'
     return this.http.post(url, loginData)
   }
 
   public logout() {
     localStorage.removeItem('user')
-    this.router.navigate(['/login'])
+    this.router.navigate([''])
   }
 }
