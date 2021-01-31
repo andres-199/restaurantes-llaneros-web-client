@@ -1,3 +1,5 @@
+import { Usuario } from './usuario.interface'
+
 export interface Tercero {
   id?: number
   nombre?: string
@@ -6,4 +8,5 @@ export interface Tercero {
   identificacion?: string
   restaurante_id?: number
   telefono?: string
+  Usuario?: Usuario
 }
