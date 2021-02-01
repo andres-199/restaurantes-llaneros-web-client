@@ -12,8 +12,7 @@ import { DinamycFormModule } from '../dinamyc-form/dinamyc-form.module'
 import { CrudService } from './crud.service'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
-
-
+import { MatInputModule } from '@angular/material/input'
 
 @NgModule({
   declarations: [DinamycCrudComponent],
@@ -28,9 +27,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
     MatDialogModule,
     MatTooltipModule,
     MatSnackBarModule,
+    MatInputModule,
   ],
   exports: [DinamycCrudComponent],
   entryComponents: [DinamycFormComponent],
-  providers: [CrudService]
+  providers: [CrudService],
 })
-export class DinamycCrudModule { }
+export class DinamycCrudModule {}
