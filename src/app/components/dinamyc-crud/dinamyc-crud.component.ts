@@ -16,6 +16,7 @@ export const Export_Config = {
 export interface Col {
   header: string
   field: string
+  width?: string
 }
 
 export interface FormField {
@@ -161,5 +162,10 @@ export class DinamycCrudComponent implements OnInit {
     this._snackBar.open(message, 'Aceptar', {
       duration: 7000,
     })
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value
+    this.dataSource.filter = filterValue.trim().toLowerCase()
   }
 }

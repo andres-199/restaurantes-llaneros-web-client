@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<form class="example-form">
+  <mat-form-field class="full-width">
+    <mat-label>Buscar</mat-label>
+    <input
+      #searchField
+      type="text"
+      placeholder="Buscar por nombre o correo"
+      matInput
+      [matAutocomplete]="auto"
+      (keyup)="search(searchField.value)"
+    />
+    <mat-autocomplete
+      autoActiveFirstOption
+      #auto="matAutocomplete"
+      [displayWith]="displayFn"
+      (optionSelected)="onSelectedTercero($event)"
+    >
+      <mat-option *ngFor="let tercero of terceros" [value]="tercero">
+        {{ tercero.nombre }} - {{ tercero.email }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="terceroSelected" cdkFocusInitial>
+    Aceptar
+  </button>
+</mat-dialog-actions>

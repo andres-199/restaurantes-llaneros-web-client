@@ -1,20 +1,33 @@
-<div align="right">
-  <button
-    mat-button
-    color="primary"
-    (click)="onRegister()"
-    matTooltip="Agregar un nuevo registro"
-  >
-    <mat-icon>add</mat-icon>
-    Registrar
-  </button>
+<div class="row">
+  <div class="col-6">
+    <mat-form-field class="full-width">
+      <mat-label>Filtro</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #input />
+    </mat-form-field>
+  </div>
+  <div class="col-6" align="right">
+    <button
+      mat-button
+      color="primary"
+      (click)="onRegister()"
+      matTooltip="Agregar un nuevo registro"
+    >
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </div>
 </div>
+
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource">
     <!--template cols-->
     <ng-container [matColumnDef]="col.field" *ngFor="let col of cols">
-      <th mat-header-cell *matHeaderCellDef>{{ col.header }}</th>
-      <td mat-cell *matCellDef="let data">{{ data[col.field] }}</td>
+      <th [width]="col.width" mat-header-cell *matHeaderCellDef>
+        {{ col.header }}
+      </th>
+      <td [width]="col.width" mat-cell *matCellDef="let data">
+        {{ data[col.field] }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="opciones">
@@ -53,11 +66,16 @@
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
     <!--/template rows-->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell">
+        No hay datos que coincidan con "{{ input.value }}"
+      </td>
+    </tr>
   </table>
 
   <mat-paginator
     itemsPerPageLabel="Elementos"
-    [pageSizeOptions]="[5, 10, 20]"
+    [pageSizeOptions]="[10, 15, 20]"
     showFirstLastButtons
   ></mat-paginator>
 </div>
