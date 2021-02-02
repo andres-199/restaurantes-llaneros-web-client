@@ -27,7 +27,7 @@ const routes: Routes = [
     canActivate: [LoginGuard, RoleGuard],
   },
   {
-    path: 'restaurante',
+    path: 'restaurante/view',
     loadChildren: () =>
       import('./restaurante-view/restaurante-view.module').then(
         (res) => res.RestauranteViewModule
@@ -44,6 +44,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./registro/registro.module').then((res) => res.RegistroModule),
     canActivate: [LogoutGuard],
+  },
+  {
+    path: 'restaurante/personal',
+    loadChildren: () =>
+      import('./restaurante-personal/restaurante-personal.module').then(
+        (res) => res.RestaurantePersonalModule
+      ),
   },
 ]
 

@@ -10,6 +10,19 @@
       <!------------------MENU------------------->
       <div class="col-md-auto">
         <button #homeButton mat-button [routerLink]="['']">Iinicio</button>
+
+        <!--Restaurante-->
+        <ng-container *ngIf="isLogedIn && user.rol_id === roles.Restaurante">
+          <button mat-button [routerLink]="['restaurante/personal']">
+            Personal
+          </button>
+          <button mat-button [routerLink]="['restaurante/platos']">
+            Platos
+          </button>
+          <button mat-button [routerLink]="['restaurante/mesas']">Mesas</button>
+        </ng-container>
+
+        <!--Admin-->
         <ng-container *ngIf="isLogedIn && user.rol_id === roles.Admin">
           <button mat-button [routerLink]="['categorias']">Categorías</button>
           <button mat-button [routerLink]="['restaurantes']">

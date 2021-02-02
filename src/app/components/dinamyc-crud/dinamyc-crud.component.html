@@ -11,6 +11,7 @@
       color="primary"
       (click)="onRegister()"
       matTooltip="Agregar un nuevo registro"
+      *ngIf="!hideCreate"
     >
       <mat-icon>add</mat-icon>
       Registrar
@@ -47,11 +48,22 @@
 
         <!--...-->
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="onEdit(data)">
+          <button
+            [disabled]="data.disableEdit"
+            mat-menu-item
+            (click)="onEdit(data)"
+            *ngIf="!hideEdit"
+          >
             <mat-icon>edit</mat-icon>
             <span>Editar</span>
           </button>
-          <button mat-menu-item (click)="onDelete(data)">
+
+          <button
+            [disabled]="data.disableDelete"
+            mat-menu-item
+            (click)="onDelete(data)"
+            *ngIf="!hideDelete"
+          >
             <mat-icon>delete</mat-icon>
             <span>Eliminar</span>
           </button>

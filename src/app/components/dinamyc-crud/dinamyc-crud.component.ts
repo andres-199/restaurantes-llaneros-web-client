@@ -7,8 +7,13 @@ import { MatTableDataSource } from '@angular/material/table'
 import { MatPaginator } from '@angular/material/paginator'
 import { origin } from 'src/app/util/origin.enum'
 
+export interface DisableButtonRule {
+  action: 'disableDelete' | 'disableEdit'
+  where: { attribute: string; value: any }
+}
+
 export const Export_Config = {
-  fileName: 'pqr_system_file_export',
+  fileName: 'filename',
   sheet: 'datos',
   Props: { Author: 'andres199' },
 }
@@ -39,6 +44,14 @@ export interface MenuOption {
   styles: [],
 })
 export class DinamycCrudComponent implements OnInit {
+  @Input()
+  disabbleButtonRule: DisableButtonRule
+  @Input()
+  hideDelete = false
+  @Input()
+  hideEdit = false
+  @Input()
+  hideCreate = false
   @Input()
   public cols: Col[] = []
   @Input()
@@ -71,9 +84,22 @@ export class DinamycCrudComponent implements OnInit {
   getDataSource() {
     this.service.findAll(this.origin).subscribe((dataSource) => {
       console.log('get data>>>>>>>>', dataSource)
+      if (this.disabbleButtonRule) {
+        this.setDisableButtonRule(dataSource)
+      }
 
       this.dataSource = new MatTableDataSource<any>(dataSource)
       this.dataSource.paginator = this.paginator
+    })
+  }
+
+  private setDisableButtonRule(dataSource: any[]) {
+    dataSource = dataSource.map((item) => {
+      const attr = this.disabbleButtonRule.where.attribute
+      const value = this.disabbleButtonRule.where.value
+      const action = this.disabbleButtonRule.action
+      if (item[attr] == value) item[action] = true
+      return item
     })
   }
 
@@ -145,8 +171,10 @@ export class DinamycCrudComponent implements OnInit {
     const _origin = `${this.origin}/${id}`
     this.service.delete(_origin).subscribe(
       (res) => {
+        console.log('delete>>>', res)
+
         this.getDataSource()
-        this.onSuccess()
+        this.onSuccess(false)
       },
       (err) => {
         this.showMsg(err.name || err.message)
