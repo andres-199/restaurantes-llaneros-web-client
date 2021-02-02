@@ -1,25 +1,30 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import {
   Col,
+  DinamycCrudComponent,
   FormField,
   MenuOption,
 } from '../components/dinamyc-crud/dinamyc-crud.component'
 import { FilterPeopleComponent } from '../components/filter-people/filter-people.component'
+import { SnackBarActions } from '../registro/registro.component'
 import { Tercero } from '../registro/tercero.interface'
 import { origin } from '../util/origin.enum'
 import { Restaurante } from './restaurante.interface'
+import { RestaurantesService } from './restaurantes.service'
 
 @Component({
   selector: 'app-restaurantes',
   templateUrl: './restaurantes.component.html',
 })
 export class RestaurantesComponent implements OnInit {
-  public columnsToDisplay = ['nombre', 'descripcion', 'opciones']
+  public columnsToDisplay = ['nombre', 'descripcion', 'Personal', 'opciones']
 
   public cols: Col[] = [
     { header: 'NOMBRE', field: 'nombre', width: '25%' },
     { header: 'DESCRIPCION ', field: 'descripcion' },
+    { header: 'PERSONAL', field: 'Personal', width: '20%', type: 'list' },
   ]
 
   public formFields: FormField[] = [
@@ -37,7 +42,12 @@ export class RestaurantesComponent implements OnInit {
     },
   ]
 
-  constructor(private dialog: MatDialog) {}
+  @ViewChild(DinamycCrudComponent) dinamycCrud: DinamycCrudComponent
+  constructor(
+    private dialog: MatDialog,
+    private restauranteService: RestaurantesService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {}
 
@@ -61,5 +71,19 @@ export class RestaurantesComponent implements OnInit {
     })
   }
 
-  private addPeople(restaurante: Restaurante, tercero: Tercero) {}
+  private addPeople(restaurante: Restaurante, tercero: Tercero) {
+    tercero.restaurante_id = restaurante.id
+    const subscription = this.restauranteService.addPeople(tercero).subscribe({
+      next: (response: any) => {
+        this.dinamycCrud.getDataSource()
+        this.snackBar.open(response?.message, SnackBarActions.Aceptar)
+      },
+      error: (e) => {
+        console.log(e)
+      },
+      complete: () => {
+        subscription.unsubscribe()
+      },
+    })
+  }
 }

@@ -26,7 +26,14 @@
         {{ col.header }}
       </th>
       <td [width]="col.width" mat-cell *matCellDef="let data">
-        {{ data[col.field] }}
+        <ng-container *ngIf="!col.type; else templates">
+          {{ data[col.field] }}
+        </ng-container>
+        <ng-template #templates>
+          <ul *ngIf="col.type === 'list'">
+            <li *ngFor="let item of data[col.field]">{{ item }}</li>
+          </ul>
+        </ng-template>
       </td>
     </ng-container>
 
