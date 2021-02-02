@@ -17,6 +17,7 @@ export interface Col {
   header: string
   field: string
   width?: string
+  type?: 'list' | 'array' | 'object'
 }
 
 export interface FormField {
@@ -67,8 +68,10 @@ export class DinamycCrudComponent implements OnInit {
     this.getDataSource()
   }
 
-  private getDataSource() {
+  getDataSource() {
     this.service.findAll(this.origin).subscribe((dataSource) => {
+      console.log('get data>>>>>>>>', dataSource)
+
       this.dataSource = new MatTableDataSource<any>(dataSource)
       this.dataSource.paginator = this.paginator
     })
