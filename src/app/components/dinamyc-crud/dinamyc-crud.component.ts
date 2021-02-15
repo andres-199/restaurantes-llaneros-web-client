@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core'
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter,
+} from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { DinamycFormComponent } from '../dinamyc-form/dinamyc-form.component'
 import { CrudService } from './crud.service'
@@ -71,6 +78,8 @@ export class DinamycCrudComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true })
   private paginator: MatPaginator
 
+  @Output() onLoadDataSource = new EventEmitter<any>()
+
   constructor(
     private dialog: MatDialog,
     private service: CrudService,
@@ -83,7 +92,8 @@ export class DinamycCrudComponent implements OnInit {
 
   getDataSource() {
     this.service.findAll(this.origin).subscribe((dataSource) => {
-      console.log('get data>>>>>>>>', dataSource)
+      this.onLoadDataSource.emit(dataSource)
+
       if (this.disabbleButtonRule) {
         this.setDisableButtonRule(dataSource)
       }

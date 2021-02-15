@@ -51,6 +51,45 @@ const routes: Routes = [
       import('./restaurante-personal/restaurante-personal.module').then(
         (res) => res.RestaurantePersonalModule
       ),
+    canActivate: [LoginGuard, RoleGuard],
+  },
+  {
+    path: 'restaurante/productos',
+    loadChildren: () =>
+      import('./restaurante-platos/restaurante-platos.module').then(
+        (res) => res.RestaurantePlatosModule
+      ),
+    canActivate: [LoginGuard, RoleGuard],
+  },
+  {
+    path: 'perfil',
+    loadChildren: () =>
+      import('./perfil/perfil.module').then((res) => res.PerfilModule),
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'restaurante/mesas',
+    loadChildren: () =>
+      import('./restaurante-mesas/restaurante-mesas.module').then(
+        (res) => res.RestauranteMesasModule
+      ),
+    canActivate: [LoginGuard, RoleGuard],
+  },
+  {
+    path: 'restaurante/reservas',
+    loadChildren: () =>
+      import('./restaurante-reservas/restaurante-reservas.module').then(
+        (res) => res.RestauranteReservasModule
+      ),
+    canActivate: [LoginGuard, RoleGuard],
+  },
+  {
+    path: 'restaurante/ventas',
+    loadChildren: () =>
+      import('./restaurante-ventas/restaurante-ventas.module').then(
+        (res) => res.RestauranteVentasModule
+      ),
+    canActivate: [LoginGuard, RoleGuard],
   },
 ]
 
