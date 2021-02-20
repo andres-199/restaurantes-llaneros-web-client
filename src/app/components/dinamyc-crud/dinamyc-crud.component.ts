@@ -93,7 +93,6 @@ export class DinamycCrudComponent implements OnInit {
   getDataSource() {
     this.service.findAll(this.origin).subscribe((dataSource) => {
       this.onLoadDataSource.emit(dataSource)
-
       if (this.disabbleButtonRule) {
         this.setDisableButtonRule(dataSource)
       }
@@ -152,10 +151,11 @@ export class DinamycCrudComponent implements OnInit {
     })
   }
 
-  private update(data) {
+  public update(data) {
     const origin = this.originForm || this.origin
     this.service.update(origin, data).subscribe(
       (res) => {
+        this.getDataSource()
         this.onSuccess(false)
       },
       (err) => {
@@ -192,14 +192,14 @@ export class DinamycCrudComponent implements OnInit {
     )
   }
 
-  private onSuccess(is_create = true) {
+  onSuccess(is_create = true) {
     const message = `Registro ${
       is_create ? 'creado' : 'actualizado'
     } exitosamente!`
     this.showMsg(message)
   }
 
-  private showMsg(message: string) {
+  showMsg(message: string) {
     this._snackBar.open(message, 'Aceptar', {
       duration: 7000,
     })

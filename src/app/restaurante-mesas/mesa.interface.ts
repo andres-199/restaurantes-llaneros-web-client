@@ -4,4 +4,5 @@ export interface Mesa {
   restaurante_id?: number
   cupo?: number
   habilitada?: boolean
+  habilitada_text?: string
 }

@@ -6,6 +6,8 @@ import { DinamycCrudModule } from '../components/dinamyc-crud/dinamyc-crud.modul
 import { MatCardModule } from '@angular/material/card'
 import { MatDialogModule } from '@angular/material/dialog'
 import { FormModule } from './form/form.module'
+import { MesasService } from './mesas.service'
+import { ToggleModule } from './toggle/toggle.module'
 
 const routes: Routes = [
   {
@@ -23,6 +25,8 @@ const routes: Routes = [
     MatCardModule,
     MatDialogModule,
     FormModule,
+    ToggleModule,
   ],
+  providers: [MesasService],
 })
 export class RestauranteMesasModule {}

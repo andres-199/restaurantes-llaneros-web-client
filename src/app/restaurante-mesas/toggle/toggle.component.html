@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>NÚMERO DE MESAS</h1>
+<div mat-dialog-content>
+  <mat-slide-toggle [(ngModel)]="mesa.habilitada">{{
+    mesa.habilitada ? 'Deshabilitar' : 'Habilitar'
+  }}</mat-slide-toggle>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="mesa" cdkFocusInitial>Aceptar</button>
+</div>

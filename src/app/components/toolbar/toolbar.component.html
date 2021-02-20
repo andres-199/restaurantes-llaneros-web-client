@@ -5,14 +5,18 @@
         <span (click)="homeButton._elementRef.nativeElement.click()"
           >Restaurantes Llaneros</span
         >
-
-        <button mat-button [routerLink]="['perfil']" *ngIf="isLogedIn">
-          {{ user.usuario }}
-        </button>
       </div>
 
       <!------------------MENU------------------->
       <div class="col-md-auto">
+        <button
+          mat-button
+          [routerLink]="['perfil']"
+          *ngIf="isLogedIn"
+          matTooltip="Mi cuenta"
+        >
+          <mat-icon>person</mat-icon>
+        </button>
         <button #homeButton mat-button [routerLink]="['']">Iinicio</button>
 
         <!--Restaurante-->
@@ -47,15 +51,13 @@
 
       <div class="col-md-auto">
         <ng-container *ngIf="isLogedIn; else login">
-          <button mat-icon-button (click)="onLogout()">
-            Salir
+          <button matTooltip="Salir" mat-icon-button (click)="onLogout()">
             <mat-icon>logout</mat-icon>
           </button>
         </ng-container>
 
         <ng-template #login>
-          <button mat-icon-button (click)="onLogin()">
-            Ingresar
+          <button matTooltip="Entrar" mat-icon-button (click)="onLogin()">
             <mat-icon>login</mat-icon>
           </button>
         </ng-template>
