@@ -1,6 +1,8 @@
 <div class="container">
   <mat-card>
-    <mat-card-title> {{ restaurante }} </mat-card-title>
+    <img class="restaurante-image" mat-card-image [src]="restaurante.imagen" />
+    {{ restaurante.imagen }}
+    <mat-card-title> {{ restaurante.nombre }} </mat-card-title>
 
     <mat-card-content> </mat-card-content>
   </mat-card>

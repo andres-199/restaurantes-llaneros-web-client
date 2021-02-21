@@ -14,4 +14,9 @@ export class RestaurantesService {
     const url = environment.BACKEND_URL + 'restaurantes/agregar-personal'
     return this.http.post(url, tercero)
   }
+
+  getById(restauranteId: number) {
+    const url = environment.BACKEND_URL + `restaurantes/${restauranteId}`
+    return this.http.get(url)
+  }
 }

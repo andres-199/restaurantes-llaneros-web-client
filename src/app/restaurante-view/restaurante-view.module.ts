@@ -4,9 +4,7 @@ import { RestauranteViewComponent } from './restaurante-view.component'
 import { RouterModule, Routes } from '@angular/router'
 import { MatCardModule } from '@angular/material/card'
 
-const routes: Routes = [
-  { path: ':restaurante', component: RestauranteViewComponent },
-]
+const routes: Routes = [{ path: ':id', component: RestauranteViewComponent }]
 
 @NgModule({
   declarations: [RestauranteViewComponent],
