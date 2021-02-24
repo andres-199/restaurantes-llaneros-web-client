@@ -23,6 +23,7 @@ export class ImagesComponent implements OnInit {
   ngOnInit(): void {
     this.imagenes = this.data.imagenes
     this.title = this.data.title
+    this.max = this.data.max ? this.data.max : this.max
     this.validateImages()
   }
 

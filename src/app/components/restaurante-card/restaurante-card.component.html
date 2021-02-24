@@ -2,7 +2,7 @@
   <mat-card-header>
     <img
       mat-card-avatar
-      [src]="restaurante.imagen"
+      [src]="restaurante.imagen.path"
       *ngIf="restaurante.imagen"
     />
     <mat-card-title>{{ restaurante.nombre }}</mat-card-title>

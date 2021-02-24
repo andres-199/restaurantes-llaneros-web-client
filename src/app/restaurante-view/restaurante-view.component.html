@@ -1,6 +1,10 @@
 <div class="container">
   <mat-card>
-    <img class="restaurante-image" mat-card-image [src]="restaurante.imagen" />
+    <img
+      class="restaurante-image"
+      mat-card-image
+      [src]="restaurante.imagen.path"
+    />
     {{ restaurante.imagen }}
     <mat-card-title> {{ restaurante.nombre }} </mat-card-title>
 

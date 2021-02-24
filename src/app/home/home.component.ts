@@ -25,8 +25,12 @@ export class HomeComponent implements OnInit {
       .pipe(
         map((restaurantes) => {
           restaurantes = restaurantes.map((restaurante) => {
-            if (restaurante.imagen)
-              restaurante.imagen = `${environment.IMAGES_URL}${restaurante.imagen}/100x100`
+            const imagen = restaurante.imagen
+            if (imagen) {
+              restaurante.imagen.path =
+                environment.STORAGE_URL +
+                imagen.path.replace('original', 'pequeno')
+            }
             return restaurante
           })
           return restaurantes

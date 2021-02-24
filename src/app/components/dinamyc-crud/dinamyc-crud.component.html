@@ -36,7 +36,7 @@
           </ul>
           <ng-container *ngIf="col.type === 'image'">
             <img
-              style="height: 70px; padding: 7px"
+              class="image"
               [src]="image.path"
               [alt]="image.nombre"
               *ngFor="let image of data[col.field]"

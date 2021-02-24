@@ -1,1 +1,145 @@
-<p>perfil works!</p>
+<div class="container">
+  <mat-card>
+    <mat-card-title> MI CUENTA </mat-card-title>
+
+    <mat-card-content>
+      <mat-tab-group mat-align-tabs="start" *ngIf="iLoaded">
+        <mat-tab label="Información Personal">
+          <ng-container *ngTemplateOutlet="infoPersonal"></ng-container>
+        </mat-tab>
+        <mat-tab label="Restaurante" *ngIf="showRestauranteTab">
+          <ng-container *ngTemplateOutlet="restaurante"></ng-container>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<ng-template #infoPersonal>
+  <mat-card>
+    <div class="row">
+      <div class="col-8">
+        <mat-card-content>
+          <form #registerForm="ngForm" (ngSubmit)="onSubmitInfoPersonal()">
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                name="nombre"
+                type="text"
+                placeholder="Nombres"
+                [(ngModel)]="perfil.Tercero.nombre"
+              />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                name="apellido"
+                type="text"
+                placeholder="Apellidos"
+                [(ngModel)]="perfil.Tercero.apellido"
+              />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                name="identificacion"
+                type="text"
+                placeholder="Identificación"
+                [(ngModel)]="perfil.Tercero.identificacion"
+              />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                name="email"
+                type="email"
+                placeholder="Correo"
+                [(ngModel)]="perfil.Tercero.email"
+              />
+            </mat-form-field>
+            <mat-card-actions>
+              <button
+                class="full-width"
+                mat-raised-button
+                color="primary"
+                type="submit"
+              >
+                <mat-icon>save</mat-icon>
+                Guardar
+              </button>
+            </mat-card-actions>
+          </form>
+        </mat-card-content>
+      </div>
+      <div class="col-4">
+        <img class="image" src="assets/images/profile-no-img.png" />
+      </div>
+    </div>
+  </mat-card>
+</ng-template>
+
+<ng-template #restaurante>
+  <mat-card>
+    <div class="row">
+      <div class="col-8">
+        <mat-card-content>
+          <form #registerForm="ngForm" (ngSubmit)="onSubmitInfoRestaurante()">
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                name="nombre"
+                type="text"
+                placeholder="Nombre"
+                [(ngModel)]="perfil.Restaurante.nombre"
+              />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <mat-label>Descripción</mat-label>
+              <textarea
+                matInput
+                name="descripcion"
+                rows="6"
+                placeholder="Describa su restaurante. Esta decripción le ayudará a los usuarios conocerlo mejor."
+                [(ngModel)]="perfil.Restaurante.descripcion"
+              ></textarea>
+            </mat-form-field>
+
+            <mat-card-actions>
+              <button
+                class="full-width"
+                mat-raised-button
+                color="primary"
+                type="submit"
+              >
+                <mat-icon>save</mat-icon>
+                Guardar
+              </button>
+            </mat-card-actions>
+          </form>
+        </mat-card-content>
+      </div>
+      <div class="col-4">
+        <input
+          #imageR
+          type="file"
+          name="image"
+          accept="image/*"
+          hidden
+          (change)="onLoadRestauranteImage($event.target.files)"
+        />
+        <img
+          (click)="imageR.click()"
+          class="image image-restaurante"
+          [src]="perfil.Restaurante.imagen.path"
+          *ngIf="!loadingPhoto; else loading"
+        />
+
+        <ng-template #loading>
+          <div align="center">
+            <mat-spinner diameter="50"></mat-spinner>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </mat-card>
+</ng-template>

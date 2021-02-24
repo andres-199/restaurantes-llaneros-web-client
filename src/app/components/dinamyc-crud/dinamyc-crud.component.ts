@@ -48,7 +48,7 @@ export interface MenuOption {
 @Component({
   selector: 'app-dinamyc-crud',
   templateUrl: './dinamyc-crud.component.html',
-  styles: [],
+  styleUrls: ['./dinamyc-crud.style.css'],
 })
 export class DinamycCrudComponent implements OnInit {
   @Input()

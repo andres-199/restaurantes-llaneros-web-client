@@ -25,7 +25,12 @@ export class RestauranteViewComponent implements OnInit {
       .getById(this.restaurante.id)
       .subscribe({
         next: (restaurante: Restaurante) => {
-          restaurante.imagen = `${environment.IMAGES_URL}${restaurante.imagen}`
+          const imagen = restaurante.imagen
+          if (imagen) {
+            restaurante.imagen.path =
+              environment.STORAGE_URL +
+              imagen.path.replace('original', 'pequeno')
+          }
           this.restaurante = restaurante
         },
         error: (err) => {},
