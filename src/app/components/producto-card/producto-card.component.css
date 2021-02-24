@@ -10,3 +10,7 @@
 .mat-card:hover {
   background-color: #bcaaa493;
 }
+
+.actions {
+  text-align: right;
+}

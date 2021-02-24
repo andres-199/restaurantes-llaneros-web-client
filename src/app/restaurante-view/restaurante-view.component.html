@@ -1,13 +1,40 @@
 <div class="container">
-  <mat-card>
-    <img
-      class="restaurante-image"
-      mat-card-image
-      [src]="restaurante.imagen.path"
-    />
-    {{ restaurante.imagen }}
-    <mat-card-title> {{ restaurante.nombre }} </mat-card-title>
+  <mat-card *ngIf="restaurante">
+    <mat-card-header>
+      <button
+        class="button-reserva"
+        mat-button
+        color="primary"
+        aria-label="Reservar"
+        (click)="onClickReservar()"
+      >
+        <mat-icon>watch_later</mat-icon>
+        Reservar
+      </button>
+      <div
+        mat-card-avatar
+        class="avatar-restaurante"
+        style="background-image: url({{ restaurante.imagen.path }});"
+        *ngIf="restaurante.imagen"
+      ></div>
+      <mat-card-title>{{ restaurante.nombre }}</mat-card-title>
+      <mat-card-subtitle>
+        <p>{{ restaurante.Mesas?.length }} Mesas disponibles</p>
+        <p>
+          {{ restaurante.descripcion }}
+        </p>
+      </mat-card-subtitle>
+    </mat-card-header>
 
-    <mat-card-content> </mat-card-content>
+    <mat-card-content class="content">
+      <div class="row">
+        <div
+          class="col-6 card-container"
+          *ngFor="let producto of restaurante.Productos"
+        >
+          <app-producto-card [producto]="producto"></app-producto-card>
+        </div>
+      </div>
+    </mat-card-content>
   </mat-card>
 </div>

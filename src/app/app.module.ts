@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { MatPaginatorIntl } from '@angular/material/paginator'
 import { MatPaginatorIntlCro } from './components/dinamyc-crud/mat-paginator-intl.service'
 import { FooterModule } from './components/footer/footer.module'
+import { MatNativeDateModule } from '@angular/material/core'
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { FooterModule } from './components/footer/footer.module'
     ToolbarModule,
     HttpClientModule,
     FooterModule,
+    MatNativeDateModule,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro }],
   bootstrap: [AppComponent],

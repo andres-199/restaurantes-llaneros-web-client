@@ -3,7 +3,11 @@
     <mat-card-title> MI CUENTA </mat-card-title>
 
     <mat-card-content>
-      <mat-tab-group mat-align-tabs="start" *ngIf="iLoaded">
+      <mat-tab-group
+        mat-align-tabs="start"
+        animationDuration="0ms"
+        *ngIf="iLoaded"
+      >
         <mat-tab label="Información Personal">
           <ng-container *ngTemplateOutlet="infoPersonal"></ng-container>
         </mat-tab>
@@ -16,7 +20,7 @@
 </div>
 
 <ng-template #infoPersonal>
-  <mat-card>
+  <mat-card class="form">
     <div class="row">
       <div class="col-8">
         <mat-card-content>
@@ -79,7 +83,7 @@
 </ng-template>
 
 <ng-template #restaurante>
-  <mat-card>
+  <mat-card class="form">
     <div class="row">
       <div class="col-8">
         <mat-card-content>
@@ -130,7 +134,7 @@
         <img
           (click)="imageR.click()"
           class="image image-restaurante"
-          [src]="perfil.Restaurante.imagen.path"
+          [src]="imagen.path"
           *ngIf="!loadingPhoto; else loading"
         />
 

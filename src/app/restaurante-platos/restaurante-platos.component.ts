@@ -14,6 +14,9 @@ import { Usuario } from '../registro/usuario.interface'
 import { origin } from '../util/origin.enum'
 import { Producto } from './producto.interface'
 
+/**
+ * @todo categorias de producto
+ */
 @Component({
   selector: 'app-restaurante-platos',
   templateUrl: './restaurante-platos.component.html',

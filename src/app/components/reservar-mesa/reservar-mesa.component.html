@@ -1,0 +1,38 @@
+<h3 mat-dialog-title>Reserva en {{ restaurante.nombre }}</h3>
+
+<form #form="ngForm">
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      name="hora"
+      type="datetime-local"
+      placeholder="Seleccione la fecha y hora"
+      required
+      [(ngModel)]="reserva.fecha"
+      required
+    />
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      name="numero-mesas"
+      type="number"
+      placeholder="Número de Mesas"
+      required
+      [(ngModel)]="reserva.numero_mesas"
+      required
+    />
+  </mat-form-field>
+</form>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button
+    [disabled]="form.invalid || reserva.numero_mesas < 1"
+    mat-button
+    cdkFocusInitial
+    [mat-dialog-close]="reserva"
+  >
+    Reservar
+  </button>
+</mat-dialog-actions>

@@ -1,3 +1,19 @@
-.restaurante-image {
-  height: 330px !important;
+.avatar-restaurante {
+  background-size: cover;
+  height: 7em;
+  width: 7em;
+}
+
+.content {
+  padding-top: 2em;
+}
+
+.button-reserva {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.card-container {
+  padding-top: 0.7%;
 }

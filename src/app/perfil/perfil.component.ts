@@ -20,6 +20,7 @@ export class PerfilComponent implements OnInit {
   perfil: Perfil
   loadingPhoto = false
   user: Usuario
+  imagen: Imagen
   constructor(
     private loginService: LoginService,
     private perfilService: PerfilService,
@@ -53,14 +54,13 @@ export class PerfilComponent implements OnInit {
   private setImagen() {
     const imagen = this.perfil.Restaurante?.imagen
     if (imagen) {
-      if (!imagen.path.includes('http')) {
-        imagen.path =
+      this.imagen = { ...imagen }
+      if (!this.imagen.path.includes('http')) {
+        this.imagen.path =
           environment.STORAGE_URL + imagen.path.replace('original', 'pequeno')
       }
-
-      this.perfil.Restaurante.imagen = imagen
     } else {
-      this.perfil.Restaurante.imagen = {
+      this.imagen = {
         path: 'assets/images/profile-no-img.png',
       }
     }
