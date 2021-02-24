@@ -34,6 +34,14 @@
           <ul *ngIf="col.type === 'list'">
             <li *ngFor="let item of data[col.field]">{{ item }}</li>
           </ul>
+          <ng-container *ngIf="col.type === 'image'">
+            <img
+              style="height: 70px; padding: 7px"
+              [src]="image.path"
+              [alt]="image.nombre"
+              *ngFor="let image of data[col.field]"
+            />
+          </ng-container>
         </ng-template>
       </td>
     </ng-container>

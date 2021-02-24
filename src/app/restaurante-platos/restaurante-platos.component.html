@@ -9,6 +9,7 @@
         [formFields]="formFields"
         [origin]="origin"
         [menuOptions]="menuOptions"
+        (onLoadDataSource)="onLoadData($event)"
         *ngIf="iLoaded"
       >
       </app-dinamyc-crud>

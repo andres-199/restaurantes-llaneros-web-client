@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
+import { environment } from 'src/environments/environment'
 import {
   Col,
   DinamycCrudComponent,
@@ -19,12 +20,19 @@ import { Producto } from './producto.interface'
   styleUrls: ['./restaurante-platos.component.css'],
 })
 export class RestaurantePlatosComponent implements OnInit {
-  public columnsToDisplay = ['nombre', 'precio', 'descripcion', 'opciones']
+  public columnsToDisplay = [
+    'nombre',
+    'precio',
+    'descripcion',
+    'Imagenes',
+    'opciones',
+  ]
 
   public cols: Col[] = [
     { header: 'NOMBRE', field: 'nombre' },
     { header: 'PRECIO', field: 'precio' },
     { header: 'DESCRIPCION ', field: 'descripcion' },
+    { header: 'IMAGENES', field: 'Imagenes', type: 'image' },
   ]
 
   public formFields: FormField[] = [
@@ -54,6 +62,18 @@ export class RestaurantePlatosComponent implements OnInit {
 
     setTimeout(() => {
       this.iLoaded = true
+    })
+  }
+
+  onLoadData(productos: Producto[]) {
+    productos = productos.map((producto) => {
+      producto.Imagenes = producto.Imagenes.map((imagen) => {
+        if (!imagen.path.includes('http'))
+          imagen.path =
+            environment.STORAGE_URL + imagen.path.replace('original', 'pequeno')
+        return imagen
+      })
+      return producto
     })
   }
 

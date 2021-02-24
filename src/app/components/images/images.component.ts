@@ -13,6 +13,7 @@ export class ImagesComponent implements OnInit {
   imagenes: Imagen[]
   title: string
   iLoading = false
+  max = 4
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data,
@@ -29,6 +30,8 @@ export class ImagesComponent implements OnInit {
     this.iLoading = true
     const subscription = this.imageService.uploadImg(files[0]).subscribe({
       next: (images) => {
+        if (this.imagenes.length === this.max)
+          this.deleteImage(this.imagenes[0])
         this.saveImage(images[0])
       },
       error: (err) => {},
@@ -43,6 +46,7 @@ export class ImagesComponent implements OnInit {
       next: (response) => {
         const index = this.imagenes.indexOf(image)
         this.imagenes.splice(index, 1)
+        this.validateImages()
       },
       error: () => {},
       complete: () => {
@@ -75,7 +79,8 @@ export class ImagesComponent implements OnInit {
     if (!(this.imagenes.length > 0)) return this.setAddImage()
     this.imagenes = this.imagenes.map((imagen) => {
       if (!imagen.path.includes('http'))
-        imagen.path = environment.STORAGE_URL + imagen.path
+        imagen.path =
+          environment.STORAGE_URL + imagen.path.replace('original', 'pequeno')
       return imagen
     })
   }

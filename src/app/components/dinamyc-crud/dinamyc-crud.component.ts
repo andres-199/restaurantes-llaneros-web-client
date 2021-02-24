@@ -29,7 +29,7 @@ export interface Col {
   header: string
   field: string
   width?: string
-  type?: 'list' | 'array' | 'object'
+  type?: 'list' | 'array' | 'object' | 'image'
 }
 
 export interface FormField {
