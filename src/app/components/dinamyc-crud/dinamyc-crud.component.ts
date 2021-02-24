@@ -42,7 +42,7 @@ export interface FormField {
 export interface MenuOption {
   icon: string
   label: string
-  handler: (data: any) => any
+  handler: (data?: any) => any
 }
 
 @Component({

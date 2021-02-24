@@ -1,11 +1,17 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 import {
   Col,
+  DinamycCrudComponent,
   FormField,
+  MenuOption,
 } from '../components/dinamyc-crud/dinamyc-crud.component'
+import { ImagesComponent } from '../components/images/images.component'
+import { Imagen } from '../interfaces/imagen.interface'
 import { LoginService } from '../login/login.service'
 import { Usuario } from '../registro/usuario.interface'
 import { origin } from '../util/origin.enum'
+import { Producto } from './producto.interface'
 
 @Component({
   selector: 'app-restaurante-platos',
@@ -27,10 +33,20 @@ export class RestaurantePlatosComponent implements OnInit {
     { name: 'descripcion', label: 'Descripción', type: 'textArea' },
   ]
 
+  menuOptions: MenuOption[] = [
+    {
+      icon: 'linked_camera',
+      label: 'Imagenes',
+      handler: (producto: Producto) => this.onClickImages(producto),
+    },
+  ]
+
   public origin
   public usuario: Usuario
   public iLoaded = false
-  constructor(private loginService: LoginService) {}
+
+  @ViewChild(DinamycCrudComponent) dinamycCrud: DinamycCrudComponent
+  constructor(private loginService: LoginService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.usuario = this.loginService.user
@@ -38,6 +54,28 @@ export class RestaurantePlatosComponent implements OnInit {
 
     setTimeout(() => {
       this.iLoaded = true
+    })
+  }
+
+  private onClickImages(producto: Producto) {
+    const imagenes = producto.Imagenes
+    const title = producto.nombre
+    const foreignKey = { producto_id: producto.id }
+    const data = { imagenes, title, foreignKey }
+
+    const dialogRef = this.dialog.open(ImagesComponent, {
+      data,
+      minWidth: '500px',
+      maxHeight: '700px',
+    })
+
+    const subscription = dialogRef.afterClosed().subscribe({
+      next: (imagenes: Imagen[]) => {
+        this.dinamycCrud.getDataSource()
+      },
+      complete: () => {
+        subscription.unsubscribe()
+      },
     })
   }
 }
