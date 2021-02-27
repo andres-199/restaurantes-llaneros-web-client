@@ -3,8 +3,11 @@ import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute } from '@angular/router'
 import { environment } from 'src/environments/environment'
+import { AddProductoComponent } from '../components/add-producto/add-producto.component'
+import { ProductoViewComponent } from '../components/producto-view/producto-view.component'
 import { ReservarMesaComponent } from '../components/reservar-mesa/reservar-mesa.component'
 import { LoginService } from '../login/login.service'
+import { Producto } from '../restaurante-platos/producto.interface'
 import { Reserva } from '../restaurante-reservas/reserva.interface'
 import { Restaurante } from '../restaurantes/restaurante.interface'
 import { RestaurantesService } from '../restaurantes/restaurantes.service'
@@ -15,6 +18,8 @@ import { RestaurantesService } from '../restaurantes/restaurantes.service'
   styleUrls: ['./restaurante-view.component.css'],
 })
 export class RestauranteViewComponent implements OnInit {
+  restaurante: Restaurante
+  restauranteId: number
   constructor(
     private activatedRoute: ActivatedRoute,
     private restaurantesService: RestaurantesService,
@@ -22,8 +27,7 @@ export class RestauranteViewComponent implements OnInit {
     private loginService: LoginService,
     private _snackBar: MatSnackBar
   ) {}
-  restaurante: Restaurante
-  restauranteId: number
+
   ngOnInit(): void {
     this.restauranteId = this.activatedRoute.snapshot.params['id']
     this.getRestaurante()
@@ -70,7 +74,7 @@ export class RestauranteViewComponent implements OnInit {
 
     const subscription = dialogRef.afterClosed().subscribe({
       next: (reserva: Reserva) => {
-        this.createReserva(reserva)
+        if (reserva) this.createReserva(reserva)
       },
       complete: () => {
         subscription.unsubscribe()
@@ -102,6 +106,36 @@ export class RestauranteViewComponent implements OnInit {
   showMsg(message: string) {
     this._snackBar.open(message, 'Aceptar', {
       duration: 7000,
+    })
+  }
+
+  onClickView(producto: Producto) {
+    this.showProduct(producto)
+  }
+
+  private showProduct(producto: Producto) {
+    const data = { producto }
+    const dialogRef = this.dialog.open(ProductoViewComponent, {
+      width: '500px',
+      data,
+    })
+
+    dialogRef.afterClosed().subscribe({
+      next: (producto: Producto) => {
+        if (producto) this.onClickShoppingCart(producto)
+      },
+    })
+  }
+
+  onClickShoppingCart(producto: Producto) {
+    const data = { producto }
+    const dialogRef = this.dialog.open(AddProductoComponent, {
+      width: '500px',
+      data,
+    })
+
+    dialogRef.afterClosed().subscribe({
+      next: (producto: Producto) => {},
     })
   }
 }

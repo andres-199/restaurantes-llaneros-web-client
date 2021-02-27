@@ -9,5 +9,5 @@ export interface Producto {
   restaurante_id?: number
   categoria_id?: number
   Imagenes?: Imagen[]
-  Categoria: Categoria
+  Categoria?: Categoria
 }

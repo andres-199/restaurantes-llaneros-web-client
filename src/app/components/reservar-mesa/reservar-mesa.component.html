@@ -4,12 +4,12 @@
   <mat-form-field class="full-width">
     <input
       matInput
-      name="hora"
+      name="fecha"
       type="datetime-local"
       placeholder="Seleccione la fecha y hora"
+      [min]="now"
       required
       [(ngModel)]="reserva.fecha"
-      required
     />
   </mat-form-field>
   <mat-form-field class="full-width">
@@ -20,7 +20,6 @@
       placeholder="Número de Mesas"
       required
       [(ngModel)]="reserva.numero_mesas"
-      required
     />
   </mat-form-field>
 </form>

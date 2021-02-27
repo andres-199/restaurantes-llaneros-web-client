@@ -9,6 +9,8 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatDialogModule } from '@angular/material/dialog'
 import { ReservarMesaModule } from '../components/reservar-mesa/reservar-mesa.module'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { ProductoViewModule } from '../components/producto-view/producto-view.module'
+import { AddProductoModule } from '../components/add-producto/add-producto.module'
 
 const routes: Routes = [{ path: ':id', component: RestauranteViewComponent }]
 
@@ -24,6 +26,8 @@ const routes: Routes = [{ path: ':id', component: RestauranteViewComponent }]
     MatDialogModule,
     ReservarMesaModule,
     MatSnackBarModule,
+    ProductoViewModule,
+    AddProductoModule,
   ],
 })
 export class RestauranteViewModule {}

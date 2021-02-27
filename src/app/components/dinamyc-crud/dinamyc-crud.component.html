@@ -42,6 +42,9 @@
               *ngFor="let image of data[col.field]"
             />
           </ng-container>
+          <p *ngIf="col.type === 'date'">
+            {{ data[col.field] | date: 'EEEE, MMMM d, y, h:mm a' }}
+          </p>
         </ng-template>
       </td>
     </ng-container>

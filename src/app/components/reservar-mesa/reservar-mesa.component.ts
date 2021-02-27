@@ -11,10 +11,20 @@ import { Restaurante } from 'src/app/restaurantes/restaurante.interface'
 export class ReservarMesaComponent implements OnInit {
   reserva: Reserva = {}
   restaurante: Restaurante
+  now
 
   constructor(@Inject(MAT_DIALOG_DATA) public data) {}
 
   ngOnInit(): void {
     this.restaurante = this.data.restaurante
+
+    const year = new Date().getFullYear()
+    const month: any = new Date().getMonth() + 1
+    const _month = month < 10 ? `0${month}` : month
+    const day = new Date().getDate()
+    const hour = new Date().getHours()
+    const minute = new Date().getMinutes()
+
+    this.now = `${year}-${_month}-${day}T${hour}:${minute}`
   }
 }

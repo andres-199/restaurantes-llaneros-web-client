@@ -9,14 +9,6 @@
 
       <!------------------MENU------------------->
       <div class="col-md-auto">
-        <button
-          mat-button
-          [routerLink]="['perfil']"
-          *ngIf="isLogedIn"
-          matTooltip="Mi cuenta"
-        >
-          <mat-icon>person</mat-icon>
-        </button>
         <button #homeButton mat-button [routerLink]="['']">Iinicio</button>
 
         <!--Restaurante-->
@@ -51,6 +43,14 @@
 
       <div class="col-md-auto">
         <ng-container *ngIf="isLogedIn; else login">
+          <button mat-button matTooltip="Mi carrito de compras">
+            <mat-icon>shopping_cart</mat-icon>
+          </button>
+
+          <button mat-button [routerLink]="['perfil']" matTooltip="Mi cuenta">
+            <mat-icon>person</mat-icon>
+          </button>
+
           <button matTooltip="Salir" mat-icon-button (click)="onLogout()">
             <mat-icon>logout</mat-icon>
           </button>

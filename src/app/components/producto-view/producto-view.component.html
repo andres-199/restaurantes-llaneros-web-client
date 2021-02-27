@@ -1,0 +1,25 @@
+<h3 mat-dialog-title>{{ producto.nombre }}</h3>
+<p>
+  <mat-chip-list>
+    <mat-chip color="primary" selected>{{
+      producto.Categoria.nombre
+    }}</mat-chip>
+  </mat-chip-list>
+</p>
+<mat-dialog-content>
+  <carousel [images]="producto.Imagenes"> </carousel>
+  <p>{{ producto.descripcion }}</p>
+  <p>{{ producto.precio | currency: 'COP' }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button
+    mat-button
+    color="primary"
+    [mat-dialog-close]="producto"
+    cdkFocusInitial
+  >
+    Agregar
+    <mat-icon>shopping_cart</mat-icon>
+  </button>
+</mat-dialog-actions>

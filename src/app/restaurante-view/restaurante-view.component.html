@@ -32,7 +32,11 @@
           class="col-6 card-container"
           *ngFor="let producto of restaurante.Productos"
         >
-          <app-producto-card [producto]="producto"></app-producto-card>
+          <app-producto-card
+            (onClickView)="onClickView(producto)"
+            (onClickShoppingCart)="onClickShoppingCart(producto)"
+            [producto]="producto"
+          ></app-producto-card>
         </div>
       </div>
     </mat-card-content>
