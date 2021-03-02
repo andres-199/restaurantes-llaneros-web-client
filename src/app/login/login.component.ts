@@ -6,6 +6,7 @@ import { Router } from '@angular/router'
 import { Usuario } from '../registro/usuario.interface'
 import { SnackBarActions } from '../registro/registro.component'
 import { HttpErrorResponse } from '@angular/common/http'
+import { CarritoService } from '../carrito/carrito.service'
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private carritoService: CarritoService
   ) {}
 
   ngOnInit() {}
@@ -37,6 +39,7 @@ export class LoginComponent implements OnInit {
       next: (user) => {
         this.loginService.user = user
         this.router.navigate([''])
+        this.carritoService.updateTotalOrdenes()
       },
       error: (e: HttpErrorResponse) => {
         this.snackBar.open(e.error.error, SnackBarActions.Aceptar)

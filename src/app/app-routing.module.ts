@@ -91,6 +91,12 @@ const routes: Routes = [
       ),
     canActivate: [LoginGuard, RoleGuard],
   },
+  {
+    path: 'carrito',
+    loadChildren: () =>
+      import('./carrito/carrito.module').then((res) => res.CarritoModule),
+    canActivate: [LoginGuard],
+  },
 ]
 
 @NgModule({

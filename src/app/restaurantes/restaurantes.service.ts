@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { environment } from 'src/environments/environment'
+import { Carrito } from '../interfaces/carrito.interface'
 import { Tercero } from '../registro/tercero.interface'
 import { Reserva } from '../restaurante-reservas/reserva.interface'
 import { Restaurante } from './restaurante.interface'
@@ -24,5 +25,10 @@ export class RestaurantesService {
   createReserva(reserva: Reserva) {
     const url = environment.BACKEND_URL + 'reservas'
     return this.http.post<Reserva>(url, reserva)
+  }
+
+  addShoppingCart(carrito: Carrito) {
+    const url = environment.BACKEND_URL + 'carrito'
+    return this.http.post<Carrito>(url, carrito)
   }
 }

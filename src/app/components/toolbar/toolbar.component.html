@@ -43,7 +43,15 @@
 
       <div class="col-md-auto">
         <ng-container *ngIf="isLogedIn; else login">
-          <button mat-button matTooltip="Mi carrito de compras">
+          <button
+            [routerLink]="['carrito']"
+            mat-button
+            matTooltip="Mi carrito de compras"
+            matBadgeColor="accent"
+            matBadgePosition="before"
+            [matBadge]="totalOrdenes"
+            [matBadgeHidden]="!totalOrdenes"
+          >
             <mat-icon>shopping_cart</mat-icon>
           </button>
 

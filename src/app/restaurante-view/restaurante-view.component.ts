@@ -3,9 +3,11 @@ import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute } from '@angular/router'
 import { environment } from 'src/environments/environment'
+import { CarritoService } from '../carrito/carrito.service'
 import { AddProductoComponent } from '../components/add-producto/add-producto.component'
 import { ProductoViewComponent } from '../components/producto-view/producto-view.component'
 import { ReservarMesaComponent } from '../components/reservar-mesa/reservar-mesa.component'
+import { Carrito } from '../interfaces/carrito.interface'
 import { LoginService } from '../login/login.service'
 import { Producto } from '../restaurante-platos/producto.interface'
 import { Reserva } from '../restaurante-reservas/reserva.interface'
@@ -25,7 +27,8 @@ export class RestauranteViewComponent implements OnInit {
     private restaurantesService: RestaurantesService,
     private dialog: MatDialog,
     private loginService: LoginService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private carritoService: CarritoService
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +41,7 @@ export class RestauranteViewComponent implements OnInit {
       .getById(this.restauranteId)
       .subscribe({
         next: (restaurante: Restaurante) => {
-          this.setupImges(restaurante)
+          this.setupImages(restaurante)
           this.restaurante = restaurante
         },
         error: (err) => {},
@@ -48,7 +51,7 @@ export class RestauranteViewComponent implements OnInit {
       })
   }
 
-  private setupImges(restaurante: Restaurante) {
+  private setupImages(restaurante: Restaurante) {
     const imagen = restaurante.imagen
     if (imagen) {
       restaurante.imagen.path =
@@ -103,9 +106,11 @@ export class RestauranteViewComponent implements OnInit {
       })
   }
 
-  showMsg(message: string) {
+  showMsg(message: string, verticalPosition?: 'bottom' | 'top') {
+    verticalPosition = verticalPosition || 'bottom'
     this._snackBar.open(message, 'Aceptar', {
       duration: 7000,
+      verticalPosition,
     })
   }
 
@@ -128,6 +133,14 @@ export class RestauranteViewComponent implements OnInit {
   }
 
   onClickShoppingCart(producto: Producto) {
+    const isLogedIn = this.loginService.isLogedIn
+    if (!isLogedIn) {
+      const msg =
+        'Ingresa con tu cuenta o registrate para agregar productos 🥓🍖🥩🍗🍔🥐🥞🍠🍤🍪🍩🍮 al carrito'
+      this.showMsg(msg, 'top')
+      return
+    }
+
     const data = { producto }
     const dialogRef = this.dialog.open(AddProductoComponent, {
       width: '500px',
@@ -135,7 +148,30 @@ export class RestauranteViewComponent implements OnInit {
     })
 
     dialogRef.afterClosed().subscribe({
-      next: (producto: Producto) => {},
+      next: (carrito: Carrito) => {
+        if (carrito) this.addShoppingCart(carrito)
+      },
+    })
+  }
+
+  private addShoppingCart({ Producto, cantidad }: Carrito) {
+    const user = this.loginService.user
+    const carrito: Carrito = {
+      fecha: new Date(),
+      producto_id: Producto.id,
+      tercero_id: user.tercero_id,
+      cantidad,
+    }
+
+    this.restaurantesService.addShoppingCart(carrito).subscribe({
+      next: (carrito) => {
+        this.carritoService.updateTotalOrdenes()
+        const msg = `Se agragarón ${cantidad} ${Producto.nombre} al carrito`
+        this.showMsg(msg, 'top')
+      },
+      error: (err) => {
+        this.showMsg('No es posible agregar al carrito.')
+      },
     })
   }
 }

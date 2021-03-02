@@ -1,5 +1,6 @@
 import { Categoria } from '../categorias/categoria.interface'
 import { Imagen } from '../interfaces/imagen.interface'
+import { Restaurante } from '../restaurantes/restaurante.interface'
 
 export interface Producto {
   id?: number
@@ -10,4 +11,5 @@ export interface Producto {
   categoria_id?: number
   Imagenes?: Imagen[]
   Categoria?: Categoria
+  Restaurant?: Restaurante
 }

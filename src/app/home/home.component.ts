@@ -4,6 +4,7 @@ import { Restaurante } from '../restaurantes/restaurante.interface'
 import { origin } from '../util/origin.enum'
 import { map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ import { environment } from 'src/environments/environment'
 export class HomeComponent implements OnInit {
   restaurantes: Restaurante[]
 
-  constructor(private crudService: CrudService) {}
+  constructor(private crudService: CrudService, private router: Router) {}
 
   ngOnInit() {
     this.getRestaurantes()
@@ -44,5 +45,9 @@ export class HomeComponent implements OnInit {
           subscription.unsubscribe()
         },
       })
+  }
+
+  onClickRestaurante(restaurante: Restaurante) {
+    this.router.navigate(['restaurante', 'view', restaurante.id])
   }
 }

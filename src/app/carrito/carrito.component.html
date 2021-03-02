@@ -1,0 +1,29 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title> Mi carrito de compras </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-selection-list #shoes>
+        <mat-list-option *ngFor="let orden of ordenes$ | async">
+          <img
+            class="avatar"
+            matListAvatar
+            [src]="orden.Producto?.Imagenes[0]?.path"
+            [alt]="orden.Producto?.nombre"
+          />
+          <h3 matLine>
+            {{ orden.Producto.nombre }}
+          </h3>
+          <p matLine>
+            {{ orden.cantidad }}
+            {{ orden.cantidad > 1 ? 'unidades' : 'unidad' }}
+          </p>
+          <p matLine>
+            {{ orden.Producto.precio * orden.cantidad | currency: 'COP' }}
+          </p>
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-card-content>
+  </mat-card>
+</div>

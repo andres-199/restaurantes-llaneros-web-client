@@ -9,8 +9,8 @@
           *ngFor="let restaurante of restaurantes"
         >
           <app-restaurante-card
+            (click)="onClickRestaurante(restaurante)"
             [restaurante]="restaurante"
-            [routerLink]="['restaurante', 'view', restaurante.id]"
           ></app-restaurante-card>
         </div>
       </div>
