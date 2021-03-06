@@ -17,9 +17,19 @@
         style="background-image: url({{ restaurante.imagen.path }});"
         *ngIf="restaurante.imagen"
       ></div>
-      <mat-card-title>{{ restaurante.nombre }}</mat-card-title>
+
+      <mat-card-title>
+        {{ restaurante.nombre }}
+      </mat-card-title>
       <mat-card-subtitle>
-        <p>{{ restaurante.Mesas?.length }} Mesas disponibles</p>
+        <mat-icon> location_on</mat-icon>
+        {{ restaurante.direccion }}
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+        <p>
+          <mat-icon> local_dining</mat-icon>
+          {{ restaurante.Mesas?.length }} Mesas disponibles
+        </p>
         <p>
           {{ restaurante.descripcion }}
         </p>

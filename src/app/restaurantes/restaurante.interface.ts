@@ -9,4 +9,5 @@ export interface Restaurante {
   imagen?: Imagen
   Productos?: Producto[]
   Mesas?: Mesa[]
+  direccion?: string
 }
