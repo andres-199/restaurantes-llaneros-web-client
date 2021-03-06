@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
+import { map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import {
   Col,
   DinamycCrudComponent,
+  DropdownOption,
   FormField,
   MenuOption,
 } from '../components/dinamyc-crud/dinamyc-crud.component'
@@ -11,6 +13,7 @@ import { ImagesComponent } from '../components/images/images.component'
 import { Imagen } from '../interfaces/imagen.interface'
 import { LoginService } from '../login/login.service'
 import { Usuario } from '../registro/usuario.interface'
+import { RestaurantesService } from '../restaurantes/restaurantes.service'
 import { origin } from '../util/origin.enum'
 import { Producto } from './producto.interface'
 
@@ -57,15 +60,37 @@ export class RestaurantePlatosComponent implements OnInit {
   public iLoaded = false
 
   @ViewChild(DinamycCrudComponent) dinamycCrud: DinamycCrudComponent
-  constructor(private loginService: LoginService, private dialog: MatDialog) {}
+  constructor(
+    private loginService: LoginService,
+    private dialog: MatDialog,
+    private restauranteService: RestaurantesService
+  ) {}
 
   ngOnInit(): void {
     this.usuario = this.loginService.user
     this.origin = `${origin.RESTAURANTES}/${this.usuario.Tercero.restaurante_id}/productos`
 
-    setTimeout(() => {
-      this.iLoaded = true
-    })
+    this.restauranteService
+      .getCategorias()
+      .pipe(
+        map((categorias): DropdownOption[] =>
+          categorias.map((categoria) => {
+            return { label: categoria.nombre, value: categoria.id }
+          })
+        )
+      )
+      .subscribe((categorias) => {
+        const field: FormField = {
+          name: 'categoria_id',
+          label: 'Categoría',
+          type: 'dropdown',
+          options: categorias,
+        }
+        this.formFields.unshift(field)
+        setTimeout(() => {
+          this.iLoaded = true
+        })
+      })
   }
 
   onLoadData(productos: Producto[]) {

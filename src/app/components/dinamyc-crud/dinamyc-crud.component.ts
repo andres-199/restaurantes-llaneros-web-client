@@ -36,7 +36,12 @@ export interface FormField {
   name: string
   label: string
   type?: 'text' | 'textArea' | 'dropdown' | 'date' | 'file' | 'number'
-  options?: any
+  options?: DropdownOption[]
+}
+
+export interface DropdownOption {
+  label: string
+  value: any
 }
 
 export interface MenuOption {
