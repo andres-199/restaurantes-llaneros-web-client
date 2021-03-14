@@ -1,16 +1,20 @@
-<mat-card (click)="onClickView.emit(producto)">
+<mat-card class="card-container" (click)="onClickView.emit(producto)">
   <mat-card-header>
     <img
       mat-card-avatar
       [src]="producto.Imagenes[0]?.path"
       *ngIf="producto.Imagenes"
     />
-    <mat-card-title>{{ producto.nombre }}</mat-card-title>
-    <mat-card-subtitle>
+
+    <mat-card-title style="display: flex; flex-direction: row">
+      <div class="name">{{ producto.nombre }}</div>
+      <div class="price-separator"></div>
+      <div class="price">{{ producto.precio | currency: 'COP' }}</div>
+    </mat-card-title>
+    <mat-card-subtitle class="description">
       <p>
         {{ producto.descripcion }}
       </p>
-      <p>{{ producto.precio | currency: 'COP' }}</p>
     </mat-card-subtitle>
   </mat-card-header>
 

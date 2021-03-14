@@ -1,3 +1,4 @@
+import { Categoria } from '../categorias/categoria.interface'
 import { Imagen } from '../interfaces/imagen.interface'
 import { Mesa } from '../restaurante-mesas/mesa.interface'
 import { Producto } from '../restaurante-platos/producto.interface'
@@ -10,4 +11,5 @@ export interface Restaurante {
   Productos?: Producto[]
   Mesas?: Mesa[]
   direccion?: string
+  Categorias: Categoria[]
 }

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { ActivatedRoute } from '@angular/router'
+import { map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import { CarritoService } from '../carrito/carrito.service'
+import { Categoria } from '../categorias/categoria.interface'
 import { AddProductoComponent } from '../components/add-producto/add-producto.component'
 import { ProductoViewComponent } from '../components/producto-view/producto-view.component'
 import { ReservarMesaComponent } from '../components/reservar-mesa/reservar-mesa.component'
@@ -22,6 +24,7 @@ import { RestaurantesService } from '../restaurantes/restaurantes.service'
 export class RestauranteViewComponent implements OnInit {
   restaurante: Restaurante
   restauranteId: number
+  avatarStyle: string
   constructor(
     private activatedRoute: ActivatedRoute,
     private restaurantesService: RestaurantesService,
@@ -37,17 +40,36 @@ export class RestauranteViewComponent implements OnInit {
   }
 
   private getRestaurante() {
-    const susbcription = this.restaurantesService
+    this.restaurantesService
       .getById(this.restauranteId)
+      .pipe(
+        map((restaurante) => {
+          const categorias: Categoria[] = []
+          for (const producto of restaurante.Productos) {
+            const index = categorias.findIndex(
+              (categoria) => categoria.id === producto.Categoria.id
+            )
+            if (index >= 0) {
+              categorias[index].Productos.push(producto)
+            } else {
+              const categoria = producto.Categoria
+              categoria.Productos = [producto]
+              categorias.push(categoria)
+            }
+          }
+          restaurante.Categorias = categorias
+          return restaurante
+        })
+      )
       .subscribe({
         next: (restaurante: Restaurante) => {
+          console.log(restaurante)
+
           this.setupImages(restaurante)
           this.restaurante = restaurante
+          this.avatarStyle = `background-image: url(${restaurante.imagen.path})`
         },
         error: (err) => {},
-        complete: () => {
-          susbcription.unsubscribe()
-        },
       })
   }
 

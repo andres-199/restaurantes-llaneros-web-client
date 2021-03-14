@@ -11,6 +11,7 @@ import { ReservarMesaModule } from '../components/reservar-mesa/reservar-mesa.mo
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { ProductoViewModule } from '../components/producto-view/producto-view.module'
 import { AddProductoModule } from '../components/add-producto/add-producto.module'
+import { MatDividerModule } from '@angular/material/divider'
 
 const routes: Routes = [{ path: ':id', component: RestauranteViewComponent }]
 
@@ -28,6 +29,7 @@ const routes: Routes = [{ path: ':id', component: RestauranteViewComponent }]
     MatSnackBarModule,
     ProductoViewModule,
     AddProductoModule,
+    MatDividerModule,
   ],
 })
 export class RestauranteViewModule {}

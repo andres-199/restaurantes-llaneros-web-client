@@ -20,7 +20,7 @@ export class RestaurantesService {
 
   getById(restauranteId: number) {
     const url = environment.BACKEND_URL + `restaurantes/${restauranteId}`
-    return this.http.get(url)
+    return this.http.get<Restaurante>(url)
   }
 
   createReserva(reserva: Reserva) {

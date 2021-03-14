@@ -14,7 +14,7 @@
       <div
         mat-card-avatar
         class="avatar-restaurante"
-        style="background-image: url({{ restaurante.imagen.path }});"
+        [style]="avatarStyle"
         *ngIf="restaurante.imagen"
       ></div>
 
@@ -37,18 +37,30 @@
     </mat-card-header>
 
     <mat-card-content class="content">
-      <div class="row">
-        <div
-          class="col-6 card-container"
-          *ngFor="let producto of restaurante.Productos"
-        >
-          <app-producto-card
-            (onClickView)="onClickView(producto)"
-            (onClickShoppingCart)="onClickShoppingCart(producto)"
-            [producto]="producto"
-          ></app-producto-card>
+      <ng-container *ngFor="let categoria of restaurante.Categorias">
+        <div class="row col divider-container-top">
+          <mat-divider class="divider"></mat-divider>
         </div>
-      </div>
+        <div class="row col">
+          <h2>{{ categoria.nombre }}</h2>
+        </div>
+        <div class="row col divider-container-bottom">
+          <mat-divider class="divider"></mat-divider>
+        </div>
+
+        <div class="row">
+          <div
+            class="col-12 card-container"
+            *ngFor="let producto of categoria.Productos"
+          >
+            <app-producto-card
+              (onClickView)="onClickView(producto)"
+              (onClickShoppingCart)="onClickShoppingCart(producto)"
+              [producto]="producto"
+            ></app-producto-card>
+          </div>
+        </div>
+      </ng-container>
     </mat-card-content>
   </mat-card>
 </div>

@@ -14,3 +14,30 @@
 .actions {
   text-align: right;
 }
+
+::ng-deep .mat-card-header-text {
+  width: 100%;
+}
+
+.price {
+  float: right;
+  color: #795548;
+}
+
+.name {
+  color: #795548;
+}
+
+.price-separator {
+  border-bottom: 0.1em dotted #79554873;
+  float: right;
+  flex-grow: 5;
+  margin: 0 0.2em;
+}
+.card-container {
+  box-shadow: none;
+}
+
+.description {
+  margin-top: 1.2em !important;
+}
