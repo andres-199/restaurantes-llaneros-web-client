@@ -12,6 +12,11 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { ImageService } from '../components/images/image.service'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatDividerModule } from '@angular/material/divider'
+import { MatDialogModule } from '@angular/material/dialog'
+import { AddDireccionModule } from '../components/add-direccion/add-direccion.module'
+import { MatListModule } from '@angular/material/list'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 const routes: Routes = [{ path: '', component: PerfilComponent }]
 
@@ -28,6 +33,10 @@ const routes: Routes = [{ path: '', component: PerfilComponent }]
     MatIconModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatDialogModule,
+    AddDireccionModule,
+    MatListModule,
+    MatTooltipModule,
   ],
   providers: [PerfilService, ImageService],
 })

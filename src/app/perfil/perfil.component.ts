@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { environment } from 'src/environments/environment'
+import { AddDireccionComponent } from '../components/add-direccion/add-direccion.component'
 import { ImageService } from '../components/images/image.service'
+import { Direccion } from '../interfaces/direccion.interface'
 import { Imagen } from '../interfaces/imagen.interface'
 import { Roles } from '../interfaces/roles.enum'
 import { LoginService } from '../login/login.service'
@@ -25,7 +28,8 @@ export class PerfilComponent implements OnInit {
     private loginService: LoginService,
     private perfilService: PerfilService,
     private imageService: ImageService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -123,6 +127,63 @@ export class PerfilComponent implements OnInit {
   private showMsg(message: string) {
     this._snackBar.open(message, 'Aceptar', {
       duration: 7000,
+    })
+  }
+
+  onClickAddDirection() {
+    const dialogRef = this.dialog.open(AddDireccionComponent, {
+      width: '450px',
+    })
+
+    dialogRef.afterClosed().subscribe({
+      next: (direccion: Direccion) => {
+        if (direccion) this.createDireccion(direccion)
+      },
+    })
+  }
+
+  private createDireccion(direccion: Direccion) {
+    direccion.tercero_id = this.perfil.Tercero.id
+    this.perfilService.createDireccion(direccion).subscribe({
+      next: (_direccion) => {
+        this.getPerfil(this.user.tercero_id)
+        const msg = `Se registró la dirección ${_direccion.direccion}`
+        this.showMsg(msg)
+      },
+    })
+  }
+
+  onClickEditDireccion(direccion: Direccion) {
+    const data = { direccion }
+    const dialogRef = this.dialog.open(AddDireccionComponent, {
+      width: '450px',
+      data,
+    })
+
+    dialogRef.afterClosed().subscribe({
+      next: (direccion: Direccion) => {
+        if (direccion) this.updateDireccion(direccion)
+      },
+    })
+  }
+
+  private updateDireccion(direccion: Direccion) {
+    this.perfilService.updateDireccion(direccion).subscribe({
+      next: (_direccion) => {
+        this.getPerfil(this.user.tercero_id)
+        const msg = `Se actualizó la dirección `
+        this.showMsg(msg)
+      },
+    })
+  }
+
+  onClickDeleteDireccion(direccion: Direccion) {
+    this.perfilService.deleteDireccion(direccion.id).subscribe({
+      next: () => {
+        this.getPerfil(this.user.tercero_id)
+        const msg = `Se Eliminó la dirección `
+        this.showMsg(msg)
+      },
     })
   }
 }

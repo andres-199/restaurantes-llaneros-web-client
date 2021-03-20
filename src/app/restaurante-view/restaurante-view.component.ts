@@ -63,8 +63,6 @@ export class RestauranteViewComponent implements OnInit {
       )
       .subscribe({
         next: (restaurante: Restaurante) => {
-          console.log(restaurante)
-
           this.setupImages(restaurante)
           this.restaurante = restaurante
           this.avatarStyle = `background-image: url(${restaurante.imagen.path})`
@@ -97,12 +95,9 @@ export class RestauranteViewComponent implements OnInit {
       data,
     })
 
-    const subscription = dialogRef.afterClosed().subscribe({
+    dialogRef.afterClosed().subscribe({
       next: (reserva: Reserva) => {
         if (reserva) this.createReserva(reserva)
-      },
-      complete: () => {
-        subscription.unsubscribe()
       },
     })
   }

@@ -61,6 +61,77 @@
                 [(ngModel)]="perfil.Tercero.email"
               />
             </mat-form-field>
+            <hr class="divider" />
+            <div>
+              <h3 class="direction-title">
+                Direcciones
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="add-direction"
+                  (click)="onClickAddDirection(); $event.preventDefault()"
+                >
+                  <mat-icon>add</mat-icon>
+                  Agregar
+                </button>
+              </h3>
+            </div>
+            <mat-list class="direction-list">
+              <ng-container
+                *ngIf="
+                  perfil.Tercero?.Direcciones?.length > 0;
+                  else noDirections
+                "
+              >
+                <mat-list-item
+                  class="container row"
+                  *ngFor="let direccion of perfil.Tercero.Direcciones"
+                >
+                  <div class="col">
+                    <mat-icon>home</mat-icon>
+                    {{ direccion.nombre }}
+                  </div>
+                  <div class="col" align="center">
+                    <mat-icon> location_on</mat-icon> {{ direccion.direccion }}
+                  </div>
+                  <div class="col" align="center">
+                    <mat-icon>phone</mat-icon> {{ direccion.telefono }}
+                  </div>
+                  <div class="col-1" align="end">
+                    <button
+                      mat-icon-button
+                      color="primary"
+                      matTooltip="Editar"
+                      (click)="
+                        onClickEditDireccion(direccion); $event.preventDefault()
+                      "
+                    >
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </div>
+                  <div class="col-1" align="end">
+                    <button
+                      mat-icon-button
+                      color="primary"
+                      matTooltip="Eliminar"
+                      (click)="
+                        onClickDeleteDireccion(direccion);
+                        $event.preventDefault()
+                      "
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </mat-list-item>
+              </ng-container>
+              <ng-template #noDirections>
+                <mat-list-item>
+                  <mat-icon> not_listed_location</mat-icon>
+                  No tienes direcciones registradas, agrega una dirección.
+                </mat-list-item>
+              </ng-template>
+            </mat-list>
+            <hr class="divider" />
             <mat-card-actions>
               <button
                 class="full-width"
