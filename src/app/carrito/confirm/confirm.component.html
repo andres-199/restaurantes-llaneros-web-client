@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Eliminar Productos del carrito</h1>
+<div mat-dialog-content>
+  Desea eliminar {{ data.ordenes }} producto{{ data.ordenes > 1 ? 's' : '' }} ?
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Aceptar</button>
+</div>

@@ -3,3 +3,50 @@
   height: 5em !important;
   width: 5em !important;
 }
+
+.card-container {
+  padding-top: 0.7%;
+}
+
+.divider {
+  border: 1px solid #79554899;
+}
+
+.divider-container-top {
+  padding-top: 3em;
+  left: 1em;
+}
+
+.divider-container-bottom {
+  left: 1em;
+  padding-bottom: 1em;
+}
+
+h2 {
+  color: #795548;
+}
+h3 {
+  color: #795548;
+}
+
+.toggle-checkbox {
+  position: absolute;
+  right: 0;
+  bottom: 1.5em;
+}
+
+.delete-button {
+  position: absolute;
+  right: 1.5em;
+  top: 3em;
+}
+
+.order-button {
+  min-width: 10em;
+}
+.order-button-text {
+  float: left;
+}
+.order-button-value {
+  float: right;
+}

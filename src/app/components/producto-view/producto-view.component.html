@@ -9,7 +9,7 @@
 <mat-dialog-content>
   <carousel [images]="producto.Imagenes"> </carousel>
   <p>{{ producto.descripcion }}</p>
-  <p>{{ producto.precio | currency: 'COP' }}</p>
+  <p>{{ producto.precio | currency: 'COP':'symbol':'1.0' }}</p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancelar</button>

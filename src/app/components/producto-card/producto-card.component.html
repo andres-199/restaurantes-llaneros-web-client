@@ -9,7 +9,9 @@
     <mat-card-title style="display: flex; flex-direction: row">
       <div class="name">{{ producto.nombre }}</div>
       <div class="price-separator"></div>
-      <div class="price">{{ producto.precio | currency: 'COP' }}</div>
+      <div class="price">
+        {{ producto.precio | currency: 'COP':'symbol':'1.0' }}
+      </div>
     </mat-card-title>
     <mat-card-subtitle class="description">
       <p>

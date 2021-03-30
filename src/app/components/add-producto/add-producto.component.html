@@ -19,7 +19,11 @@
     </mat-form-field>
 
     <button color="primary" mat-raised-button [mat-dialog-close]="carrito">
-      Agregar {{ carrito.Producto.precio * carrito.cantidad | currency: 'COP' }}
+      Agregar
+      {{
+        carrito.Producto.precio * carrito.cantidad
+          | currency: 'COP':'symbol':'1.0'
+      }}
     </button>
 
     <button mat-button mat-dialog-close>Cancelar</button>

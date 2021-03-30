@@ -28,4 +28,9 @@ export class CarritoService {
       })
     }
   }
+
+  deleteOrden(orden: Carrito) {
+    const url = environment.BACKEND_URL + `carrito/${orden.id}`
+    return this.http.delete(url)
+  }
 }
