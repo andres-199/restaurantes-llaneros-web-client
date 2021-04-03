@@ -89,6 +89,13 @@ export class RestauranteViewComponent implements OnInit {
   }
 
   onClickReservar() {
+    const isLogedIn = this.loginService.isLogedIn
+    if (!isLogedIn) {
+      const msg = 'Ingresa con tu cuenta o registrate para Reservar 🕐'
+      this.showMsg(msg, 'top')
+      return
+    }
+
     const data = { restaurante: this.restaurante }
     const dialogRef = this.dialog.open(ReservarMesaComponent, {
       width: '350px',

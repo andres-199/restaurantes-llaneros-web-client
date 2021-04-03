@@ -97,6 +97,14 @@ const routes: Routes = [
       import('./carrito/carrito.module').then((res) => res.CarritoModule),
     canActivate: [LoginGuard],
   },
+  {
+    path: 'metodos-pago',
+    loadChildren: () =>
+      import('./metodos-pago/metodos-pago.module').then(
+        (res) => res.MetodosPagoModule
+      ),
+    canActivate: [LoginGuard],
+  },
 ]
 
 @NgModule({
