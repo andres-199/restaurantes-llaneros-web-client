@@ -1,7 +1,7 @@
 .avatar {
   border-radius: 0 !important;
-  height: 5em !important;
-  width: 5em !important;
+  min-height: 5em !important;
+  min-width: 5em !important;
 }
 
 .card-container {
@@ -49,4 +49,27 @@ h3 {
 }
 .order-button-value {
   float: right;
+}
+
+.price {
+  float: right;
+  color: #795548;
+}
+
+.name {
+  color: #795548;
+}
+
+.price-separator {
+  border-bottom: 0.1em dotted #79554873;
+  float: right;
+  flex-grow: 5;
+  margin: 0 0.2em;
+}
+
+.empty-cart-text {
+  font-size: 2em;
+  color: #795548;
+  position: absolute;
+  right: 17%;
 }

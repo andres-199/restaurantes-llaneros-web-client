@@ -1,10 +1,11 @@
 <mat-card>
+  <img
+    style="max-height: 200px"
+    mat-card-image
+    [src]="restaurante.imagen.path"
+    *ngIf="restaurante.imagen"
+  />
   <mat-card-header>
-    <img
-      mat-card-avatar
-      [src]="restaurante.imagen.path"
-      *ngIf="restaurante.imagen"
-    />
     <mat-card-title>{{ restaurante.nombre }}</mat-card-title>
     <mat-card-subtitle> {{ restaurante.descripcion }}</mat-card-subtitle>
   </mat-card-header>

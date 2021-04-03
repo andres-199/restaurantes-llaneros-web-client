@@ -1,6 +1,6 @@
 <div class="container">
   <mat-card>
-    <mat-card-title> MI CUENTA </mat-card-title>
+    <mat-card-title style="color: #795548"> MI CUENTA </mat-card-title>
 
     <mat-card-content>
       <mat-tab-group
@@ -124,12 +124,6 @@
                   </div>
                 </mat-list-item>
               </ng-container>
-              <ng-template #noDirections>
-                <mat-list-item>
-                  <mat-icon> not_listed_location</mat-icon>
-                  No tienes direcciones registradas, agrega una dirección.
-                </mat-list-item>
-              </ng-template>
             </mat-list>
             <hr class="divider" />
             <mat-card-actions>
@@ -226,4 +220,18 @@
       </div>
     </div>
   </mat-card>
+</ng-template>
+
+<ng-template #noDirections>
+  <div style="display: flex; flex-direction: row">
+    <div>
+      <img
+        src="assets/images/undraw_location_review_dmxd.svg"
+        style="max-height: 200px"
+      />
+    </div>
+    <div style="color: #795548; font-size: 2em" align="center">
+      No tienes direcciones registradas, agrega una dirección.
+    </div>
+  </div>
 </ng-template>

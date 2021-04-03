@@ -1,11 +1,24 @@
 <div class="container">
   <mat-card>
+    <div style="margin-bottom: 2.5em">
+      <carousel
+        [images]="imagenes"
+        cellWidth="100%"
+        dots="true"
+        autoplayInterval="3000"
+        autoplay="true"
+        height="370"
+        style="z-index: 0"
+      >
+      </carousel>
+    </div>
+
     <mat-card-title> Restaurantes Típicos del Llano </mat-card-title>
 
     <mat-card-content>
       <div class="row">
         <div
-          class="col-6 card-container"
+          class="col-4 card-container"
           *ngFor="let restaurante of restaurantes"
         >
           <app-restaurante-card

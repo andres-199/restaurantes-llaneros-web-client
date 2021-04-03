@@ -5,6 +5,7 @@ import { origin } from '../util/origin.enum'
 import { map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import { Router } from '@angular/router'
+import { Imagen } from '../interfaces/imagen.interface'
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,25 @@ import { Router } from '@angular/router'
 })
 export class HomeComponent implements OnInit {
   restaurantes: Restaurante[]
+
+  imagenes: Imagen[] = [
+    {
+      path:
+        'https://laspaginasamarillasdecolombia.com/galerias/fondo/estadero%20rancho%20llanerazo_fondo.jpg',
+    },
+    {
+      path:
+        'https://laspaginasamarillasdecolombia.com/galerias/aviso/estadero%20rancho%20llanerazo_aviso.jpg',
+    },
+    {
+      path:
+        'https://laspaginasamarillasdecolombia.com/galerias/fondo/estadero%20rancho%20llanerazo_fondo.jpg',
+    },
+    {
+      path:
+        'https://laspaginasamarillasdecolombia.com/galerias/aviso/estadero%20rancho%20llanerazo_aviso.jpg',
+    },
+  ]
 
   constructor(private crudService: CrudService, private router: Router) {}
 

@@ -13,65 +13,86 @@
       </button>
     </mat-card-header>
     <mat-card-content *ngIf="iLoaded">
-      <div *ngFor="let restaurante of restaurantes">
-        <div class="row col divider-container-top">
-          <mat-divider class="divider"></mat-divider>
-        </div>
-        <div class="row col">
-          <h2>{{ restaurante.nombre }}</h2>
-          <mat-checkbox
-            class="toggle-checkbox"
-            (change)="onToggleAllOrders(ordenes, restaurante, $event)"
-          ></mat-checkbox>
-        </div>
-        <div class="row col divider-container-bottom">
-          <mat-divider class="divider"></mat-divider>
-        </div>
+      <ng-container
+        *ngIf="restaurantes && restaurantes?.length > 0; else noData"
+      >
+        <div *ngFor="let restaurante of restaurantes">
+          <div class="row col divider-container-top">
+            <mat-divider class="divider"></mat-divider>
+          </div>
+          <div class="row col">
+            <h2>{{ restaurante.nombre }}</h2>
+            <mat-checkbox
+              class="toggle-checkbox"
+              (change)="onToggleAllOrders(ordenes, restaurante, $event)"
+            ></mat-checkbox>
+          </div>
+          <div class="row col divider-container-bottom">
+            <mat-divider class="divider"></mat-divider>
+          </div>
 
-        <div class="row">
-          <div class="col-12 card-container">
-            <mat-selection-list #ordenes>
-              <mat-list-option
-                #_orden
-                (click)="onToggleOrder(_orden, restaurante)"
-                *ngFor="let orden of restaurante.Ordenes"
-                [value]="orden"
-              >
-                <img
-                  class="avatar"
-                  matListAvatar
-                  [src]="orden.Producto?.Imagenes[0]?.path"
-                  [alt]="orden.Producto?.nombre"
-                />
-                <h3 matLine>
-                  {{ orden.Producto.nombre }}
-                </h3>
-                <p matLine>
-                  {{ orden.cantidad }}
-                  {{ orden.cantidad > 1 ? 'unidades' : 'unidad' }}
-                </p>
-                <p matLine>
-                  {{
-                    orden.Producto.precio * orden.cantidad
-                      | currency: 'COP':'symbol':'1.0'
-                  }}
-                </p>
-              </mat-list-option>
-            </mat-selection-list>
-            <p align="right">
-              <button mat-raised-button color="primary" class="order-button">
-                <span class="order-button-text"> Ordenar </span>
-                <span class="order-button-value">
-                  {{
-                    restaurante.valorTotalOrdenes
-                      | currency: 'COP':'symbol':'1.0'
-                  }}</span
+          <div class="row">
+            <div class="col-12 card-container">
+              <mat-selection-list #ordenes>
+                <mat-list-option
+                  #_orden
+                  (click)="onToggleOrder(_orden, restaurante)"
+                  *ngFor="let orden of restaurante.Ordenes"
+                  [value]="orden"
+                  style="min-height: 6em"
                 >
-              </button>
-            </p>
+                  <img
+                    class="avatar"
+                    matListAvatar
+                    [src]="orden.Producto?.Imagenes[0]?.path"
+                    [alt]="orden.Producto?.nombre"
+                  />
+
+                  <div matLine style="display: flex; flex-direction: row">
+                    <div class="name">
+                      {{ orden.Producto.nombre }}
+                    </div>
+
+                    <div class="price-separator"></div>
+
+                    <div class="price">
+                      {{
+                        orden.Producto.precio * orden.cantidad
+                          | currency: 'COP':'symbol':'1.0'
+                      }}
+                    </div>
+                  </div>
+
+                  <div matLine style="padding-top: 0.5em">
+                    {{ orden.cantidad }}
+                    {{ orden.cantidad > 1 ? 'unidades' : 'unidad' }}
+                  </div>
+                </mat-list-option>
+              </mat-selection-list>
+              <p align="right">
+                <button mat-raised-button color="primary" class="order-button">
+                  <span class="order-button-text"> Ordenar </span>
+                  <span class="order-button-value">
+                    {{
+                      restaurante.valorTotalOrdenes
+                        | currency: 'COP':'symbol':'1.0'
+                    }}</span
+                  >
+                </button>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </ng-container>
     </mat-card-content>
   </mat-card>
 </div>
+
+<ng-template #noData>
+  <div>
+    <span class="empty-cart-text"
+      >No tienes productos en el carrito, empieza agregar...
+    </span>
+    <img src="assets/images/undraw_add_to_cart_vkjp.svg" />
+  </div>
+</ng-template>
