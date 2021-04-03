@@ -2,13 +2,16 @@ import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { environment } from 'src/environments/environment'
+import { ConfirmComponent } from '../carrito/confirm/confirm.component'
 import { AddDireccionComponent } from '../components/add-direccion/add-direccion.component'
 import { ImageService } from '../components/images/image.service'
 import { Direccion } from '../interfaces/direccion.interface'
 import { Imagen } from '../interfaces/imagen.interface'
 import { Roles } from '../interfaces/roles.enum'
 import { LoginService } from '../login/login.service'
+import { MetodoPago } from '../metodos-pago/metodo-pago.interface'
 import { Usuario } from '../registro/usuario.interface'
+import { AddPaymentMethodComponent } from './add-payment-method/add-payment-method.component'
 import { Perfil } from './perfil.interface'
 import { PerfilService } from './perfil.service'
 
@@ -182,6 +185,76 @@ export class PerfilComponent implements OnInit {
       next: () => {
         this.getPerfil(this.user.tercero_id)
         const msg = `Se Eliminó la dirección `
+        this.showMsg(msg)
+      },
+    })
+  }
+
+  onClickAddPaymentMethod() {
+    const dialogRef = this.dialog.open(AddPaymentMethodComponent, {
+      width: '450px',
+    })
+
+    dialogRef.afterClosed().subscribe({
+      next: (paymentMethod: MetodoPago) => {
+        if (paymentMethod) this.addPaymentMethod(paymentMethod)
+      },
+    })
+  }
+
+  private addPaymentMethod(paymentMethod: MetodoPago) {
+    paymentMethod.RestauranteMetodoPago.restaurante_id = this.user.Tercero?.restaurante_id
+
+    this.perfilService.createRestaurantePaymentMethod(paymentMethod).subscribe({
+      next: (response) => {
+        this.getPerfil(this.user.tercero_id)
+        const msg = `Se agregó el metodo de pago 💳 ${paymentMethod.nombre}`
+        this.showMsg(msg)
+      },
+    })
+  }
+
+  onClickUpdatePaymentMethod(paymentMethod: MetodoPago) {
+    const dialogRef = this.dialog.open(AddPaymentMethodComponent, {
+      width: '450px',
+      data: { paymentMethod },
+    })
+
+    dialogRef.afterClosed().subscribe({
+      next: (paymentMethod: MetodoPago) => {
+        if (paymentMethod) this.updatePaymentMethod(paymentMethod)
+      },
+    })
+  }
+
+  private updatePaymentMethod(paymentMethod: MetodoPago) {
+    this.perfilService.updateRestaurantePaymentMethod(paymentMethod).subscribe({
+      next: (response) => {
+        this.getPerfil(this.user.tercero_id)
+        const msg = `Se actualizó el metodo de pago 💳 ${paymentMethod.nombre}`
+        this.showMsg(msg)
+      },
+    })
+  }
+
+  onClickDeletePaymentMethod(paymentMethod: MetodoPago) {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      data: {
+        title: 'Eliminar Metodo de Pago',
+        body: 'Desea eliminar el metodo se pago ' + paymentMethod.nombre + '?',
+      },
+    })
+
+    dialogRef.afterClosed().subscribe((del) => {
+      if (del) this.deletePaymentMethod(paymentMethod)
+    })
+  }
+
+  private deletePaymentMethod(paymentMethod: MetodoPago) {
+    this.perfilService.deleteRestaurantePaymentMethod(paymentMethod).subscribe({
+      next: (response) => {
+        this.getPerfil(this.user.tercero_id)
+        const msg = `Se eliminó el metodo de pago 💳 ${paymentMethod.nombre}`
         this.showMsg(msg)
       },
     })

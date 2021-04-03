@@ -17,6 +17,8 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { AddDireccionModule } from '../components/add-direccion/add-direccion.module'
 import { MatListModule } from '@angular/material/list'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { AddPaymentMethodModule } from './add-payment-method/add-payment-method.module'
+import { ConfirmModule } from '../carrito/confirm/confirm.module'
 
 const routes: Routes = [{ path: '', component: PerfilComponent }]
 
@@ -37,6 +39,8 @@ const routes: Routes = [{ path: '', component: PerfilComponent }]
     AddDireccionModule,
     MatListModule,
     MatTooltipModule,
+    AddPaymentMethodModule,
+    ConfirmModule,
   ],
   providers: [PerfilService, ImageService],
 })

@@ -1,6 +1,12 @@
-<h1 mat-dialog-title>Eliminar Productos del carrito</h1>
+<h1 mat-dialog-title>{{ data.title || 'Eliminar Productos del carrito' }}</h1>
 <div mat-dialog-content>
-  Desea eliminar {{ data.ordenes }} producto{{ data.ordenes > 1 ? 's' : '' }} ?
+  <span *ngIf="data.ordenes; else common">
+    Desea eliminar {{ data.ordenes }} producto{{ data.ordenes > 1 ? 's' : '' }}
+    ?
+  </span>
+  <ng-template #common>
+    <span>{{ data.body }}</span>
+  </ng-template>
 </div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Cancelar</button>

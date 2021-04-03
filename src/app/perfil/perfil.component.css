@@ -33,3 +33,7 @@
   margin-right: -1.2em;
   margin-top: 2em;
 }
+
+.bold {
+  font-weight: 500 !important;
+}

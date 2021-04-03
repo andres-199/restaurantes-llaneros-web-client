@@ -61,7 +61,7 @@
                 [(ngModel)]="perfil.Tercero.email"
               />
             </mat-form-field>
-            <hr class="divider" />
+
             <div>
               <h3 class="direction-title">
                 Direcciones
@@ -88,14 +88,16 @@
                   *ngFor="let direccion of perfil.Tercero.Direcciones"
                 >
                   <div class="col">
-                    <mat-icon>home</mat-icon>
+                    <mat-icon color="accent">home</mat-icon>
                     {{ direccion.nombre }}
                   </div>
                   <div class="col" align="center">
-                    <mat-icon> location_on</mat-icon> {{ direccion.direccion }}
+                    <mat-icon color="accent"> location_on</mat-icon>
+                    {{ direccion.direccion }}
                   </div>
                   <div class="col" align="center">
-                    <mat-icon>phone</mat-icon> {{ direccion.telefono }}
+                    <mat-icon color="accent">phone</mat-icon>
+                    {{ direccion.telefono }}
                   </div>
                   <div class="col-1" align="end">
                     <button
@@ -125,7 +127,7 @@
                 </mat-list-item>
               </ng-container>
             </mat-list>
-            <hr class="divider" />
+
             <mat-card-actions>
               <button
                 class="full-width"
@@ -182,6 +184,70 @@
               ></textarea>
             </mat-form-field>
 
+            <div>
+              <h3 class="direction-title">
+                Metodos de pago
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="add-direction"
+                  (click)="onClickAddPaymentMethod(); $event.preventDefault()"
+                >
+                  <mat-icon>add</mat-icon>
+                  Agregar
+                </button>
+              </h3>
+            </div>
+            <mat-list class="direction-list">
+              <ng-container
+                *ngIf="
+                  perfil.Restaurante?.MetodosPago?.length > 0;
+                  else noPaymentMethods
+                "
+              >
+                <mat-list-item
+                  *ngFor="let metodoPago of perfil.Restaurante?.MetodosPago"
+                >
+                  <img
+                    matListAvatar
+                    [src]="metodoPago.imagen"
+                    style="border-radius: 0"
+                  />
+                  <p matLine class="bold">{{ metodoPago.nombre }}</p>
+                  <p matLine class="bold">
+                    {{ metodoPago.RestauranteMetodoPago.numero_cuenta }}
+                  </p>
+                  <p matLine style="color: gray">
+                    {{ metodoPago.RestauranteMetodoPago.detalle }}
+                  </p>
+
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    matTooltip="Editar"
+                    (click)="
+                      onClickUpdatePaymentMethod(metodoPago);
+                      $event.preventDefault()
+                    "
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    matTooltip="Eliminar"
+                    (click)="
+                      onClickDeletePaymentMethod(metodoPago);
+                      $event.preventDefault()
+                    "
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </mat-list-item>
+              </ng-container>
+            </mat-list>
+
             <mat-card-actions>
               <button
                 class="full-width"
@@ -220,6 +286,21 @@
       </div>
     </div>
   </mat-card>
+</ng-template>
+
+<ng-template #noPaymentMethods>
+  <div style="display: flex; flex-direction: row">
+    <div>
+      <img
+        src="assets/images/undraw_online_payments_luau.svg"
+        style="max-height: 200px"
+      />
+    </div>
+    <div style="color: #795548; font-size: 2em" align="center">
+      No tienes metodos de pago registrados, agrega un metodo de pago para tu
+      restaurante.
+    </div>
+  </div>
 </ng-template>
 
 <ng-template #noDirections>
