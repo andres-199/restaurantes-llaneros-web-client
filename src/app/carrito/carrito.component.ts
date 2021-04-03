@@ -11,6 +11,7 @@ import { Producto } from '../restaurante-platos/producto.interface'
 import { Restaurante } from '../restaurantes/restaurante.interface'
 import { CarritoService } from './carrito.service'
 import { ConfirmComponent } from './confirm/confirm.component'
+import { PurchaseComponent } from './purchase/purchase.component'
 
 @Component({
   selector: 'app-carrito',
@@ -161,6 +162,26 @@ export class CarritoComponent implements OnInit {
     this._snackBar.open(message, 'Aceptar', {
       duration: 7000,
       verticalPosition,
+    })
+  }
+
+  onClickOrdenar(restaurante: Restaurante) {
+    let ordenes: Carrito[] = []
+    for (const orden of this.ordenesSelected) {
+      const _orden = orden.value
+      const found = restaurante.Ordenes.includes(_orden)
+      if (found) ordenes.push(_orden)
+    }
+
+    if (!(ordenes.length > 0)) {
+      const msg = 'Selecciona almenos un producto 🍗🥓🥩🍖'
+      this.showMsg(msg)
+      return false
+    }
+
+    const dialogRef = this.dialog.open(PurchaseComponent, {
+      data: { restaurante, ordenes },
+      minWidth: '500px',
     })
   }
 }

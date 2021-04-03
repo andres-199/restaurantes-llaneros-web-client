@@ -70,7 +70,12 @@
                 </mat-list-option>
               </mat-selection-list>
               <p align="right">
-                <button mat-raised-button color="primary" class="order-button">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="order-button"
+                  (click)="onClickOrdenar(restaurante)"
+                >
                   <span class="order-button-text"> Ordenar </span>
                   <span class="order-button-value">
                     {{

@@ -11,6 +11,7 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatDialogModule } from '@angular/material/dialog'
 import { ConfirmModule } from './confirm/confirm.module'
+import { PurchaseModule } from './purchase/purchase.module'
 
 const routes: Routes = [{ path: '', component: CarritoComponent }]
 
@@ -28,6 +29,7 @@ const routes: Routes = [{ path: '', component: CarritoComponent }]
     MatSnackBarModule,
     MatDialogModule,
     ConfirmModule,
+    PurchaseModule,
   ],
 })
 export class CarritoModule {}

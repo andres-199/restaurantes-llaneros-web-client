@@ -1,0 +1,53 @@
+<h1 class="title" mat-dialog-title>{{ restaurante.nombre }}</h1>
+<small class="restaurante-direction">{{ restaurante.direccion }}</small>
+<div mat-dialog-content>
+  <div>
+    <mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let orden of ordenes">
+        <div class="producto-container">
+          <div>{{ orden.cantidad + '. ' }}</div>
+          <div style="flex-grow: 5">{{ orden.Producto.nombre }}</div>
+          <div style="float: right">
+            {{
+              orden.cantidad * orden.Producto?.precio
+                | currency: 'COP':'symbol':'1.0'
+            }}
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-list>
+
+    <div class="total">
+      Total:
+      {{ restaurante.valorTotalOrdenes | currency: 'COP':'symbol':'1.0' }}
+    </div>
+  </div>
+
+  <div *ngIf="tercero">
+    <mat-selection-list #directions [multiple]="false">
+      <h3 matSubheader>Seleccione la dirección de entrega</h3>
+      <mat-list-option
+        *ngFor="let direccion of tercero.Direcciones"
+        [value]="direccion"
+      >
+        {{ direccion.nombre }} - {{ direccion.direccion }}
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+
+  <div>
+    <mat-selection-list #directions [multiple]="false">
+      <h3 matSubheader>Seleccione el medio de pago</h3>
+      <mat-list-option
+        *ngFor="let direccion of tercero.Direcciones"
+        [value]="direccion"
+      >
+        {{ direccion.nombre }} - {{ direccion.direccion }}
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Ordenar</button>
+</div>
