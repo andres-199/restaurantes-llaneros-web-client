@@ -16,3 +16,11 @@
   width: 100%;
   text-align: right;
 }
+
+.bold {
+  font-weight: 500;
+}
+
+h1 {
+  color: #795548 !important;
+}

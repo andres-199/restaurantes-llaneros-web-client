@@ -1,9 +1,14 @@
-<h1 class="title" mat-dialog-title>{{ restaurante.nombre }}</h1>
+<h1 class="title section" mat-dialog-title>{{ restaurante.nombre }}</h1>
 <small class="restaurante-direction">{{ restaurante.direccion }}</small>
 <div mat-dialog-content>
   <div>
     <mat-list role="list">
-      <mat-list-item role="listitem" *ngFor="let orden of ordenes">
+      <h1 class="section" matSubheader>Resumen del pedido</h1>
+      <mat-list-item
+        style="font-size: 0.9em"
+        role="listitem"
+        *ngFor="let orden of ordenes"
+      >
         <div class="producto-container">
           <div>{{ orden.cantidad + '. ' }}</div>
           <div style="flex-grow: 5">{{ orden.Producto.nombre }}</div>
@@ -16,7 +21,7 @@
         </div>
       </mat-list-item>
     </mat-list>
-
+    <mat-divider></mat-divider>
     <div class="total">
       Total:
       {{ restaurante.valorTotalOrdenes | currency: 'COP':'symbol':'1.0' }}
@@ -25,29 +30,56 @@
 
   <div *ngIf="tercero">
     <mat-selection-list #directions [multiple]="false">
-      <h3 matSubheader>Seleccione la dirección de entrega</h3>
-      <mat-list-option
-        *ngFor="let direccion of tercero.Direcciones"
-        [value]="direccion"
-      >
-        {{ direccion.nombre }} - {{ direccion.direccion }}
-      </mat-list-option>
+      <h1 class="section" matSubheader>Seleccione la dirección de entrega</h1>
+      <ng-container *ngIf="tercero.Direcciones?.length > 0; else noDirections">
+        <mat-list-option
+          *ngFor="let direccion of tercero.Direcciones"
+          [value]="direccion"
+          (click)="onCLickDireccion(directions)"
+        >
+          {{ direccion.nombre }} - {{ direccion.direccion }}
+        </mat-list-option>
+      </ng-container>
     </mat-selection-list>
   </div>
 
-  <div>
-    <mat-selection-list #directions [multiple]="false">
-      <h3 matSubheader>Seleccione el medio de pago</h3>
-      <mat-list-option
-        *ngFor="let direccion of tercero.Direcciones"
-        [value]="direccion"
-      >
-        {{ direccion.nombre }} - {{ direccion.direccion }}
-      </mat-list-option>
-    </mat-selection-list>
-  </div>
+  <mat-selection-list #paymentMethods [multiple]="false">
+    <h1 class="section" matSubheader>Seleccione el medio de pago</h1>
+    <mat-list-option
+      *ngFor="let metodoPago of metodosPago"
+      [value]="metodoPago"
+      (click)="onCLickMetodoPago(paymentMethods)"
+    >
+      <img matListAvatar [src]="metodoPago.imagen" style="border-radius: 0" />
+      <p matLine class="bold">
+        {{ metodoPago.nombre }}
+      </p>
+      <p matLine>
+        {{ metodoPago.RestauranteMetodoPago?.detalle }}
+      </p>
+    </mat-list-option>
+  </mat-selection-list>
 </div>
 <div mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancelar</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Ordenar</button>
+  <button
+    [disabled]="!metodoPagoSelected || !direccionSelected"
+    mat-button
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+  >
+    Ordenar
+  </button>
 </div>
+
+<ng-template #noDirections>
+  <div style="color: #795548; font-size: 1em" align="center">
+    <p>No tienes direcciones registradas.</p>
+    <p>
+      <button mat-raised-button color="primary" (click)="onClickAddDirection()">
+        <mat-icon>add</mat-icon>
+        agrega una dirección
+      </button>
+    </p>
+  </div>
+</ng-template>

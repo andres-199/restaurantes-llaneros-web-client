@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { Carrito } from '../interfaces/carrito.interface'
 import { LoginService } from '../login/login.service'
+import { MetodoPago } from '../metodos-pago/metodo-pago.interface'
 
 @Injectable({
   providedIn: 'root',
@@ -32,5 +33,11 @@ export class CarritoService {
   deleteOrden(orden: Carrito) {
     const url = environment.BACKEND_URL + `carrito/${orden.id}`
     return this.http.delete(url)
+  }
+
+  getPaymentMethods(restauranteId: number) {
+    const url =
+      environment.BACKEND_URL + `restaurantes/${restauranteId}/metodos-pago`
+    return this.http.get<MetodoPago[]>(url)
   }
 }
