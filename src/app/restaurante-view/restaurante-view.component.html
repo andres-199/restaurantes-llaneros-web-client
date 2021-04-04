@@ -1,7 +1,66 @@
 <div class="container">
-  <mat-card>
-    <mat-card-title> {{ restaurante }} </mat-card-title>
+  <mat-card *ngIf="restaurante">
+    <mat-card-header>
+      <button
+        class="button-reserva"
+        mat-button
+        color="primary"
+        aria-label="Reservar"
+        (click)="onClickReservar()"
+      >
+        <mat-icon>watch_later</mat-icon>
+        Reservar
+      </button>
+      <div
+        mat-card-avatar
+        class="avatar-restaurante"
+        [style]="avatarStyle"
+        *ngIf="restaurante.imagen"
+      ></div>
 
-    <mat-card-content> </mat-card-content>
+      <mat-card-title>
+        {{ restaurante.nombre }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        <mat-icon> location_on</mat-icon>
+        {{ restaurante.direccion }}
+      </mat-card-subtitle>
+      <mat-card-subtitle>
+        <p>
+          <mat-icon> local_dining</mat-icon>
+          {{ restaurante.Mesas?.length }} Mesas disponibles
+        </p>
+        <p>
+          {{ restaurante.descripcion }}
+        </p>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content class="content">
+      <ng-container *ngFor="let categoria of restaurante.Categorias">
+        <div class="row col divider-container-top">
+          <mat-divider class="divider"></mat-divider>
+        </div>
+        <div class="row col">
+          <h2>{{ categoria.nombre }}</h2>
+        </div>
+        <div class="row col divider-container-bottom">
+          <mat-divider class="divider"></mat-divider>
+        </div>
+
+        <div class="row">
+          <div
+            class="col-12 card-container"
+            *ngFor="let producto of categoria.Productos"
+          >
+            <app-producto-card
+              (onClickView)="onClickView(producto)"
+              (onClickShoppingCart)="onClickShoppingCart(producto)"
+              [producto]="producto"
+            ></app-producto-card>
+          </div>
+        </div>
+      </ng-container>
+    </mat-card-content>
   </mat-card>
 </div>

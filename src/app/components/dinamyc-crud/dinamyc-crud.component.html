@@ -11,6 +11,7 @@
       color="primary"
       (click)="onRegister()"
       matTooltip="Agregar un nuevo registro"
+      *ngIf="!hideCreate"
     >
       <mat-icon>add</mat-icon>
       Registrar
@@ -33,6 +34,17 @@
           <ul *ngIf="col.type === 'list'">
             <li *ngFor="let item of data[col.field]">{{ item }}</li>
           </ul>
+          <ng-container *ngIf="col.type === 'image'">
+            <img
+              class="image"
+              [src]="image.path"
+              [alt]="image.nombre"
+              *ngFor="let image of data[col.field]"
+            />
+          </ng-container>
+          <p *ngIf="col.type === 'date'">
+            {{ data[col.field] | date: 'EEEE, MMMM d, y, h:mm a' }}
+          </p>
         </ng-template>
       </td>
     </ng-container>
@@ -47,11 +59,22 @@
 
         <!--...-->
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="onEdit(data)">
+          <button
+            [disabled]="data.disableEdit"
+            mat-menu-item
+            (click)="onEdit(data)"
+            *ngIf="!hideEdit"
+          >
             <mat-icon>edit</mat-icon>
             <span>Editar</span>
           </button>
-          <button mat-menu-item (click)="onDelete(data)">
+
+          <button
+            [disabled]="data.disableDelete"
+            mat-menu-item
+            (click)="onDelete(data)"
+            *ngIf="!hideDelete"
+          >
             <mat-icon>delete</mat-icon>
             <span>Eliminar</span>
           </button>

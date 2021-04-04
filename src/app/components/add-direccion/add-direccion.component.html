@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>Registrar Dirección</h1>
+<div mat-dialog-content *ngIf="direccion">
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      type="text"
+      name="nombre"
+      placeholder="Nombre (Escriba un nombre para su dirección)"
+      [(ngModel)]="direccion.nombre"
+    />
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      required
+      type="text"
+      name="direccion"
+      placeholder="Direccion"
+      [(ngModel)]="direccion.direccion"
+    />
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      type="text"
+      name="telefono"
+      placeholder="Telefono"
+      [(ngModel)]="direccion.telefono"
+    />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="null">Cancelar</button>
+  <button mat-button [mat-dialog-close]="direccion" cdkFocusInitial>
+    Aceptar
+  </button>
+</div>

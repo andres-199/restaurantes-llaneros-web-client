@@ -1,12 +1,7 @@
-.mat-card-avatar {
-  border-radius: 0 !important;
-  height: 100px !important;
-  width: 100px !important;
-}
 .mat-card {
   transition: all 200ms ease;
 }
 
 .mat-card:hover {
-  background-color: #bcaaa4;
+  background-color: #bcaaa493;
 }

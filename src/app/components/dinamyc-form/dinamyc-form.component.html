@@ -1,8 +1,6 @@
 <h1 mat-dialog-title>
   {{ title }}
-  <i class="material-icons" *ngIf="isDelete">
-    warning
-  </i>
+  <i class="material-icons" *ngIf="isDelete"> warning </i>
 </h1>
 
 <div mat-dialog-content>
@@ -10,7 +8,11 @@
     <div *ngFor="let field of formFields">
       <ng-container
         *ngTemplateOutlet="
-          field.type === 'textArea' ? textArea : input;
+          field.type === 'textArea'
+            ? textArea
+            : field.type === 'dropdown'
+            ? dropdown
+            : input;
           context: { $implicit: field }
         "
       ></ng-container>
@@ -27,7 +29,7 @@
 <!--templates-->
 <ng-template #datePicker let-field>
   <mat-label>{{ field.label }}</mat-label>
- <!--  <mat-form-field class="full-width">
+  <!--  <mat-form-field class="full-width">
     <input
       (click)="picker.open()"
       (focus)="picker.open()"
@@ -40,10 +42,10 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field> -->
   <mat-form-field>
-  <input matInput [matDatepicker]="picker" placeholder="Choose a date">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Choose a date" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 </ng-template>
 
 <ng-template #input let-field>
@@ -69,8 +71,17 @@
   </mat-form-field>
 </ng-template>
 
+<ng-template #dropdown let-field>
+  <mat-form-field class="full-width">
+    <mat-label>{{ field.label }}</mat-label>
+    <mat-select [(ngModel)]="data[field.name]">
+      <mat-option *ngFor="let option of field.options" [value]="option.value">{{
+        option.label
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>
+
 <ng-template #is_delete>
-  <span>
-    Está seguro que desea eliminar el registro?
-  </span>
+  <span> Está seguro que desea eliminar el registro? </span>
 </ng-template>

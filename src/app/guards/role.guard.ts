@@ -20,11 +20,33 @@ export class RoleGuard implements CanActivate {
     switch (path) {
       case 'categorias':
         return this.isAdmin()
+
       case 'restaurantes':
         return this.isAdmin()
+
+      case 'restaurante/personal':
+        return this.isRestaurante()
+
+      case 'restaurante/productos':
+        return this.isRestaurante()
+
+      case 'restaurante/mesas':
+        return this.isRestaurante()
+
+      case 'restaurante/reservas':
+        return this.isRestaurante()
+
+      case 'restaurante/ventas':
+        return this.isRestaurante()
+
       default:
-        return true
+        return false
     }
+  }
+
+  private isRestaurante() {
+    const user = this.loginService.user
+    return user.rol_id === Roles.Restaurante
   }
 
   private isAdmin() {

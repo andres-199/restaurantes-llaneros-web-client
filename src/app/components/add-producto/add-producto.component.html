@@ -1,0 +1,31 @@
+<h3 mat-dialog-title>Agregar al carrito de compras</h3>
+
+<ng-container *ngIf="carrito">
+  <mat-dialog-content>
+    <app-producto-card
+      [hideActions]="true"
+      [producto]="carrito?.Producto"
+    ></app-producto-card>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <mat-form-field style="max-width: 33%; padding-right: 1em">
+      <input
+        matInput
+        name="cantidad"
+        type="number"
+        placeholder="Cantidad"
+        [(ngModel)]="carrito.cantidad"
+      />
+    </mat-form-field>
+
+    <button color="primary" mat-raised-button [mat-dialog-close]="carrito">
+      Agregar
+      {{
+        carrito.Producto.precio * carrito.cantidad
+          | currency: 'COP':'symbol':'1.0'
+      }}
+    </button>
+
+    <button mat-button mat-dialog-close>Cancelar</button>
+  </mat-dialog-actions>
+</ng-container>

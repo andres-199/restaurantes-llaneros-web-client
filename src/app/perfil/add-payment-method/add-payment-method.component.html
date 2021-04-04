@@ -1,0 +1,60 @@
+<form #_form="ngForm">
+  <h1 mat-dialog-title>Agregar Metodo de Pago</h1>
+  <div mat-dialog-content *ngIf="metodoPago">
+    <mat-form-field class="full-width" *ngIf="paymentMethods">
+      <mat-label>Metodo de pago</mat-label>
+      <mat-select
+        placeholder="Seleccione"
+        name="metodo_pago_id"
+        required
+        [(ngModel)]="metodoPago.RestauranteMetodoPago.metodo_pago_id"
+      >
+        <mat-option
+          *ngFor="let paymentMethod of paymentMethods"
+          [value]="paymentMethod.id"
+          (click)="onChangePaymentMethod(paymentMethod)"
+        >
+          {{ paymentMethod.nombre }}
+        </mat-option>
+      </mat-select>
+
+      <mat-hint align="start">
+        <strong>{{ metodoPago.descripcion }}</strong>
+      </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" *ngIf="!metodoPago.contra_entrega">
+      <input
+        matInput
+        required
+        type="text"
+        name="numero_cuenta"
+        placeholder="Numero de cuenta"
+        [(ngModel)]="metodoPago.RestauranteMetodoPago.numero_cuenta"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Detalle</mat-label>
+      <textarea
+        [(ngModel)]="metodoPago.RestauranteMetodoPago.detalle"
+        matInput
+        name="detalle"
+        placeholder="Describa detalladamente como debe el usuario realizar el pago con este metodo."
+        rows="4"
+        required
+      ></textarea>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="null">Cancelar</button>
+    <button
+      [disabled]="_form.invalid"
+      mat-button
+      [mat-dialog-close]="metodoPago"
+      cdkFocusInitial
+    >
+      Aceptar
+    </button>
+  </div>
+</form>

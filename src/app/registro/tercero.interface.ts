@@ -1,3 +1,4 @@
+import { Direccion } from '../interfaces/direccion.interface'
 import { Usuario } from './usuario.interface'
 
 export interface Tercero {
@@ -7,6 +8,6 @@ export interface Tercero {
   email?: string
   identificacion?: string
   restaurante_id?: number
-  telefono?: string
   Usuario?: Usuario
+  Direcciones?: Direccion[]
 }

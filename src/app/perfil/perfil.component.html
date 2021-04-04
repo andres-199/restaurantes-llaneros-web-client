@@ -1,0 +1,318 @@
+<div class="container">
+  <mat-card>
+    <mat-card-title style="color: #795548"> MI CUENTA </mat-card-title>
+
+    <mat-card-content>
+      <mat-tab-group
+        mat-align-tabs="start"
+        animationDuration="0ms"
+        *ngIf="iLoaded"
+      >
+        <mat-tab label="Información Personal">
+          <ng-container *ngTemplateOutlet="infoPersonal"></ng-container>
+        </mat-tab>
+        <mat-tab label="Restaurante" *ngIf="showRestauranteTab">
+          <ng-container *ngTemplateOutlet="restaurante"></ng-container>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<ng-template #infoPersonal>
+  <mat-card class="form">
+    <div class="row">
+      <div class="col-8">
+        <mat-card-content>
+          <form #registerForm="ngForm" (ngSubmit)="onSubmitInfoPersonal()">
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                name="nombre"
+                type="text"
+                placeholder="Nombres"
+                [(ngModel)]="perfil.Tercero.nombre"
+              />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                name="apellido"
+                type="text"
+                placeholder="Apellidos"
+                [(ngModel)]="perfil.Tercero.apellido"
+              />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                name="identificacion"
+                type="text"
+                placeholder="Identificación"
+                [(ngModel)]="perfil.Tercero.identificacion"
+              />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                name="email"
+                type="email"
+                placeholder="Correo"
+                [(ngModel)]="perfil.Tercero.email"
+              />
+            </mat-form-field>
+
+            <div>
+              <h3 class="direction-title">
+                Direcciones
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="add-direction"
+                  (click)="onClickAddDirection(); $event.preventDefault()"
+                >
+                  <mat-icon>add</mat-icon>
+                  Agregar
+                </button>
+              </h3>
+            </div>
+            <mat-list class="direction-list">
+              <ng-container
+                *ngIf="
+                  perfil.Tercero?.Direcciones?.length > 0;
+                  else noDirections
+                "
+              >
+                <mat-list-item
+                  class="container row"
+                  *ngFor="let direccion of perfil.Tercero.Direcciones"
+                >
+                  <div class="col">
+                    <mat-icon color="accent">home</mat-icon>
+                    {{ direccion.nombre }}
+                  </div>
+                  <div class="col" align="center">
+                    <mat-icon color="accent"> location_on</mat-icon>
+                    {{ direccion.direccion }}
+                  </div>
+                  <div class="col" align="center">
+                    <mat-icon color="accent">phone</mat-icon>
+                    {{ direccion.telefono }}
+                  </div>
+                  <div class="col-1" align="end">
+                    <button
+                      mat-icon-button
+                      color="primary"
+                      matTooltip="Editar"
+                      (click)="
+                        onClickEditDireccion(direccion); $event.preventDefault()
+                      "
+                    >
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </div>
+                  <div class="col-1" align="end">
+                    <button
+                      mat-icon-button
+                      color="primary"
+                      matTooltip="Eliminar"
+                      (click)="
+                        onClickDeleteDireccion(direccion);
+                        $event.preventDefault()
+                      "
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </mat-list-item>
+              </ng-container>
+            </mat-list>
+
+            <mat-card-actions>
+              <button
+                class="full-width"
+                mat-raised-button
+                color="primary"
+                type="submit"
+              >
+                <mat-icon>save</mat-icon>
+                Guardar
+              </button>
+            </mat-card-actions>
+          </form>
+        </mat-card-content>
+      </div>
+      <div class="col-4">
+        <img class="image" src="assets/images/profile-no-img.png" />
+      </div>
+    </div>
+  </mat-card>
+</ng-template>
+
+<ng-template #restaurante>
+  <mat-card class="form">
+    <div class="row">
+      <div class="col-8">
+        <mat-card-content>
+          <form #registerForm="ngForm" (ngSubmit)="onSubmitInfoRestaurante()">
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                name="direccion"
+                type="text"
+                placeholder="Dirección"
+                [(ngModel)]="perfil.Restaurante.direccion"
+              />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                name="nombre"
+                type="text"
+                placeholder="Nombre"
+                [(ngModel)]="perfil.Restaurante.nombre"
+              />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <mat-label>Descripción</mat-label>
+              <textarea
+                matInput
+                name="descripcion"
+                rows="6"
+                placeholder="Describa su restaurante. Esta decripción le ayudará a los usuarios conocerlo mejor."
+                [(ngModel)]="perfil.Restaurante.descripcion"
+              ></textarea>
+            </mat-form-field>
+
+            <div>
+              <h3 class="direction-title">
+                Metodos de pago
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="add-direction"
+                  (click)="onClickAddPaymentMethod(); $event.preventDefault()"
+                >
+                  <mat-icon>add</mat-icon>
+                  Agregar
+                </button>
+              </h3>
+            </div>
+            <mat-list class="direction-list">
+              <ng-container
+                *ngIf="
+                  perfil.Restaurante?.MetodosPago?.length > 0;
+                  else noPaymentMethods
+                "
+              >
+                <mat-list-item
+                  *ngFor="let metodoPago of perfil.Restaurante?.MetodosPago"
+                >
+                  <img
+                    matListAvatar
+                    [src]="metodoPago.imagen"
+                    style="border-radius: 0"
+                  />
+                  <p matLine class="bold">{{ metodoPago.nombre }}</p>
+                  <p matLine class="bold">
+                    {{ metodoPago.RestauranteMetodoPago.numero_cuenta }}
+                  </p>
+                  <p matLine style="color: gray">
+                    {{ metodoPago.RestauranteMetodoPago.detalle }}
+                  </p>
+
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    matTooltip="Editar"
+                    (click)="
+                      onClickUpdatePaymentMethod(metodoPago);
+                      $event.preventDefault()
+                    "
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    matTooltip="Eliminar"
+                    (click)="
+                      onClickDeletePaymentMethod(metodoPago);
+                      $event.preventDefault()
+                    "
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </mat-list-item>
+              </ng-container>
+            </mat-list>
+
+            <mat-card-actions>
+              <button
+                class="full-width"
+                mat-raised-button
+                color="primary"
+                type="submit"
+              >
+                <mat-icon>save</mat-icon>
+                Guardar
+              </button>
+            </mat-card-actions>
+          </form>
+        </mat-card-content>
+      </div>
+      <div class="col-4">
+        <input
+          #imageR
+          type="file"
+          name="image"
+          accept="image/*"
+          hidden
+          (change)="onLoadRestauranteImage($event.target.files)"
+        />
+        <img
+          (click)="imageR.click()"
+          class="image image-restaurante"
+          [src]="imagen.path"
+          *ngIf="!loadingPhoto; else loading"
+        />
+
+        <ng-template #loading>
+          <div align="center">
+            <mat-spinner diameter="50"></mat-spinner>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </mat-card>
+</ng-template>
+
+<ng-template #noPaymentMethods>
+  <div style="display: flex; flex-direction: row">
+    <div>
+      <img
+        src="assets/images/undraw_online_payments_luau.svg"
+        style="max-height: 200px"
+      />
+    </div>
+    <div style="color: #795548; font-size: 2em" align="center">
+      No tienes metodos de pago registrados, agrega un metodo de pago para tu
+      restaurante.
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noDirections>
+  <div style="display: flex; flex-direction: row">
+    <div>
+      <img
+        src="assets/images/undraw_location_review_dmxd.svg"
+        style="max-height: 200px"
+      />
+    </div>
+    <div style="color: #795548; font-size: 2em" align="center">
+      No tienes direcciones registradas, agrega una dirección.
+    </div>
+  </div>
+</ng-template>

@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core'
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter,
+} from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { DinamycFormComponent } from '../dinamyc-form/dinamyc-form.component'
 import { CrudService } from './crud.service'
@@ -7,8 +14,13 @@ import { MatTableDataSource } from '@angular/material/table'
 import { MatPaginator } from '@angular/material/paginator'
 import { origin } from 'src/app/util/origin.enum'
 
+export interface DisableButtonRule {
+  action: 'disableDelete' | 'disableEdit'
+  where: { attribute: string; value: any }
+}
+
 export const Export_Config = {
-  fileName: 'pqr_system_file_export',
+  fileName: 'filename',
   sheet: 'datos',
   Props: { Author: 'andres199' },
 }
@@ -17,28 +29,41 @@ export interface Col {
   header: string
   field: string
   width?: string
-  type?: 'list' | 'array' | 'object'
+  type?: 'list' | 'array' | 'object' | 'image' | 'date'
 }
 
 export interface FormField {
   name: string
   label: string
   type?: 'text' | 'textArea' | 'dropdown' | 'date' | 'file' | 'number'
-  options?: any
+  options?: DropdownOption[]
+}
+
+export interface DropdownOption {
+  label: string
+  value: any
 }
 
 export interface MenuOption {
   icon: string
   label: string
-  handler: (data: any) => any
+  handler: (data?: any) => any
 }
 
 @Component({
   selector: 'app-dinamyc-crud',
   templateUrl: './dinamyc-crud.component.html',
-  styles: [],
+  styleUrls: ['./dinamyc-crud.style.css'],
 })
 export class DinamycCrudComponent implements OnInit {
+  @Input()
+  disabbleButtonRule: DisableButtonRule
+  @Input()
+  hideDelete = false
+  @Input()
+  hideEdit = false
+  @Input()
+  hideCreate = false
   @Input()
   public cols: Col[] = []
   @Input()
@@ -58,6 +83,8 @@ export class DinamycCrudComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true })
   private paginator: MatPaginator
 
+  @Output() onLoadDataSource = new EventEmitter<any>()
+
   constructor(
     private dialog: MatDialog,
     private service: CrudService,
@@ -70,10 +97,23 @@ export class DinamycCrudComponent implements OnInit {
 
   getDataSource() {
     this.service.findAll(this.origin).subscribe((dataSource) => {
-      console.log('get data>>>>>>>>', dataSource)
+      this.onLoadDataSource.emit(dataSource)
+      if (this.disabbleButtonRule) {
+        this.setDisableButtonRule(dataSource)
+      }
 
       this.dataSource = new MatTableDataSource<any>(dataSource)
       this.dataSource.paginator = this.paginator
+    })
+  }
+
+  private setDisableButtonRule(dataSource: any[]) {
+    dataSource = dataSource.map((item) => {
+      const attr = this.disabbleButtonRule.where.attribute
+      const value = this.disabbleButtonRule.where.value
+      const action = this.disabbleButtonRule.action
+      if (item[attr] == value) item[action] = true
+      return item
     })
   }
 
@@ -116,10 +156,11 @@ export class DinamycCrudComponent implements OnInit {
     })
   }
 
-  private update(data) {
+  public update(data) {
     const origin = this.originForm || this.origin
     this.service.update(origin, data).subscribe(
       (res) => {
+        this.getDataSource()
         this.onSuccess(false)
       },
       (err) => {
@@ -145,8 +186,10 @@ export class DinamycCrudComponent implements OnInit {
     const _origin = `${this.origin}/${id}`
     this.service.delete(_origin).subscribe(
       (res) => {
+        console.log('delete>>>', res)
+
         this.getDataSource()
-        this.onSuccess()
+        this.onSuccess(false)
       },
       (err) => {
         this.showMsg(err.name || err.message)
@@ -154,14 +197,14 @@ export class DinamycCrudComponent implements OnInit {
     )
   }
 
-  private onSuccess(is_create = true) {
+  onSuccess(is_create = true) {
     const message = `Registro ${
       is_create ? 'creado' : 'actualizado'
     } exitosamente!`
     this.showMsg(message)
   }
 
-  private showMsg(message: string) {
+  showMsg(message: string) {
     this._snackBar.open(message, 'Aceptar', {
       duration: 7000,
     })

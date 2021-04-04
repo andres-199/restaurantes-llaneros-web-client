@@ -4,6 +4,8 @@ import { Restaurante } from '../restaurantes/restaurante.interface'
 import { origin } from '../util/origin.enum'
 import { map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
+import { Router } from '@angular/router'
+import { Imagen } from '../interfaces/imagen.interface'
 
 @Component({
   selector: 'app-home',
@@ -13,7 +15,26 @@ import { environment } from 'src/environments/environment'
 export class HomeComponent implements OnInit {
   restaurantes: Restaurante[]
 
-  constructor(private crudService: CrudService) {}
+  imagenes: Imagen[] = [
+    {
+      path:
+        'https://laspaginasamarillasdecolombia.com/galerias/fondo/estadero%20rancho%20llanerazo_fondo.jpg',
+    },
+    {
+      path:
+        'https://laspaginasamarillasdecolombia.com/galerias/aviso/estadero%20rancho%20llanerazo_aviso.jpg',
+    },
+    {
+      path:
+        'https://laspaginasamarillasdecolombia.com/galerias/fondo/estadero%20rancho%20llanerazo_fondo.jpg',
+    },
+    {
+      path:
+        'https://laspaginasamarillasdecolombia.com/galerias/aviso/estadero%20rancho%20llanerazo_aviso.jpg',
+    },
+  ]
+
+  constructor(private crudService: CrudService, private router: Router) {}
 
   ngOnInit() {
     this.getRestaurantes()
@@ -25,8 +46,12 @@ export class HomeComponent implements OnInit {
       .pipe(
         map((restaurantes) => {
           restaurantes = restaurantes.map((restaurante) => {
-            if (restaurante.imagen)
-              restaurante.imagen = `${environment.IMAGES_URL}${restaurante.imagen}/100x100`
+            const imagen = restaurante.imagen
+            if (imagen) {
+              restaurante.imagen.path =
+                environment.STORAGE_URL +
+                imagen.path.replace('original', 'pequeno')
+            }
             return restaurante
           })
           return restaurantes
@@ -40,5 +65,9 @@ export class HomeComponent implements OnInit {
           subscription.unsubscribe()
         },
       })
+  }
+
+  onClickRestaurante(restaurante: Restaurante) {
+    this.router.navigate(['restaurante', 'view', restaurante.id])
   }
 }

@@ -10,10 +10,32 @@
       <!------------------MENU------------------->
       <div class="col-md-auto">
         <button #homeButton mat-button [routerLink]="['']">Iinicio</button>
+
+        <!--Restaurante-->
+        <ng-container *ngIf="isLogedIn && user.rol_id === roles.Restaurante">
+          <button mat-button [routerLink]="['restaurante/personal']">
+            Personal
+          </button>
+          <button mat-button [routerLink]="['restaurante/productos']">
+            Productos
+          </button>
+          <button mat-button [routerLink]="['restaurante/mesas']">Mesas</button>
+          <button mat-button [routerLink]="['restaurante/reservas']">
+            Reservas
+          </button>
+          <button mat-button [routerLink]="['restaurante/ventas']">
+            Ventas
+          </button>
+        </ng-container>
+
+        <!--Admin-->
         <ng-container *ngIf="isLogedIn && user.rol_id === roles.Admin">
           <button mat-button [routerLink]="['categorias']">Categorías</button>
           <button mat-button [routerLink]="['restaurantes']">
             Restaurantes
+          </button>
+          <button mat-button [routerLink]="['metodos-pago']">
+            Metodos de pago
           </button>
         </ng-container>
 
@@ -24,15 +46,29 @@
 
       <div class="col-md-auto">
         <ng-container *ngIf="isLogedIn; else login">
-          <button mat-icon-button (click)="onLogout()">
-            Salir
+          <button
+            [routerLink]="['carrito']"
+            mat-button
+            matTooltip="Mi carrito de compras"
+            matBadgeColor="accent"
+            matBadgePosition="before"
+            [matBadge]="totalOrdenes"
+            [matBadgeHidden]="!totalOrdenes"
+          >
+            <mat-icon>shopping_cart</mat-icon>
+          </button>
+
+          <button mat-button [routerLink]="['perfil']" matTooltip="Mi cuenta">
+            <mat-icon>person</mat-icon>
+          </button>
+
+          <button matTooltip="Salir" mat-icon-button (click)="onLogout()">
             <mat-icon>logout</mat-icon>
           </button>
         </ng-container>
 
         <ng-template #login>
-          <button mat-icon-button (click)="onLogin()">
-            Ingresar
+          <button matTooltip="Entrar" mat-icon-button (click)="onLogin()">
             <mat-icon>login</mat-icon>
           </button>
         </ng-template>

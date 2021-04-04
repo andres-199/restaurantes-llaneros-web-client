@@ -1,0 +1,26 @@
+.restaurante-direction {
+  color: #9e9e9e;
+}
+
+.title {
+  margin-bottom: 0;
+}
+
+.producto-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.total {
+  width: 100%;
+  text-align: right;
+}
+
+.bold {
+  font-weight: 500;
+}
+
+h1 {
+  color: #795548 !important;
+}
