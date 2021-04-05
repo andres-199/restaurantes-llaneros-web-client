@@ -51,7 +51,7 @@ export class CarritoComponent implements OnInit {
           if (index >= 0) {
             restaurantes[index].Ordenes.push(orden)
           } else {
-            const restaurante = orden.Producto.Restaurant
+            const restaurante = { ...orden.Producto.Restaurant }
             restaurante.valorTotalOrdenes = 0
             restaurante.Ordenes = [orden]
             restaurantes.push(restaurante)
@@ -157,8 +157,7 @@ export class CarritoComponent implements OnInit {
     this.ordenesSelected = []
   }
 
-  private showMsg(message: string) {
-    const verticalPosition = 'bottom'
+  private showMsg(message: string, verticalPosition: any = 'bottom') {
     this._snackBar.open(message, 'Aceptar', {
       duration: 7000,
       verticalPosition,
@@ -182,6 +181,14 @@ export class CarritoComponent implements OnInit {
     const dialogRef = this.dialog.open(PurchaseComponent, {
       data: { restaurante, ordenes },
       minWidth: '500px',
+    })
+
+    dialogRef.afterClosed().subscribe((orden) => {
+      if (orden) {
+        this.getRestaurantes()
+        const msg = 'Orden registrada ✔'
+        this.showMsg(msg, 'top')
+      }
     })
   }
 }

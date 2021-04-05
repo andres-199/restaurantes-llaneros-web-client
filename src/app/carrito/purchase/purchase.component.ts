@@ -1,8 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core'
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog'
 import { AddDireccionComponent } from 'src/app/components/add-direccion/add-direccion.component'
 import { Carrito } from 'src/app/interfaces/carrito.interface'
 import { Direccion } from 'src/app/interfaces/direccion.interface'
+import { Orden } from 'src/app/interfaces/orden.interface'
 import { LoginService } from 'src/app/login/login.service'
 import { MetodoPago } from 'src/app/metodos-pago/metodo-pago.interface'
 import { PerfilService } from 'src/app/perfil/perfil.service'
@@ -24,13 +29,15 @@ export class PurchaseComponent implements OnInit {
   metodosPago: MetodoPago[]
   direccionSelected: Direccion
   metodoPagoSelected: MetodoPago
+  ordenVenta
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data,
     private userService: LoginService,
     private perfilService: PerfilService,
     private dialog: MatDialog,
-    private carritoService: CarritoService
+    private carritoService: CarritoService,
+    private dialogRef: MatDialogRef<PurchaseComponent>
   ) {}
 
   ngOnInit(): void {
@@ -87,5 +94,25 @@ export class PurchaseComponent implements OnInit {
   onCLickMetodoPago(paymentMethodList) {
     this.metodoPagoSelected =
       paymentMethodList.selectedOptions.selected[0]?.value
+  }
+
+  onClickOrdenar() {
+    this.createOrden()
+  }
+
+  private createOrden() {
+    const orden: Orden = {
+      fecha: new Date(),
+      detalles: this.ordenes,
+      direccion_entrega: this.direccionSelected,
+      metodo_pago: this.metodoPagoSelected,
+    }
+
+    return this.carritoService.createOrden(orden).subscribe({
+      next: (_orden) => {
+        if (this.metodoPagoSelected.contra_entrega) this.dialogRef.close(_orden)
+        else this.ordenVenta = _orden
+      },
+    })
   }
 }
