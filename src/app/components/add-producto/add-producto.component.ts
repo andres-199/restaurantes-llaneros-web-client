@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'
-import { Carrito } from 'src/app/interfaces/carrito.interface'
+import { Carrito } from 'src/app/carrito/interfaces/carrito.interface'
 import { Producto } from 'src/app/restaurante-platos/producto.interface'
 
 @Component({

@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { Carrito } from '../interfaces/carrito.interface'
+import { Carrito } from './interfaces/carrito.interface'
 import { Producto } from '../restaurante-platos/producto.interface'
 import { Restaurante } from '../restaurantes/restaurante.interface'
 import { CarritoService } from './carrito.service'
@@ -181,6 +181,7 @@ export class CarritoComponent implements OnInit {
     const dialogRef = this.dialog.open(PurchaseComponent, {
       data: { restaurante, ordenes },
       minWidth: '500px',
+      maxWidth: '700px',
     })
 
     dialogRef.afterClosed().subscribe((orden) => {

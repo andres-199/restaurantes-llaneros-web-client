@@ -6,6 +6,10 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { MatListModule } from '@angular/material/list'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatCardModule } from '@angular/material/card'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view'
 
 @NgModule({
   declarations: [PurchaseComponent],
@@ -16,6 +20,10 @@ import { MatIconModule } from '@angular/material/icon'
     MatListModule,
     MatDividerModule,
     MatIconModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    MatTooltipModule,
+    NgImageFullscreenViewModule,
   ],
 })
 export class PurchaseModule {}

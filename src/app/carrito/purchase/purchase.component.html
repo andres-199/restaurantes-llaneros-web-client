@@ -66,7 +66,7 @@
 </div>
 
 <div mat-dialog-actions align="end">
-  <ng-container *ngIf="!ordenVenta">
+  <ng-container *ngIf="!ordenVenta; else venta">
     <button mat-button mat-dialog-close>Cancelar</button>
     <button
       (click)="onClickOrdenar()"
@@ -76,16 +76,93 @@
       Ordenar
     </button>
   </ng-container>
+
+  <ng-template #venta>
+    <button (click)="onClickAceptar()" mat-button>Aceptar</button>
+  </ng-template>
 </div>
 
 <ng-template #soportePago>
-  <div>
-    {{ metodoPagoSelected.RestauranteMetodoPago.detalle }}
+  <mat-list role="list">
+    <small class="bold">
+      Siga las instrucciones y cargue el soporte de pago.
+    </small>
+  </mat-list>
+  <div style="display: flex; flex-direction: row">
+    <div>
+      <mat-list role="list">
+        <h1 matSubheader>Metodo de pago</h1>
+        <mat-list-item role="listitem">
+          <img
+            matListAvatar
+            [src]="metodoPagoSelected.imagen"
+            style="border-radius: 0"
+          />
+          {{ metodoPagoSelected.nombre }}
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          Cuenta No.
+          {{ metodoPagoSelected.RestauranteMetodoPago.numero_cuenta }}
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          Valor: {{ ordenVenta.valor | currency: 'COP':'symbol':'1.0' }}
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          {{ metodoPagoSelected.RestauranteMetodoPago.detalle }}
+        </mat-list-item>
+      </mat-list>
+
+      <img
+        *ngIf="paymentSupport"
+        class="payment-support-img"
+        [src]="paymentSupportThumbnail"
+        [alt]="paymentSupport.nombre"
+        (click)="showPaymentSupportFull = true"
+      />
+
+      <ng-image-fullscreen-view
+        [images]="[{ image: paymentSupportFull }]"
+        [imageIndex]="0"
+        [show]="showPaymentSupportFull"
+        (close)="showPaymentSupportFull = false"
+      ></ng-image-fullscreen-view>
+
+      <div style="margin-top: 2em">
+        <input
+          #image
+          type="file"
+          name="image"
+          accept="image/*"
+          hidden
+          (change)="onLoadImage($event.target.files)"
+        />
+        <button
+          [disabled]="iLoading"
+          (click)="image.click()"
+          class="full-width"
+          mat-raised-button
+          color="primary"
+          matTooltip="Agregar imagen"
+        >
+          <ng-container *ngIf="!iLoading; else loading">
+            <mat-icon>{{ paymentSupport ? 'sync' : 'add_a_photo' }}</mat-icon>
+            Cargar Soporte de Pago
+          </ng-container>
+          <ng-template #loading>
+            <div align="center">
+              <mat-spinner diameter="50"></mat-spinner>
+            </div>
+          </ng-template>
+        </button>
+      </div>
+    </div>
+    <div>
+      <img
+        src="assets/images/undraw_File_sync_re_0pcx.svg"
+        style="max-width: 350px"
+      />
+    </div>
   </div>
-  <img
-    src="assets/images/undraw_File_sync_re_0pcx.svg"
-    style="max-width: 450px"
-  />
 </ng-template>
 
 <ng-template #noDirections>
