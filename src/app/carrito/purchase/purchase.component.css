@@ -24,3 +24,9 @@
 h1 {
   color: #795548 !important;
 }
+
+.payment-support-img {
+  cursor: pointer;
+  max-height: 300px;
+  margin-top: 2em;
+}

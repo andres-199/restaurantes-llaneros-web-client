@@ -1,5 +1,5 @@
 import { Categoria } from '../categorias/categoria.interface'
-import { Carrito } from '../interfaces/carrito.interface'
+import { Carrito } from '../carrito/interfaces/carrito.interface'
 import { Imagen } from '../interfaces/imagen.interface'
 import { MetodoPago } from '../metodos-pago/metodo-pago.interface'
 import { Mesa } from '../restaurante-mesas/mesa.interface'

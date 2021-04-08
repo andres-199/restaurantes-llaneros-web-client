@@ -1,4 +1,4 @@
-import { Producto } from '../restaurante-platos/producto.interface'
+import { Producto } from '../../restaurante-platos/producto.interface'
 
 export interface Carrito {
   id?: number

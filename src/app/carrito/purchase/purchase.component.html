@@ -1,76 +1,169 @@
 <h1 class="title section" mat-dialog-title>{{ restaurante.nombre }}</h1>
 <small class="restaurante-direction">{{ restaurante.direccion }}</small>
 <div mat-dialog-content>
-  <div>
-    <mat-list role="list">
-      <h1 class="section" matSubheader>Resumen del pedido</h1>
-      <mat-list-item
-        style="font-size: 0.9em"
-        role="listitem"
-        *ngFor="let orden of ordenes"
-      >
-        <div class="producto-container">
-          <div>{{ orden.cantidad + '. ' }}</div>
-          <div style="flex-grow: 5">{{ orden.Producto.nombre }}</div>
-          <div style="float: right">
-            {{
-              orden.cantidad * orden.Producto?.precio
-                | currency: 'COP':'symbol':'1.0'
-            }}
+  <ng-container *ngIf="!ordenVenta; else soportePago">
+    <div>
+      <mat-list role="list">
+        <h1 class="section" matSubheader>Resumen del pedido</h1>
+        <mat-list-item
+          style="font-size: 0.9em"
+          role="listitem"
+          *ngFor="let orden of ordenes"
+        >
+          <div class="producto-container">
+            <div>{{ orden.cantidad + '. ' }}</div>
+            <div style="flex-grow: 5">{{ orden.Producto.nombre }}</div>
+            <div style="float: right">
+              {{
+                orden.cantidad * orden.Producto?.precio
+                  | currency: 'COP':'symbol':'1.0'
+              }}
+            </div>
           </div>
-        </div>
-      </mat-list-item>
-    </mat-list>
-    <mat-divider></mat-divider>
-    <div class="total">
-      Total:
-      {{ restaurante.valorTotalOrdenes | currency: 'COP':'symbol':'1.0' }}
+        </mat-list-item>
+      </mat-list>
+      <mat-divider></mat-divider>
+      <div class="total">
+        Total:
+        {{ restaurante.valorTotalOrdenes | currency: 'COP':'symbol':'1.0' }}
+      </div>
+    </div>
+
+    <div *ngIf="tercero">
+      <mat-selection-list #directions [multiple]="false">
+        <h1 class="section" matSubheader>Seleccione la dirección de entrega</h1>
+        <ng-container
+          *ngIf="tercero.Direcciones?.length > 0; else noDirections"
+        >
+          <mat-list-option
+            *ngFor="let direccion of tercero.Direcciones"
+            [value]="direccion"
+            (click)="onCLickDireccion(directions)"
+          >
+            {{ direccion.nombre }} - {{ direccion.direccion }}
+          </mat-list-option>
+        </ng-container>
+      </mat-selection-list>
+    </div>
+
+    <mat-selection-list #paymentMethods [multiple]="false">
+      <h1 class="section" matSubheader>Seleccione el medio de pago</h1>
+      <mat-list-option
+        *ngFor="let metodoPago of metodosPago"
+        [value]="metodoPago"
+        (click)="onCLickMetodoPago(paymentMethods)"
+      >
+        <img matListAvatar [src]="metodoPago.imagen" style="border-radius: 0" />
+        <p matLine class="bold">
+          {{ metodoPago.nombre }}
+        </p>
+        <p matLine>
+          {{ metodoPago.RestauranteMetodoPago?.detalle }}
+        </p>
+      </mat-list-option>
+    </mat-selection-list>
+  </ng-container>
+</div>
+
+<div mat-dialog-actions align="end">
+  <ng-container *ngIf="!ordenVenta; else venta">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button
+      (click)="onClickOrdenar()"
+      [disabled]="!metodoPagoSelected || !direccionSelected"
+      mat-button
+    >
+      Ordenar
+    </button>
+  </ng-container>
+
+  <ng-template #venta>
+    <button (click)="onClickAceptar()" mat-button>Aceptar</button>
+  </ng-template>
+</div>
+
+<ng-template #soportePago>
+  <mat-list role="list">
+    <small class="bold">
+      Siga las instrucciones y cargue el soporte de pago.
+    </small>
+  </mat-list>
+  <div style="display: flex; flex-direction: row">
+    <div>
+      <mat-list role="list">
+        <h1 matSubheader>Metodo de pago</h1>
+        <mat-list-item role="listitem">
+          <img
+            matListAvatar
+            [src]="metodoPagoSelected.imagen"
+            style="border-radius: 0"
+          />
+          {{ metodoPagoSelected.nombre }}
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          Cuenta No.
+          {{ metodoPagoSelected.RestauranteMetodoPago.numero_cuenta }}
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          Valor: {{ ordenVenta.valor | currency: 'COP':'symbol':'1.0' }}
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          {{ metodoPagoSelected.RestauranteMetodoPago.detalle }}
+        </mat-list-item>
+      </mat-list>
+
+      <img
+        *ngIf="paymentSupport"
+        class="payment-support-img"
+        [src]="paymentSupportThumbnail"
+        [alt]="paymentSupport.nombre"
+        (click)="showPaymentSupportFull = true"
+      />
+
+      <ng-image-fullscreen-view
+        [images]="[{ image: paymentSupportFull }]"
+        [imageIndex]="0"
+        [show]="showPaymentSupportFull"
+        (close)="showPaymentSupportFull = false"
+      ></ng-image-fullscreen-view>
+
+      <div style="margin-top: 2em">
+        <input
+          #image
+          type="file"
+          name="image"
+          accept="image/*"
+          hidden
+          (change)="onLoadImage($event.target.files)"
+        />
+        <button
+          [disabled]="iLoading"
+          (click)="image.click()"
+          class="full-width"
+          mat-raised-button
+          color="primary"
+          matTooltip="Agregar imagen"
+        >
+          <ng-container *ngIf="!iLoading; else loading">
+            <mat-icon>{{ paymentSupport ? 'sync' : 'add_a_photo' }}</mat-icon>
+            Cargar Soporte de Pago
+          </ng-container>
+          <ng-template #loading>
+            <div align="center">
+              <mat-spinner diameter="50"></mat-spinner>
+            </div>
+          </ng-template>
+        </button>
+      </div>
+    </div>
+    <div>
+      <img
+        src="assets/images/undraw_File_sync_re_0pcx.svg"
+        style="max-width: 350px"
+      />
     </div>
   </div>
-
-  <div *ngIf="tercero">
-    <mat-selection-list #directions [multiple]="false">
-      <h1 class="section" matSubheader>Seleccione la dirección de entrega</h1>
-      <ng-container *ngIf="tercero.Direcciones?.length > 0; else noDirections">
-        <mat-list-option
-          *ngFor="let direccion of tercero.Direcciones"
-          [value]="direccion"
-          (click)="onCLickDireccion(directions)"
-        >
-          {{ direccion.nombre }} - {{ direccion.direccion }}
-        </mat-list-option>
-      </ng-container>
-    </mat-selection-list>
-  </div>
-
-  <mat-selection-list #paymentMethods [multiple]="false">
-    <h1 class="section" matSubheader>Seleccione el medio de pago</h1>
-    <mat-list-option
-      *ngFor="let metodoPago of metodosPago"
-      [value]="metodoPago"
-      (click)="onCLickMetodoPago(paymentMethods)"
-    >
-      <img matListAvatar [src]="metodoPago.imagen" style="border-radius: 0" />
-      <p matLine class="bold">
-        {{ metodoPago.nombre }}
-      </p>
-      <p matLine>
-        {{ metodoPago.RestauranteMetodoPago?.detalle }}
-      </p>
-    </mat-list-option>
-  </mat-selection-list>
-</div>
-<div mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancelar</button>
-  <button
-    [disabled]="!metodoPagoSelected || !direccionSelected"
-    mat-button
-    [mat-dialog-close]="true"
-    cdkFocusInitial
-  >
-    Ordenar
-  </button>
-</div>
+</ng-template>
 
 <ng-template #noDirections>
   <div style="color: #795548; font-size: 1em" align="center">
