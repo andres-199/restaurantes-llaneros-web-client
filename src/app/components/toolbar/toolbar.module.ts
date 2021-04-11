@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { RouterModule } from '@angular/router'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatBadgeModule } from '@angular/material/badge'
+import { MatMenuModule } from '@angular/material/menu'
 
 @NgModule({
   declarations: [ToolbarComponent],
@@ -18,6 +19,7 @@ import { MatBadgeModule } from '@angular/material/badge'
     RouterModule,
     MatTooltipModule,
     MatBadgeModule,
+    MatMenuModule,
   ],
   exports: [ToolbarComponent],
 })

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { ActivatedRoute } from '@angular/router'
 import { environment } from 'src/environments/environment'
 import { ConfirmComponent } from '../carrito/confirm/confirm.component'
 import { AddDireccionComponent } from '../components/add-direccion/add-direccion.component'
@@ -27,15 +28,18 @@ export class PerfilComponent implements OnInit {
   loadingPhoto = false
   user: Usuario
   imagen: Imagen
+  selectedIndexTab: number
   constructor(
     private loginService: LoginService,
     private perfilService: PerfilService,
     private imageService: ImageService,
     private _snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.selectedIndexTab = this.activatedRoute.snapshot.queryParams['tab'] || 0
     this.user = this.loginService.user
     if (this.user.rol_id === Roles.Restaurante) this.showRestauranteTab = true
     this.getPerfil(this.user.tercero_id)

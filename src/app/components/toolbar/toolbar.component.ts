@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { MatMenuTrigger } from '@angular/material/menu'
 import { Router } from '@angular/router'
 import { CarritoService } from 'src/app/carrito/carrito.service'
 import { Roles } from 'src/app/interfaces/roles.enum'
@@ -15,6 +16,10 @@ export class ToolbarComponent implements OnInit {
   user: Usuario
   roles = Roles
   totalOrdenes = 0
+  closeRestauranteMenuTimeOut
+
+  @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger
+
   constructor(
     private loginService: LoginService,
     private router: Router,
@@ -38,5 +43,19 @@ export class ToolbarComponent implements OnInit {
     this.router.navigate([''])
     this.isLogedIn = this.loginService.isLogedIn
     this.carritoServie.updateTotalOrdenes()
+  }
+
+  onMouseEnterRestaurante() {
+    if (this.closeRestauranteMenuTimeOut) {
+      clearTimeout(this.closeRestauranteMenuTimeOut)
+    }
+
+    this.menuTrigger.openMenu()
+  }
+
+  onMouseLeaveRestaurante() {
+    this.closeRestauranteMenuTimeOut = setTimeout(() => {
+      this.menuTrigger.closeMenu()
+    }, 50)
   }
 }
