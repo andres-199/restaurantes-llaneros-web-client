@@ -11,23 +11,6 @@
       <div class="col-md-auto">
         <button #homeButton mat-button [routerLink]="['']">Iinicio</button>
 
-        <!--Restaurante-->
-        <ng-container *ngIf="isLogedIn && user.rol_id === roles.Restaurante">
-          <button mat-button [routerLink]="['restaurante/personal']">
-            Personal
-          </button>
-          <button mat-button [routerLink]="['restaurante/productos']">
-            Productos
-          </button>
-          <button mat-button [routerLink]="['restaurante/mesas']">Mesas</button>
-          <button mat-button [routerLink]="['restaurante/reservas']">
-            Reservas
-          </button>
-          <button mat-button [routerLink]="['restaurante/ventas']">
-            Ventas
-          </button>
-        </ng-container>
-
         <!--Admin-->
         <ng-container *ngIf="isLogedIn && user.rol_id === roles.Admin">
           <button mat-button [routerLink]="['categorias']">Categorías</button>
@@ -46,17 +29,71 @@
 
       <div class="col-md-auto">
         <ng-container *ngIf="isLogedIn; else login">
+          <button mat-button [routerLink]="['restaurante/compras']">
+            Compras
+          </button>
+
+          <button mat-button [routerLink]="['restaurante/ventas']">
+            Ventas
+          </button>
+
           <button
             [routerLink]="['carrito']"
             mat-button
             matTooltip="Mi carrito de compras"
-            matBadgeColor="accent"
-            matBadgePosition="before"
-            [matBadge]="totalOrdenes"
-            [matBadgeHidden]="!totalOrdenes"
           >
-            <mat-icon>shopping_cart</mat-icon>
+            <mat-icon
+              matBadgeColor="accent"
+              [matBadge]="totalOrdenes"
+              [matBadgeHidden]="!totalOrdenes"
+              >shopping_cart</mat-icon
+            >
           </button>
+
+          <!--Restaurante------------------->
+          <ng-container *ngIf="isLogedIn && user.rol_id === roles.Restaurante">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              (mouseenter)="onMouseEnterRestaurante()"
+              (mouseleave)="onMouseLeaveRestaurante()"
+            >
+              <mat-icon>store</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" [hasBackdrop]="false">
+              <div
+                (mouseenter)="onMouseEnterRestaurante()"
+                (mouseleave)="onMouseLeaveRestaurante()"
+              >
+                <button
+                  mat-menu-item
+                  [routerLink]="['perfil']"
+                  [queryParams]="{ tab: 1 }"
+                >
+                  <mat-icon>create</mat-icon>
+                  <span>Información Basica </span>
+                </button>
+                <button mat-menu-item [routerLink]="['restaurante/personal']">
+                  <mat-icon>people</mat-icon>
+                  <span> Personal </span>
+                </button>
+                <button mat-menu-item [routerLink]="['restaurante/productos']">
+                  <mat-icon> fastfood</mat-icon>
+                  <span> Productos </span>
+                </button>
+                <button mat-menu-item [routerLink]="['restaurante/mesas']">
+                  <mat-icon> table_chart</mat-icon>
+                  <span> Mesas </span>
+                </button>
+                <button mat-menu-item [routerLink]="['restaurante/reservas']">
+                  <mat-icon>av_timer</mat-icon>
+                  <span> Reservas </span>
+                </button>
+              </div>
+            </mat-menu>
+          </ng-container>
+
+          <!------------------------->
 
           <button mat-button [routerLink]="['perfil']" matTooltip="Mi cuenta">
             <mat-icon>person</mat-icon>
