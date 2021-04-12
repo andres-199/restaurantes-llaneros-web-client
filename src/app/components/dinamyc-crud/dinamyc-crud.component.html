@@ -30,10 +30,12 @@
         <ng-container *ngIf="!col.type; else templates">
           {{ data[col.field] }}
         </ng-container>
+
         <ng-template #templates>
           <ul *ngIf="col.type === 'list'">
             <li *ngFor="let item of data[col.field]">{{ item }}</li>
           </ul>
+
           <ng-container *ngIf="col.type === 'image'">
             <img
               class="image"
@@ -42,9 +44,35 @@
               *ngFor="let image of data[col.field]"
             />
           </ng-container>
+
           <p *ngIf="col.type === 'date'">
             {{ data[col.field] | date: 'EEEE, MMMM d, y, h:mm a' }}
           </p>
+
+          <p *ngIf="col.type === 'money'">
+            {{ data[col.field] | currency: 'COP':'symbol':'1.0' }}
+          </p>
+
+          <mat-chip-list *ngIf="col.type === 'chips'">
+            <mat-chip
+              selected
+              [color]="chip.color"
+              *ngFor="let chip of data[col.field]"
+            >
+              {{ chip.text }}
+            </mat-chip>
+          </mat-chip-list>
+
+          <mat-list *ngIf="col.type === 'payment-method'">
+            <mat-list-item>
+              <img
+                matListAvatar
+                style="border-radius: 0"
+                [src]="data[col.field].imagen"
+              />
+              <h3 matLine>{{ data[col.field].nombre }}</h3>
+            </mat-list-item>
+          </mat-list>
         </ng-template>
       </td>
     </ng-container>
@@ -94,7 +122,12 @@
 
     <!--template rows-->
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+    <tr
+      [ngClass]="{ hover: activeHover }"
+      mat-row
+      *matRowDef="let myRowData; columns: columnsToDisplay"
+      (click)="onClickRow.emit(myRowData)"
+    ></tr>
     <!--/template rows-->
     <tr class="mat-row" *matNoDataRow>
       <td class="mat-cell">

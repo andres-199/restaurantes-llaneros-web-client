@@ -13,6 +13,8 @@ import { CrudService } from './crud.service'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatInputModule } from '@angular/material/input'
+import { MatChipsModule } from '@angular/material/chips'
+import { MatListModule } from '@angular/material/list'
 
 @NgModule({
   declarations: [DinamycCrudComponent],
@@ -28,6 +30,8 @@ import { MatInputModule } from '@angular/material/input'
     MatTooltipModule,
     MatSnackBarModule,
     MatInputModule,
+    MatChipsModule,
+    MatListModule,
   ],
   exports: [DinamycCrudComponent],
   entryComponents: [DinamycFormComponent],

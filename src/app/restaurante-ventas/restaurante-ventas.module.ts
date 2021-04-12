@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RestauranteVentasComponent } from './restaurante-ventas.component'
 import { RouterModule, Routes } from '@angular/router'
+import { DinamycCrudModule } from '../components/dinamyc-crud/dinamyc-crud.module'
+import { MatCardModule } from '@angular/material/card'
+import { MatDialogModule } from '@angular/material/dialog'
+import { OrdenModule } from './orden/orden.module'
 
 const routes: Routes = [
   {
@@ -12,6 +16,13 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [RestauranteVentasComponent],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    DinamycCrudModule,
+    MatCardModule,
+    MatDialogModule,
+    OrdenModule,
+  ],
 })
 export class RestauranteVentasModule {}

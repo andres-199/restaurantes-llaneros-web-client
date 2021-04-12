@@ -139,8 +139,6 @@ export class CarritoComponent implements OnInit {
 
   private async deleteSelectedOrders() {
     for (const orden of this.ordenesSelected) {
-      console.log(this.ordenesSelected)
-
       const _orden: Carrito = orden.value
 
       await this.carritoService.deleteOrden(_orden).toPromise()
@@ -187,7 +185,8 @@ export class CarritoComponent implements OnInit {
     dialogRef.afterClosed().subscribe((orden) => {
       if (orden) {
         this.getRestaurantes()
-        const msg = 'Orden registrada ✔'
+        const msg =
+          'Orden registrada ✔, en um momento el Restaurante revisará tu orden.'
         this.showMsg(msg, 'top')
       }
     })
