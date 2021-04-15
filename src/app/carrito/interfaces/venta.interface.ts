@@ -1,6 +1,8 @@
 import { Direccion } from 'src/app/interfaces/direccion.interface'
 import { Imagen } from 'src/app/interfaces/imagen.interface'
 import { MetodoPago } from 'src/app/metodos-pago/metodo-pago.interface'
+import { Tercero } from 'src/app/registro/tercero.interface'
+import { DetalleVenta } from 'src/app/restaurante-ventas/interfaces/detalle-venta.interface'
 
 export interface Venta {
   id?: number
@@ -13,4 +15,6 @@ export interface Venta {
   rechazada?: boolean
   direccion_entrega?: Direccion
   metodo_pago?: MetodoPago
+  Tercero?: Tercero
+  DetalleVenta?: DetalleVenta[]
 }

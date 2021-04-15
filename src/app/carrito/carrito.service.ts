@@ -13,7 +13,7 @@ import { Venta } from './interfaces/venta.interface'
   providedIn: 'root',
 })
 export class CarritoService {
-  totalOrdenes = new BehaviorSubject<number>(0)
+  totalOrdenes = new BehaviorSubject(0)
   constructor(private http: HttpClient, private loginService: LoginService) {
     this.updateTotalOrdenes()
   }

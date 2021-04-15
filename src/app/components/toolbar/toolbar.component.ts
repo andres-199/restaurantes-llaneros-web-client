@@ -5,6 +5,7 @@ import { CarritoService } from 'src/app/carrito/carrito.service'
 import { Roles } from 'src/app/interfaces/roles.enum'
 import { LoginService } from 'src/app/login/login.service'
 import { Usuario } from 'src/app/registro/usuario.interface'
+import { VentasService } from 'src/app/restaurante-ventas/ventas.service'
 
 @Component({
   selector: 'app-toolbar',
@@ -16,6 +17,7 @@ export class ToolbarComponent implements OnInit {
   user: Usuario
   roles = Roles
   totalOrdenes = 0
+  totalVentas = 0
   closeRestauranteMenuTimeOut
 
   @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger
@@ -23,7 +25,8 @@ export class ToolbarComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private carritoServie: CarritoService
+    private carritoServie: CarritoService,
+    private ventaService: VentasService
   ) {}
 
   ngOnInit() {
@@ -31,6 +34,9 @@ export class ToolbarComponent implements OnInit {
     this.user = this.loginService.user
     this.carritoServie.totalOrdenes.subscribe((totalOrdenes) => {
       this.totalOrdenes = totalOrdenes
+    })
+    this.ventaService.totalVentas.subscribe((totalVentas) => {
+      this.totalVentas = totalVentas
     })
   }
 
@@ -57,5 +63,9 @@ export class ToolbarComponent implements OnInit {
     this.closeRestauranteMenuTimeOut = setTimeout(() => {
       this.menuTrigger.closeMenu()
     }, 50)
+  }
+
+  onClickHome() {
+    this.router.navigate([''])
   }
 }

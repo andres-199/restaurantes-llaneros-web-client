@@ -2,15 +2,13 @@
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col">
-        <span (click)="homeButton._elementRef.nativeElement.click()"
+        <span style="cursor: pointer" (click)="onClickHome()"
           >Restaurantes Llaneros</span
         >
       </div>
 
       <!------------------MENU------------------->
       <div class="col-md-auto">
-        <button #homeButton mat-button [routerLink]="['']">Iinicio</button>
-
         <!--Admin-->
         <ng-container *ngIf="isLogedIn && user.rol_id === roles.Admin">
           <button mat-button [routerLink]="['categorias']">Categorías</button>
@@ -29,12 +27,23 @@
 
       <div class="col-md-auto">
         <ng-container *ngIf="isLogedIn; else login">
+          <ng-container *ngIf="user.rol_id === roles.Restaurante">
+            <button mat-button [routerLink]="['restaurante/reservas']">
+              <span> Reservas </span>
+            </button>
+            <button
+              matBadgeColor="accent"
+              [matBadge]="totalVentas"
+              [matBadgeHidden]="!totalVentas"
+              mat-button
+              [routerLink]="['restaurante/ventas']"
+            >
+              Ventas
+            </button>
+          </ng-container>
+
           <button mat-button [routerLink]="['restaurante/compras']">
             Compras
-          </button>
-
-          <button mat-button [routerLink]="['restaurante/ventas']">
-            Ventas
           </button>
 
           <button
@@ -84,10 +93,6 @@
                 <button mat-menu-item [routerLink]="['restaurante/mesas']">
                   <mat-icon> table_chart</mat-icon>
                   <span> Mesas </span>
-                </button>
-                <button mat-menu-item [routerLink]="['restaurante/reservas']">
-                  <mat-icon>av_timer</mat-icon>
-                  <span> Reservas </span>
                 </button>
               </div>
             </mat-menu>

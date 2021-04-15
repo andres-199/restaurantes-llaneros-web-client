@@ -29,7 +29,15 @@ export interface Col {
   header: string
   field: string
   width?: string
-  type?: 'list' | 'array' | 'object' | 'image' | 'date'
+  type?:
+    | 'list'
+    | 'array'
+    | 'object'
+    | 'image'
+    | 'date'
+    | 'money'
+    | 'chips'
+    | 'payment-method'
 }
 
 export interface FormField {
@@ -76,6 +84,8 @@ export class DinamycCrudComponent implements OnInit {
   public originForm = undefined
   @Input()
   public menuOptions: MenuOption[]
+  @Input()
+  public activeHover = false
 
   public dataSource: any
   public exportConfig = Export_Config
@@ -84,6 +94,7 @@ export class DinamycCrudComponent implements OnInit {
   private paginator: MatPaginator
 
   @Output() onLoadDataSource = new EventEmitter<any>()
+  @Output() onClickRow = new EventEmitter<any>()
 
   constructor(
     private dialog: MatDialog,
@@ -186,8 +197,6 @@ export class DinamycCrudComponent implements OnInit {
     const _origin = `${this.origin}/${id}`
     this.service.delete(_origin).subscribe(
       (res) => {
-        console.log('delete>>>', res)
-
         this.getDataSource()
         this.onSuccess(false)
       },

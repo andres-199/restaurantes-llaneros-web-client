@@ -1,0 +1,100 @@
+<small class="label">Cliente: {{ venta.Tercero }}</small>
+
+<small class="label" style="float: right"
+  >Orden de venta No.{{ venta.id }}</small
+>
+
+<div mat-dialog-content>
+  <mat-list role="list">
+    <h1 matSubheader>Resumen del pedido</h1>
+    <mat-list-item
+      style="font-size: 0.9em"
+      role="listitem"
+      *ngFor="let orden of venta.DetalleVenta"
+    >
+      <img
+        matListAvatar
+        [src]="orden.Producto?.Imagenes[0]?.path"
+        [alt]="orden.Producto?.nombre"
+        style="border-radius: 0"
+      />
+      <div class="producto-container">
+        <div class="orden-nombre">{{ orden.Producto.nombre }}</div>
+        <div style="flex-grow: 2">{{ ' x' + orden.cantidad }}</div>
+        <div style="float: right">
+          {{
+            orden.cantidad * orden.Producto?.precio
+              | currency: 'COP':'symbol':'1.0'
+          }}
+        </div>
+      </div>
+    </mat-list-item>
+  </mat-list>
+  <mat-divider></mat-divider>
+  <div class="total">
+    Total:
+    {{ venta.valor | currency: 'COP':'symbol':'1.0' }}
+  </div>
+
+  <mat-list>
+    <h1 matSubheader>Dirección de entrega</h1>
+    <mat-list-item>
+      <div class="row" style="width: 100%">
+        <div class="col">
+          <mat-icon color="primary">home</mat-icon>
+          <span style="margin-left: 0.5em">{{ venta.direccion_entrega }}</span>
+        </div>
+        <div class="col">
+          <mat-icon color="primary"> phone</mat-icon>
+          <span style="margin-left: 0.5em">{{ venta['telefono'] }}</span>
+        </div>
+      </div>
+    </mat-list-item>
+  </mat-list>
+
+  <mat-list>
+    <h1 matSubheader>Metodo de pago</h1>
+    <mat-list-item *ngIf="venta.metodo_pago as metodoPago">
+      <img matListAvatar [src]="metodoPago.imagen" style="border-radius: 0" />
+      <p matLine class="bold">
+        {{ metodoPago.nombre }}
+      </p>
+      <p matLine>
+        {{ metodoPago.RestauranteMetodoPago?.numero_cuenta }}
+      </p>
+    </mat-list-item>
+  </mat-list>
+
+  <mat-list *ngIf="venta.soporte_pago">
+    <h1 matSubheader>Soporte de pago</h1>
+    <div>
+      <img
+        class="payment-support-img"
+        [src]="paymentSupportThumbnail"
+        (click)="showPaymentSupportFull = true"
+      />
+      <ng-image-fullscreen-view
+        [images]="[{ image: paymentSupportFull }]"
+        [imageIndex]="0"
+        [show]="showPaymentSupportFull"
+        (close)="showPaymentSupportFull = false"
+      ></ng-image-fullscreen-view>
+    </div>
+  </mat-list>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button color="primary" [mat-dialog-close]="false">
+    <mat-icon>not_interested</mat-icon>
+    Rechazar orden
+  </button>
+  <button
+    matTooltip="Aceptar y enviar orden"
+    mat-fab
+    color="primary"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+  >
+    <mat-icon>check</mat-icon>
+  </button>
+</div>

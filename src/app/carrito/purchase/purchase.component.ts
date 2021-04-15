@@ -37,6 +37,7 @@ export class PurchaseComponent implements OnInit {
   iLoading = false
   paymentSupport: Imagen
   showPaymentSupportFull = false
+  disableOrdenar = false
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data,
@@ -105,6 +106,7 @@ export class PurchaseComponent implements OnInit {
   }
 
   onClickOrdenar() {
+    this.disableOrdenar = true
     this.createOrden()
   }
 
@@ -120,6 +122,9 @@ export class PurchaseComponent implements OnInit {
       next: (_orden) => {
         if (this.metodoPagoSelected.contra_entrega) this.dialogRef.close(_orden)
         else this.ordenVenta = _orden
+      },
+      complete: () => {
+        this.disableOrdenar = false
       },
     })
   }
