@@ -73,7 +73,6 @@
         [src]="paymentSupportThumbnail"
         (click)="showPaymentSupportFull = true"
       />
-
       <ng-image-fullscreen-view
         [images]="[{ image: paymentSupportFull }]"
         [imageIndex]="0"
@@ -84,6 +83,18 @@
   </mat-list>
 </div>
 
-<button mat-fab color="primary" style="float: right">
-  <mat-icon>not_interested</mat-icon>
-</button>
+<div mat-dialog-actions align="end">
+  <button mat-button color="primary" [mat-dialog-close]="false">
+    <mat-icon>not_interested</mat-icon>
+    Rechazar orden
+  </button>
+  <button
+    matTooltip="Aceptar y enviar orden"
+    mat-fab
+    color="primary"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+  >
+    <mat-icon>check</mat-icon>
+  </button>
+</div>

@@ -6,6 +6,7 @@ import { MatListModule } from '@angular/material/list'
 import { MatIconModule } from '@angular/material/icon'
 import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view'
 import { MatButtonModule } from '@angular/material/button'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 @NgModule({
   declarations: [OrdenComponent],
@@ -16,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button'
     MatIconModule,
     NgImageFullscreenViewModule,
     MatButtonModule,
+    MatTooltipModule,
   ],
 })
 export class OrdenModule {}

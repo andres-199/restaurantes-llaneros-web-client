@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { environment } from 'src/environments/environment'
 import { Venta } from '../carrito/interfaces/venta.interface'
 import {
   Col,
-  FormField,
+  DinamycCrudComponent,
 } from '../components/dinamyc-crud/dinamyc-crud.component'
+import { LoginService } from '../login/login.service'
 import { Producto } from '../restaurante-platos/producto.interface'
 import { OrdenComponent } from './orden/orden.component'
+import { VentasService } from './ventas.service'
 
 @Component({
   selector: 'app-restaurante-ventas',
@@ -35,15 +38,27 @@ export class RestauranteVentasComponent implements OnInit {
     { header: 'ESTADO', field: 'estado', type: 'chips' },
   ]
 
-  public origin = 'ventas'
+  public origin
+  public iLoaded = false
 
-  constructor(private dialog: MatDialog) {}
+  @ViewChild(DinamycCrudComponent) dinamycCrud: DinamycCrudComponent
+  constructor(
+    private dialog: MatDialog,
+    private ventaServise: VentasService,
+    private _snackBar: MatSnackBar,
+    private loginService: LoginService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const user = this.loginService.user
+    this.origin = `restaurantes/${user.Tercero.restaurante_id}/ventas`
+    setTimeout(() => {
+      this.iLoaded = true
+    })
+  }
 
   onLoadVentas(ventas: Venta[]) {
-    console.log(ventas)
-
+    this.ventaServise.updateTotalVentas()
     ventas = ventas.map((venta) => {
       const { nombre, apellido } = venta.Tercero
       venta.Tercero = (nombre + ' ' + apellido) as any
@@ -65,12 +80,35 @@ export class RestauranteVentasComponent implements OnInit {
   }
 
   onClickVenta(venta: Venta) {
-    console.log(venta)
-
     const dialogRef = this.dialog.open(OrdenComponent, {
       minWidth: '600px',
       maxWidth: '700px',
       data: { venta },
+    })
+
+    dialogRef.afterClosed().subscribe((acepted) => {
+      if (acepted) this.confirmVenta(venta)
+      else if (acepted === false) this.rejectVenta(venta)
+    })
+  }
+
+  private confirmVenta(venta: Venta) {
+    this.ventaServise.confirmVenta(venta).subscribe({
+      next: (_venta) => {
+        const msg = `La orden de venta No. ${venta.id} fue aceptada y se le notificará al cliente que su pedido será enviado 🏍`
+        this.showMsg(msg, 'top')
+        this.dinamycCrud.getDataSource()
+      },
+    })
+  }
+
+  private rejectVenta(venta: Venta) {
+    this.ventaServise.rejectVenta(venta).subscribe({
+      next: (_venta) => {
+        const msg = `La orden de venta No. ${venta.id} fue rechazada y se le notificará al cliente para que verifique la información.`
+        this.showMsg(msg, 'top')
+        this.dinamycCrud.getDataSource()
+      },
     })
   }
 
@@ -81,5 +119,12 @@ export class RestauranteVentasComponent implements OnInit {
       return imagen
     })
     return producto
+  }
+
+  private showMsg(message: string, verticalPosition: any = 'bottom') {
+    this._snackBar.open(message, 'Aceptar', {
+      duration: 7000,
+      verticalPosition,
+    })
   }
 }

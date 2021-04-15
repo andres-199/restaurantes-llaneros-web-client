@@ -8,8 +8,10 @@
         [cols]="cols"
         [origin]="origin"
         [activeHover]="true"
+        [hideCreate]="true"
         (onLoadDataSource)="onLoadVentas($event)"
         (onClickRow)="onClickVenta($event)"
+        *ngIf="iLoaded"
       >
       </app-dinamyc-crud>
     </mat-card-content>
