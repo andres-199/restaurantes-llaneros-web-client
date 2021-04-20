@@ -105,6 +105,11 @@ const routes: Routes = [
       ),
     canActivate: [LoginGuard],
   },
+  {
+    path: 'compras',
+    loadChildren: () =>
+      import('./compras/compras.module').then((r) => r.ComprasModule),
+  },
 ]
 
 @NgModule({
