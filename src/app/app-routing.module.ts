@@ -109,6 +109,13 @@ const routes: Routes = [
     path: 'compras',
     loadChildren: () =>
       import('./compras/compras.module').then((r) => r.ComprasModule),
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'mis-reservas',
+    loadChildren: () =>
+      import('./reservas/reservas.module').then((res) => res.ReservasModule),
+    canActivate: [LoginGuard],
   },
 ]
 

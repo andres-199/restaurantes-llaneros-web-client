@@ -1,1 +1,18 @@
-<p>reservas works!</p>
+<div class="container">
+  <mat-card>
+    <mat-card-title> MIS RESERVAS </mat-card-title>
+
+    <mat-card-content>
+      <app-dinamyc-crud
+        [columnsToDisplay]="columnsToDisplay"
+        [cols]="cols"
+        [origin]="origin"
+        [hideCreate]="true"
+        [hideEdit]="true"
+        (onLoadDataSource)="onLoadReservas($event)"
+        *ngIf="iLoaded"
+      >
+      </app-dinamyc-crud>
+    </mat-card-content>
+  </mat-card>
+</div>
