@@ -83,7 +83,7 @@
   </mat-list>
 </div>
 
-<div mat-dialog-actions align="end">
+<div mat-dialog-actions align="end" *ngIf="!venta.valida">
   <button mat-button color="primary" [mat-dialog-close]="false">
     <mat-icon>not_interested</mat-icon>
     Rechazar orden

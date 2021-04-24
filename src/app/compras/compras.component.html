@@ -1,1 +1,19 @@
-<p>compras works!</p>
+<div class="container">
+  <mat-card>
+    <mat-card-title> COMPRAS </mat-card-title>
+
+    <mat-card-content>
+      <app-dinamyc-crud
+        [columnsToDisplay]="columnsToDisplay"
+        [cols]="cols"
+        [origin]="origin"
+        [activeHover]="true"
+        [hideCreate]="true"
+        (onLoadDataSource)="onLoadCompras($event)"
+        (onClickRow)="onClickCompra($event)"
+        *ngIf="iLoaded"
+      >
+      </app-dinamyc-crud>
+    </mat-card-content>
+  </mat-card>
+</div>
