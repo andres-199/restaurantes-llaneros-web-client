@@ -1,16 +1,15 @@
 <div class="container">
   <mat-card>
-    <mat-card-title> PERSONAL </mat-card-title>
+    <mat-card-title> MIS RESERVAS </mat-card-title>
 
     <mat-card-content>
       <app-dinamyc-crud
         [columnsToDisplay]="columnsToDisplay"
         [cols]="cols"
-        [formFields]="formFields"
         [origin]="origin"
         [hideCreate]="true"
         [hideEdit]="true"
-        [disabbleButtonRule]="disableButtonRule"
+        (onLoadDataSource)="onLoadReservas($event)"
         *ngIf="iLoaded"
       >
       </app-dinamyc-crud>
