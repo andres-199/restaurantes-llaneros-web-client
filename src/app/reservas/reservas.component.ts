@@ -46,6 +46,5 @@ export class ReservasComponent implements OnInit {
       reserva['direccion'] = reserva.Restaurant?.direccion
       return reserva
     })
-    console.log(reservas)
   }
 }

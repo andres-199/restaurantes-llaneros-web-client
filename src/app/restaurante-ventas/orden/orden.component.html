@@ -1,8 +1,16 @@
-<small class="label">Cliente: {{ venta.Tercero }}</small>
-
-<small class="label" style="float: right"
-  >Orden de venta No.{{ venta.id }}</small
+<small class="label" *ngIf="data.venta; else compra"
+  >Cliente: {{ venta.Tercero }}</small
 >
+<ng-template #compra>
+  <small class="label">Restaurante: {{ venta.Restaurant.nombre }}</small>
+</ng-template>
+
+<small class="status">
+  {{ venta['estado'][0].text }}
+</small>
+<small class="label" style="float: right">
+  Orden de venta No.{{ venta.id }}
+</small>
 
 <div mat-dialog-content>
   <mat-list role="list">
@@ -83,7 +91,11 @@
   </mat-list>
 </div>
 
-<div mat-dialog-actions align="end">
+<div
+  mat-dialog-actions
+  align="end"
+  *ngIf="!venta.valida && !venta.rechazada && data.venta"
+>
   <button mat-button color="primary" [mat-dialog-close]="false">
     <mat-icon>not_interested</mat-icon>
     Rechazar orden

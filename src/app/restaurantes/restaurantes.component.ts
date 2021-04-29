@@ -78,9 +78,7 @@ export class RestaurantesComponent implements OnInit {
         this.dinamycCrud.getDataSource()
         this.snackBar.open(response?.message, SnackBarActions.Aceptar)
       },
-      error: (e) => {
-        console.log(e)
-      },
+      error: (e) => {},
       complete: () => {
         subscription.unsubscribe()
       },
