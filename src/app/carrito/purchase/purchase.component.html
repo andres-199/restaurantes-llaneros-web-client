@@ -112,6 +112,15 @@
         </mat-list-item>
       </mat-list>
 
+      <mat-list
+        role="list"
+        *ngIf="ordenVenta['estado'] && ordenVenta.soporte_pago"
+      >
+        <h2 style="color: #795548" class="bold">
+          {{ ordenVenta['estado'][0].text }}
+        </h2>
+      </mat-list>
+
       <img
         *ngIf="paymentSupport"
         class="payment-support-img"

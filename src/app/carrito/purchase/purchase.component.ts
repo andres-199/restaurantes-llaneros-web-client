@@ -52,6 +52,10 @@ export class PurchaseComponent implements OnInit {
   ngOnInit(): void {
     this.restaurante = this.data?.restaurante
     this.ordenes = this.data?.ordenes
+    this.ordenVenta = this.data?.ordenVenta
+    this.metodoPagoSelected = this.ordenVenta?.metodo_pago
+    this.paymentSupport = this.ordenVenta?.soporte_pago
+
     this.getPerfil()
     this.getPaymentMethods()
   }
@@ -130,13 +134,16 @@ export class PurchaseComponent implements OnInit {
   }
 
   onClickAceptar() {
+    const oldPaymentSupport = this.ordenVenta?.soporte_pago
     if (this.paymentSupport) {
-      this.ordenVenta.soporte_pago = this.paymentSupport
-      this.carritoService.updateOrdenVenta(this.ordenVenta).subscribe({
-        next: (venta) => {
-          this.dialogRef.close(this.ordenVenta)
-        },
-      })
+      if (this.paymentSupport !== oldPaymentSupport) {
+        this.ordenVenta.soporte_pago = this.paymentSupport
+        this.carritoService.updateOrdenVenta(this.ordenVenta).subscribe({
+          next: (venta) => {
+            this.dialogRef.close(this.ordenVenta)
+          },
+        })
+      }
     }
   }
 
