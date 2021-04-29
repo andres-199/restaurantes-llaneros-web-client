@@ -11,10 +11,12 @@ import { environment } from 'src/environments/environment'
 export class OrdenComponent implements OnInit {
   venta: Venta
   showPaymentSupportFull = false
+  isCompra = false
   constructor(@Inject(MAT_DIALOG_DATA) public data) {}
 
   ngOnInit(): void {
-    this.venta = this.data.venta
+    this.venta = this.data.venta || this.data.compra
+    this.isCompra = this.data.isCompra || false
   }
 
   get paymentSupportThumbnail() {

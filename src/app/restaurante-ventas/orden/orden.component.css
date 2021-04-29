@@ -30,3 +30,10 @@ h1 {
   cursor: pointer;
   max-height: 300px;
 }
+
+.status {
+  float: right;
+  margin-left: 1em;
+  font-weight: 500;
+  color: #795548;
+}
