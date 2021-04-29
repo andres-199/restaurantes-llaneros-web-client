@@ -186,7 +186,7 @@ export class CarritoComponent implements OnInit {
       if (orden) {
         this.getRestaurantes()
         const msg =
-          'Orden registrada ✔, en um momento el Restaurante revisará tu orden.'
+          'Orden registrada ✔, en un momento el Restaurante revisará tu orden.'
         this.showMsg(msg, 'top')
       }
     })
