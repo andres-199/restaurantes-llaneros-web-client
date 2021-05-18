@@ -138,6 +138,7 @@ export class PurchaseComponent implements OnInit {
     if (this.paymentSupport) {
       if (this.paymentSupport !== oldPaymentSupport) {
         this.ordenVenta.soporte_pago = this.paymentSupport
+        delete this.ordenVenta.direccion_entrega
         this.carritoService.updateOrdenVenta(this.ordenVenta).subscribe({
           next: (venta) => {
             this.dialogRef.close(this.ordenVenta)
