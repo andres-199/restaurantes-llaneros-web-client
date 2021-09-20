@@ -1,26 +1,27 @@
-<mat-toolbar color="primary" class="toolbar">
+<mat-toolbar color="{{isLogedIn?'primary':''}}" class="toolbar" [ngClass]="{'is-logout':!isLogedIn}">
+  <img src="assets/images/logo-{{isLogedIn?'w':'color'}}.png" width="70" matTooltip="Restaurantes Llaneros">
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col">
-        <span style="cursor: pointer" (click)="onClickHome()"
-          >Restaurantes Llaneros</span
-        >
+        <button mat-button routerLink="inicio"  routerLinkActive="mat-accent">
+          Inicio
+        </button>
       </div>
 
       <!------------------MENU------------------->
       <div class="col-md-auto">
         <!--Admin-->
         <ng-container *ngIf="isLogedIn && user.rol_id === roles.Admin">
-          <button mat-button [routerLink]="['categorias']">Categorías</button>
-          <button mat-button [routerLink]="['restaurantes']">
+          <button routerLinkActive="mat-accent" mat-button [routerLink]="['categorias']">Categorías</button>
+          <button routerLinkActive="mat-accent" mat-button [routerLink]="['restaurantes']">
             Restaurantes
           </button>
-          <button mat-button [routerLink]="['metodos-pago']">
+          <button routerLinkActive="mat-accent" mat-button [routerLink]="['metodos-pago']">
             Metodos de pago
           </button>
         </ng-container>
 
-        <button mat-button [routerLink]="['registro']" *ngIf="!isLogedIn">
+        <button routerLinkActive="mat-accent" mat-button [routerLink]="['registro']" *ngIf="!isLogedIn">
           Registro
         </button>
       </div>
@@ -28,10 +29,11 @@
       <div class="col-md-auto">
         <ng-container *ngIf="isLogedIn; else login">
           <ng-container *ngIf="user.rol_id === roles.Restaurante">
-            <button mat-button [routerLink]="['restaurante/reservas']">
+            <button routerLinkActive="mat-accent" mat-button [routerLink]="['restaurante/reservas']">
               <span> Reservas </span>
             </button>
             <button
+              routerLinkActive="mat-accent"
               matBadgeColor="accent"
               [matBadge]="totalVentas"
               [matBadgeHidden]="!totalVentas"
@@ -42,12 +44,13 @@
             </button>
           </ng-container>
 
-          <button mat-button [routerLink]="['mis-reservas']">
+          <button routerLinkActive="mat-accent" mat-button [routerLink]="['mis-reservas']">
             Mis Reservas
           </button>
-          <button mat-button [routerLink]="['compras']">Compras</button>
+          <button routerLinkActive="mat-accent" mat-button [routerLink]="['compras']">Compras</button>
 
           <button
+            routerLinkActive="mat-accent"
             [routerLink]="['carrito']"
             mat-button
             matTooltip="Mi carrito de compras"
@@ -76,6 +79,7 @@
                 (mouseleave)="onMouseLeaveRestaurante()"
               >
                 <button
+                  routerLinkActive="mat-accent"
                   mat-menu-item
                   [routerLink]="['perfil']"
                   [queryParams]="{ tab: 1 }"
@@ -83,15 +87,15 @@
                   <mat-icon>create</mat-icon>
                   <span>Información Basica </span>
                 </button>
-                <button mat-menu-item [routerLink]="['restaurante/personal']">
+                <button routerLinkActive="mat-accent" mat-menu-item [routerLink]="['restaurante/personal']">
                   <mat-icon>people</mat-icon>
                   <span> Personal </span>
                 </button>
-                <button mat-menu-item [routerLink]="['restaurante/productos']">
+                <button routerLinkActive="mat-accent" mat-menu-item [routerLink]="['restaurante/productos']">
                   <mat-icon> fastfood</mat-icon>
                   <span> Productos </span>
                 </button>
-                <button mat-menu-item [routerLink]="['restaurante/mesas']">
+                <button routerLinkActive="mat-accent" mat-menu-item [routerLink]="['restaurante/mesas']">
                   <mat-icon> table_chart</mat-icon>
                   <span> Mesas </span>
                 </button>
@@ -101,7 +105,7 @@
 
           <!------------------------->
 
-          <button mat-button [routerLink]="['perfil']" matTooltip="Mi cuenta">
+          <button routerLinkActive="mat-accent" mat-button [routerLink]="['perfil']" matTooltip="Mi cuenta">
             <mat-icon>person</mat-icon>
           </button>
 

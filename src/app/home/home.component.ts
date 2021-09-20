@@ -18,20 +18,9 @@ export class HomeComponent implements OnInit {
   imagenes: Imagen[] = [
     {
       path:
-        'https://laspaginasamarillasdecolombia.com/galerias/fondo/estadero%20rancho%20llanerazo_fondo.jpg',
+        'https://restaurantesllaneros.com:3602/original/50bd0c6d-7867-4cd5-9c3c-88ff4d901ad1.webp',
     },
-    {
-      path:
-        'https://laspaginasamarillasdecolombia.com/galerias/aviso/estadero%20rancho%20llanerazo_aviso.jpg',
-    },
-    {
-      path:
-        'https://laspaginasamarillasdecolombia.com/galerias/fondo/estadero%20rancho%20llanerazo_fondo.jpg',
-    },
-    {
-      path:
-        'https://laspaginasamarillasdecolombia.com/galerias/aviso/estadero%20rancho%20llanerazo_aviso.jpg',
-    },
+   
   ]
 
   constructor(private crudService: CrudService, private router: Router) {}

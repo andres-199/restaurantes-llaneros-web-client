@@ -8,7 +8,6 @@ import { RouterModule } from '@angular/router'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatBadgeModule } from '@angular/material/badge'
 import { MatMenuModule } from '@angular/material/menu'
-
 @NgModule({
   declarations: [ToolbarComponent],
   imports: [

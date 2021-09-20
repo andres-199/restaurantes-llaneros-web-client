@@ -1,0 +1,28 @@
+.bg-image{
+   position: fixed;
+   filter: blur(2px);
+   width: 100vw;
+   height: 100vh;
+   margin-top: -2.22em;
+   background-image: url('../assets/images/Restaurant-Menu-Slide-Backgrounds.jpg');
+   background-size: cover;
+}
+
+.bg-image-2{
+    position: fixed;
+   height: 100vh;
+   margin-top: -2.22em;
+   transform: rotatey(3.142rad);
+   right: 0;
+}
+
+
+
+.bg-image-1 {
+    position: fixed;
+    filter: blur(5px);
+    background-image: url("../assets/images/bg-inicio.jpg");
+    height: 100vh;
+    width: 100vw;
+    background-repeat: repeat;
+}

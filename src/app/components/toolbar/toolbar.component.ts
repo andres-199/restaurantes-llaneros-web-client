@@ -64,8 +64,5 @@ export class ToolbarComponent implements OnInit {
       this.menuTrigger.closeMenu()
     }, 50)
   }
-
-  onClickHome() {
-    this.router.navigate([''])
-  }
+ 
 }

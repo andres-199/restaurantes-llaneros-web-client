@@ -1,7 +1,10 @@
 <ng-container *ngIf="showtoolbar">
   <app-toolbar></app-toolbar>
 </ng-container>
-<div style="margin-top: {{ showtoolbar ? '100px' : 0 }}; height: 100%">
+<div  style="margin-top: {{ showtoolbar ? '100px' : 0 }}; height: 100%">
+  <img src="assets/images/Restaurant-Menu-Print-Templates.jpg" class="bg-image-2" *ngIf="!isHome && !isLogedIn">
+  <div class="bg-image" *ngIf="!isHome && isLogedIn"></div>
+  <div class="bg-image-1" *ngIf="isHome"></div>
   <router-outlet></router-outlet>
 </div>
 <app-footer></app-footer>

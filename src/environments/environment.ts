@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  BACKEND_URL: 'http://localhost:3001/',
+  BACKEND_URL: 'https://restaurantesllaneros.com:3001/',
   IMAGES_URL: 'https://source.unsplash.com/',
   STORAGE_URL: 'https://restaurantesllaneros.com:3602/',
 }
