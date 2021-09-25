@@ -23,14 +23,16 @@
       </mat-card-title>
       <mat-card-subtitle>
         <mat-icon> location_on</mat-icon>
-        {{ restaurante.direccion }}
+        <span style="font-size: 1.2em;">{{ restaurante.direccion }}</span>
       </mat-card-subtitle>
       <mat-card-subtitle>
         <p>
           <mat-icon> local_dining</mat-icon>
-          {{ restaurante.Mesas?.length }} Mesas disponibles
+          <span style="font-size: 1.2em;">
+            {{ restaurante.Mesas?.length }} Mesas disponibles
+          </span>
         </p>
-        <p>
+        <p style="font-size: 1.5em;">
           {{ restaurante.descripcion }}
         </p>
       </mat-card-subtitle>

@@ -1,7 +1,9 @@
 .avatar-restaurante {
   background-size: cover;
-  height: 7em;
-  width: 7em;
+  height: 17em;
+  width: 17em;
+  border-radius: 0 !important;
+  margin-right: 1em;
 }
 
 .content {
