@@ -14,26 +14,34 @@
   position: absolute;
   top: 0;
   right: 0;
+  font-size: 1.2em;
 }
 
 .card-container {
   padding-top: 0.7%;
 }
 
-.divider {
-  border: 1px solid #79554899;
-}
-
-.divider-container-top {
-  padding-top: 3em;
-  left: 1em;
-}
-
-.divider-container-bottom {
-  left: 1em;
-  padding-bottom: 1em;
-}
-
 h2 {
-  color: #795548;
+  color: #79665e;
+}
+
+.container-view {
+  background-image: url('../../assets/images/bg-menu.jpg');
+  background-repeat: repeat;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.category {
+  margin-top: 20%;
 }
