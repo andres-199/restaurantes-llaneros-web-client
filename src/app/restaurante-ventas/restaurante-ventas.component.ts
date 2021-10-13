@@ -65,7 +65,7 @@ export class RestauranteVentasComponent implements OnInit {
       venta['telefono'] = venta.direccion_entrega.telefono
       venta.direccion_entrega = venta.direccion_entrega.direccion as any
       venta['estado'] = venta.valida
-        ? [{ text: 'Aprovada', color: 'accent' }]
+        ? [{ text: 'Aprobada', color: 'accent' }]
         : venta.rechazada
         ? [{ text: 'Rechazada', color: 'primary' }]
         : [{ text: 'Pendiente', color: 'warn' }]

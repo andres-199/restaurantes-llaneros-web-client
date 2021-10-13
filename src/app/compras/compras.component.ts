@@ -70,7 +70,7 @@ export class ComprasComponent implements OnInit {
       }
 
       compra['estado'] = compra.valida
-        ? [{ text: 'Aprovada', color: 'primary' }]
+        ? [{ text: 'Aprobada', color: 'primary' }]
         : compra.rechazada
         ? [{ text: 'Rechazada', color: 'warn' }]
         : !compra.soporte_pago && !compra.metodo_pago.contra_entrega
